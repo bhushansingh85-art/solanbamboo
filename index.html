@@ -908,9 +908,6 @@
     <!-- 2. PRODUCTS SECTION -->
     <section id="productsSection" class="page-section">
         <main class="content-container" id="mainContentArea">
-            <!-- Item 1 -->
-           
-
             <!-- Item 2 -->
             <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
                 <div class="item-image-container">
@@ -1236,6 +1233,11 @@
             
             document.getElementById(sectionId).classList.add('active');
             previousView = sectionId;
+
+            // URL update karne ke liye pushState() add kiya gaya hai
+            let pathName = sectionId.replace('Section', '').toLowerCase();
+            history.pushState(null, '', '/' + pathName);
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
