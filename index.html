@@ -1225,21 +1225,26 @@
                 setTimeout(showSlides, 3500);
             }
         }
-
         function showSection(sectionId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById('fullProductSection').style.display = 'none';
-            document.getElementById('cartFullSection').style.display = 'none';
-            
-            document.getElementById(sectionId).classList.add('active');
-            previousView = sectionId;
+              document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+              document.getElementById('fullProductSection').style.display = 'none';
+              document.getElementById('cartFullSection').style.display = 'none';
+    
+                 document.getElementById(sectionId).classList.add('active');
+                 previousView = sectionId;
 
-            // URL update karne ke liye pushState() add kiya gaya hai
-            let pathName = sectionId.replace('Section', '').toLowerCase();
-            history.pushState(null, '', '/' + pathName);
+    // यहाँ section ke naam ke hisab se URL path set hoga (/products, /customercare, /home)
+    let pathName = "";
+    if (sectionId === 'productsSection') pathName = 'products';
+    else if (sectionId === 'customerCareSection') pathName = 'customercare';
+    else if (sectionId === 'reviewsSection') pathName = 'reviews';
+    else if (sectionId === 'aboutSection') pathName = 'about';
+    else pathName = 'home';
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    history.pushState(null, '', '/' + pathName);
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
         function openFullProduct(cardElement) {
             lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -1509,11 +1514,26 @@
         }
 
         function openCartFullView() {
-            if (localStorage.getItem('isLoggedIn') !== 'true') {
-                openLogin(true);
-                return;
-            }
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        openLogin(true);
+        return;
+    }
 
+    document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById('fullProductSection').style.display = 'none';
+    
+    const cartSection = document.getElementById('cartFullSection');
+    cartSection.style.display = 'block';
+    previousView = "cartFullSection";
+    
+    // Cart open hone par URL me /cart dikhane ke liye
+    history.pushState(null, '', '/cart');
+
+    // (बाकी का कार्ट वाला पुराना कोड...)
+    const container = document.getElementById('cartFullListContainer');
+    container.innerHTML = '';
+    // ...
+}
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('fullProductSection').style.display = 'none';
             
