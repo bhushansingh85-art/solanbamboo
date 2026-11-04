@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solan Bamboo Furniture</title>
+    <!-- Importing Google Font for the Cursive Tagline -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- Google Sign-In API Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- EmailJS CDN Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("bRG9LrHd7A--V5wxG");
+       })();
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: #FFFACD;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            padding-top: 140px;
+        }
+
+        /* Header Gradient Background (Sticky at Top) */
+        .header-gradient {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #2B1B17 100%);
+            border-bottom: 45px solid #E09F3E;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-title {
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .company-tagline {
+            color: #E09F3E;
+            font-family: 'Dancing Script', cursive;
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        .header-btn {
+            position: relative;
+            padding: 8px 18px;
+            background-color: #2B1B17;
+            color: #FFFFFF;
+            border: 1px solid #E09F3E;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .border-home-btn {
+            position: absolute;
+            bottom: -40px;
+            left: 15px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            z-index: 10;
+        }
+
+        .border-home-btn:hover {
+            transform: translateY(2px) scale(0.95);
+            opacity: 0.85;
+        }
+
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: #2B1B17;
+            color: #FFFFFF;
+            z-index: 10000;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #E09F3E;
+        }
+
+        .side-nav.open {
+            left: 0;
+        }
+
+        .side-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(224, 159, 62, 0.3);
+        }
+
+        .side-nav-header h3 {
+            margin: 0;
+            color: #E09F3E;
+            font-size: 18px;
+        }
+
+        .close-side-btn {
+            font-size: 28px;
+            color: #FFFFFF;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .side-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .side-nav-links li a {
+            display: block;
+            padding: 15px 20px;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .side-nav-links li a:hover {
+            background-color: #E09F3E;
+            color: #2B1B17;
+            font-weight: bold;
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        .border-search-container {
+            position: absolute;
+            bottom: -37px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2px 8px 2px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .border-search-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #FFFFFF;
+            font-size: 13px;
+            width: 140px;
+        }
+
+        .border-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .border-search-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+        }
+
+        .border-right-actions {
+            position: absolute;
+            bottom: -40px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .border-cart-btn, .border-profile-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            position: relative;
+        }
+
+        .border-profile-btn {
+            display: none; 
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #FFFFFF;
+        }
+
+        .border-profile-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: #D9534F;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .page-section {
+            display: none;
+            padding: 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            height: 520px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-top: 3px solid #E09F3E;
+            border-bottom: 3px solid #E09F3E;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: #2B1B17;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-caption {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #FFFFFF;
+            width: 85%;
+            max-width: 800px;
+            background: rgba(43, 27, 23, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .slide-caption h1 {
+            font-size: 28px;
+            margin: 0 0 8px 0;
+            color: #FFFFFF;
+        }
+
+        .slide-caption p {
+            font-size: 14px;
+            margin: 0;
+            color: #FFFACD;
+        }
+
+        .fade {
+            animation: fadeEffect 1.5s ease-in-out;
+        }
+
+        @keyframes fadeEffect {
+            from { opacity: 0.4; }
+            to { opacity: 1; }
+        }
+
+        .explore-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #E09F3E;
+            color: #2B1B17;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: background-color 0.2s;
+        }
+
+        .explore-btn:hover {
+            background-color: #FFFFFF;
+            color: #2B1B17;
+        }
+
+        .content-container {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            margin: 0;
+        }
+
+        .item-card {
+            background-color: #FFFFFF;
+            flex: 1 1 20%;
+            min-width: 250px;
+            padding: 20px;
+            border: 1px solid #E09F3E;
+            margin: -1px 0 0 -1px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+
+        .item-image-container {
+            width: 100%;
+            height: 150px;
+            background-color: #F8F9FA;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .item-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .item-title {
+            color: #2B1B17;
+            font-size: 17px;
+            margin: 8px 0;
+        }
+
+        .item-description {
+            color: #666666;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .item-btn {
+            padding: 8px 16px;
+            background-color: #E09F3E;
+            color: #2B1B17;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .item-btn:hover {
+            background-color: #2B1B17;
+            color: #FFFFFF;
+        }
+
+        .cart-btn {
+            background-color: #2B1B17;
+            color: #E09F3E;
+            border: 1px solid #E09F3E;
+        }
+
+        #fullProductSection, #cartFullSection {
+            display: none;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #FFFFFF;
+            border: 2px solid #E09F3E;
+            border-radius: 12px;
+            padding: 30px;            
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: left;
+            position: relative;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom:20px;
+            position: sticky;
+            top: 20px;
+            color: #2B1B17;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            background: #E09F3E;
+            padding: 6px 14px;
+            border-radius: 4px;
+        }
+        .back-link:hover {
+            background: #2B1B17;
+            color: #FFF;
+        }
+
+        .product-detail-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .product-detail-left {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .simple-product-img {
+            width: 100%;
+            height: 350px;
+            background-color: #F8F9FA;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .simple-product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-detail-right {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #D9534F;
+            margin: 10px 0 15px 0;
+        }
+
+        .cart-full-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-full-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .cart-full-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            background: #F8F9FA;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .site-footer {
+            background: linear-gradient(135deg, #2B1B17 100%);
+            border-top: 25px solid #E09F3E;
+            color: #FFFFFF;
+            padding: 40px 20px 20px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            text-align: left;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(224, 159, 62, 0.3);
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            color: #E09F3E;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .footer-section p, .footer-section ul {
+            font-size: 13px;
+            color: #CCCCCC;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #E09F3E;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #AAAAAA;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid #E09F3E;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #2B1B17;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-title {
+            margin: 0 0 20px 0;
+            color: #2B1B17;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #E09F3E;
+            cursor: pointer;
+            background-color: #2B1B17;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar-container input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .profile-form-group {
+            margin-bottom: 12px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .profile-form-group label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .profile-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .profile-input[readonly] {
+            background-color: #e9ecef;
+            color: #495057;
+            cursor: not-allowed;
+        }
+
+        .save-profile-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #5CB85C;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 9px;
+            background-color: #D9534F;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-gradient">
+        <!-- LEFT SIDE: Logo & Company Name (Clicking opens About / Info Section) -->
+        <div class="brand-container" onclick="showSection('aboutSection')">
+            <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="25" y="15" width="10" height="70" rx="3" />
+                    <rect x="45" y="10" width="10" height="75" rx="3" />
+                    <rect x="65" y="25" width="10" height="60" rx="3" />
+                    <line x1="15" y1="50" x2="85" y2="50" />
+                </g>
+            </svg>
+
+            <div class="brand-text">
+                <h1 class="company-title">SOLAN BAMBOO FURNITURE</h1>
+                <span class="company-tagline">Eco-Friendly, Elegant & Durable Bamboo Living</span>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: Login Button -->
+        <button id="loginHeaderBtn" class="header-btn" onclick="openLogin(false)">LOGIN</button>
+
+        <!-- HAMBURGER MENU BUTTON -->
+        <button class="border-home-btn" onclick="toggleMenu()" aria-label="Open Menu">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
+        <!-- BOTTOM BORDER: Search Bar -->
+        <div class="border-search-container">
+            <input type="text" id="searchInput" placeholder="Search..." class="border-search-input" onkeyup="filterCards()">
+            <button class="border-search-btn" onclick="filterCards()">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- BOTTOM BORDER: Cart & Profile Actions -->
+        <div class="border-right-actions">
+            <!-- Cart Button -->
+            <button class="border-cart-btn" onclick="openCartFullView()">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="#FFFFFF">
+                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span id="cartBadge" class="cart-badge">0</span>
+            </button>
+
+            <!-- Profile Button -->
+            <button id="profileBorderBtn" class="border-profile-btn" onclick="openProfile()">
+                <img id="headerProfileImg" src="" alt="Profile" style="display:none; width:100%; height:100%; object-fit:cover;">
+                <svg id="headerProfileSvg" viewBox="0 0 24 24" width="36" height="36" fill="#FFFFFF">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 1. HOME PAGE SECTION -->
+    <section id="homeSection" class="page-section active">
+        <div class="slideshow-container">
+            <div class="slide fade">
+            <img src="https://i.ibb.co/21N17gGY/1-SET-converted.jpg" alt="1SET converted" border="0">
+                <div class="slide-caption">
+                    <h1>Welcome to Solan Bamboo Furniture</h1>
+                    <p>Discover sustainable, handcrafted, and elegant bamboo living solutions designed for ultimate comfort and durability.</p>
+                </div>
+                <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+            </div>
+            <div class="slide fade">
+            <img src="https://i.ibb.co/nswZpgHK/2-SET-converted.jpg" alt="2SET converted" border="0">
+                <div class="slide-caption">
+                    <h1>Eco-Friendly Craftsmanship</h1>
+                    <p>Experience the finest natural materials shaped by skilled traditional artisans.</p>
+                </div>
+                <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+            </div>
+            <div class="slide fade">
+            <img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="3SET converted" border="0">
+                <div class="slide-caption">
+                    <h1>Durable & Elegant Living</h1>
+                    <p>Bring timeless style and comfort to your home and outdoor spaces.</p>
+                </div>
+                <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+            </div>
+            <div class="slide fade">
+            <img src="https://i.ibb.co/rRmdT12M/4-SET-converted.jpg" alt="4SET converted" border="0">
+                <div class="slide-caption">
+                    <h1>Natural Bamboo Elegance</h1>
+                    <p>Add a touch of nature and class to your living spaces.</p>
+                </div>
+                <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="aboutSection" class="page-section">
+        <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
+            <h2 style="color: #2B1B17; margin-top: 10px; font-size: 26px;">About Solan Bamboo Furniture</h2>
+            <p style="color: #444; line-height: 1.8; font-size: 15px;">
+                Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination for sustainable, handcrafted, and durable bamboo living solutions. Located in the pristine hills of Himachal Pradesh (Village Dharja, Oachghat, Solan), we take pride in blending traditional artisan craftsmanship with modern, eco-friendly designs.
+            </p>
+            <p style="color: #444; line-height: 1.8; font-size: 15px;">
+                Every piece of furniture we create—from our luxury lounge sets to classic round coffee tables and easy chairs—is meticulously built to bring natural elegance, timeless style, and unmatched comfort into your home and outdoor spaces. Thank you for supporting sustainable living!
+            </p>
+        </div>
+    </section>
+
+    <!-- CUSTOMER REVIEWS SECTION -->
+    <section id="reviewsSection" class="page-section">
+        <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
+            <h2 style="color: #2B1B17; margin-top: 10px; font-size: 26px;">Customer Reviews</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">See what our valued clients have to say about our handcrafted bamboo furniture, or share your own experience!</p>
+            
+            <!-- List of Reviews -->
+            <div id="reviewsListContainer" style="margin-bottom: 30px;"></div>
+
+            <!-- Add Review Form (Hidden until logged in) -->
+            <div id="generalReviewFormContainer" style="border-top: 2px solid #eee; padding-top: 20px; display: none;">
+                <h3 style="color: #2B1B17; margin-bottom: 15px;">Leave Your Review</h3>
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="profile-form-group" style="margin-bottom: 15px;">
+                        <label for="reviewRating">Rating</label>
+                        <select id="reviewRating" class="profile-input" required>
+                            <option value="⭐⭐⭐⭐⭐ (5/5)">⭐⭐⭐⭐⭐ - 5 Stars</option>
+                            <option value="⭐⭐⭐⭐ (4/5)">⭐⭐⭐⭐ - 4 Stars</option>
+                            <option value="⭐⭐⭐ (3/5)">⭐⭐⭐ - 3 Stars</option>
+                            <option value="⭐⭐ (2/5)">⭐⭐ - 2 Stars</option>
+                            <option value="⭐ (1/5)">⭐ - 1 Star</option>
+                        </select>
+                    </div>
+                    <div class="profile-form-group" style="margin-bottom: 15px;">
+                        <label for="reviewComment">Your Review</label>
+                        <textarea id="reviewComment" class="profile-input" rows="4" required placeholder="Write your review here..." style="resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="save-profile-btn" style="background-color: #E09F3E; color: #2B1B17;">Submit Review</button>
+                </form>
+            </div>
+
+            <!-- Login Prompt if not logged in -->
+            <div id="generalReviewLoginPrompt" style="border-top: 2px solid #eee; padding-top: 20px; text-align: center;">
+                <p style="color: #D9534F; font-weight: bold; font-size: 15px;">रिव्यू लिखने के लिए कृपया पहले लॉगिन करें।</p>
+                <button class="item-btn" onclick="openLogin(true)" style="background-color: #2B1B17; color: #E09F3E; padding: 10px 20px;">Login Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PRODUCTS SECTION -->
+    <section id="productsSection" class="page-section">
+        <main class="content-container" id="mainContentArea">
+            <!-- Item 1 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹24,999">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+             </div>
+                <h2 class="item-title">HANDCRAFTED WOVEN BAMBOO LOUNGE SET</h2>
+                <p class="item-description">Experience ultimate comfort and elegance with our Handcrafted Woven Bamboo Lounge Set. Expertly made by skilled artisans, this luxury set features a premium curved design that contours to your body for exceptional relaxation.</p>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg" alt="image 353892b2 converted" border="0">
+                </div>
+                <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+                <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table. Expertly handcrafted from premium quality bamboo, this elegant table features a beautifully woven lower shelf for added storage and a smooth, polished finish that highlights the natural beauty of the wood.</p>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹6,200">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/xtCMYVtQ/stufchair-converted.jpg" alt="stufchair converted" border="0">
+                </div>
+                <h2 class="item-title">BAMBOO EASY CHAIR</h2>
+                <p class="item-description">A classic round bamboo chair featuring a comfortable cushioned seat, expertly handcrafted from premium Solan bamboo for your relaxation.</p>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹5,500">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/rfc58tdH/chair-converted.jpg" alt="chair converted" border="0">
+                </div>
+                <h2 class="item-title">CLASSIC WOVEN BAMBOO CHAIR</h2>
+                <p class="item-description">A charming and simple bamboo chair with a delicately woven backrest, perfect for cozy indoor or outdoor seating.</p>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹12,000">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/jPct9Dgw/roundchair-converted.jpg" alt="roundchair converted" border="0">
+                </div>
+                <h2 class="item-title">OUTDOOR ROUND CHAIR</h2>
+                <p class="item-description">Designed to elevate your outdoor space, these all-weather bamboo patio chairs and tea tables are expertly crafted to resist the elements, making them perfect for balconies, patios, and garden settings.</p>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹2,800">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/KpjVc0Hp/stoolround-converted.jpg" alt="stoolround converted" border="0">
+                </div>
+                <h2 class="item-title">BAMBOO STOOL</h2>
+                <p class="item-description">A versatile and sturdy bamboo stool, expertly handcrafted from premium quality bamboo. Its lightweight design and intricate weave make it a perfect addition to any space</p>
+            </div>
+
+            <!-- Item 7 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹7,900">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/MxygHXYb/chairlong-converted.jpg" alt="chairlong converted" border="0">
+                </div>
+                <h2 class="item-title">HIGH-BACK BAMBOO</h2>
+                <p class="item-description">A beautifully designed high-back bamboo lounger, handcrafted to offer excellent support and a vintage aesthetic for your relaxation.</p>
+            </div>
+
+            <!-- Item 8 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹2,500">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/1fPPxgby/stool-converted.jpg" alt="stool converted" border="0">
+                </div>
+                <h2 class="item-title">BAMBOO SQUARE STOOL</h2>
+                <p class="item-description">Here is best stool of square shape best and comfart able</p>
+            </div>
+
+            <!-- Item 9 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹3,400">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/Z6qrYDgd/pot-converted.jpg" alt="pot converted" border="0">
+                </div>
+                <h2 class="item-title">BAMBOO PLANT STAND</h2>
+                <p class="item-description">Elegant handcrafted bamboo plant stand, perfect for displaying your favorite potted plants and flowers in style.</p>
+            </div>
+
+            <!-- Item 10 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹18,500">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/hJGr0R60/basket-converted.jpg" alt="basket converted" border="0">
+                </div>
+                <h2 class="item-title">HANDCRAFTED BAMBOO BASKETS</h2>
+                <p class="item-description">A versatile blend of a sofa and bed, this handcrafted bamboo diwan offers exceptional comfort and traditional elegance for your living space.</p>
+            </div>
+
+            <!-- Item 11 -->
+            <div class="item-card" onclick="openFullProduct(this)" data-price="₹19,000">
+                <div class="item-image-container">
+                <img src="https://i.ibb.co/jvcZScr7/image-converted.jpg" alt="image-converted" border="0">
+                </div>
+                <h2 class="item-title">HANDCRAFTED BAMBOO DIWAN</h2>
+                <p class="item-description">A versatile blend of a sofa and bed, this handcrafted bamboo diwan offers exceptional comfort and traditional elegance for your living space.</p>
+            </div>
+        </main>
+    </section>
+
+    <!-- 3. CUSTOMER CARE SECTION -->
+    <section id="customerCareSection" class="page-section">
+        <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
+            <h2 style="color: #2B1B17; margin-top: 0; font-size: 24px;">Customer Care & Support</h2>
+            <p style="color: #666; line-height: 1.6; font-size: 15px;">We are here to assist you with any questions regarding your orders, custom bamboo furniture creations, or shipping details across India.</p>
+            <div style="margin-top: 20px; padding: 15px; background: #FFFACD; border-radius: 8px;">
+                <p style="color: #2B1B17; font-weight: bold; margin: 5px 0;">Email: contact@solanbamboofurniture.com</p>
+                <p style="color: #2B1B17; font-weight: bold; margin: 5px 0;">Support Hotline: +91 9876543210</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Full Product View Section with Customer Reviews -->
+    <section id="fullProductSection">
+        <div>
+            <a class="back-link" onclick="goBack()">&larr; BACK</a>
+        </div>
+        
+        <div class="product-detail-wrapper">
+            <div class="product-detail-left">
+                <div id="simpleModalImageContainer" class="simple-product-img"></div>
+            </div>
+
+            <div class="product-detail-right">
+                <h2 id="simpleModalTitle" class="modal-title" style="margin-bottom: 10px; color: #2B1B17;"></h2>
+                <div id="productPriceTag" class="product-price">₹15,499</div>
+                <p id="simpleModalDesc" style="color: #555; font-size: 15px; margin-bottom: 20px; line-height: 1.6;"></p>
+                
+                <div class="button-group" style="justify-content: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 25px;">
+                    <button id="simpleCartBtn" class="item-btn cart-btn" style="padding: 12px 20px; font-size: 14px;" onclick="toggleCartFromSimpleView()">Add to Cart</button>
+                    <button class="item-btn" style="padding: 12px 20px; font-size: 14px; background-color: #5CB85C; color: white;" onclick="buyNowFromSimpleView()">Buy Now</button>              
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Specific Customer Reviews Area -->
+        <div style="margin-top: 40px; border-top: 2px solid #E09F3E; padding-top: 25px;">
+            <h3 style="color: #2B1B17; margin-bottom: 15px;">Customer Reviews & Ratings for this Product</h3>
+            <div id="productReviewsContainer" style="margin-bottom: 25px;">
+                <!-- Dynamically loaded product reviews will appear here -->
+            </div>
+
+            <!-- Add Review for this specific product (Hidden until logged in) -->
+            <div id="prodReviewFormContainer" style="background: #FFFACD; padding: 20px; border-radius: 8px; border: 1px solid #E09F3E; display: none;">
+                <h4 style="color: #2B1B17; margin-top: 0; margin-bottom: 12px;">Write a Review for this Item</h4>
+                <form id="productReviewForm" onsubmit="submitProductReview(event)">
+                    <div class="profile-form-group" style="margin-bottom: 12px;">
+                        <label for="prodReviewRating">Rating</label>
+                        <select id="prodReviewRating" class="profile-input" required>
+                            <option value="⭐⭐⭐⭐⭐ (5/5)">⭐⭐⭐⭐⭐ - 5 Stars</option>
+                            <option value="⭐⭐⭐⭐ (4/5)">⭐⭐⭐⭐ - 4 Stars</option>
+                            <option value="⭐⭐⭐ (3/5)">⭐⭐⭐ - 3 Stars</option>
+                            <option value="⭐⭐ (2/5)">⭐⭐ - 2 Stars</option>
+                            <option value="⭐ (1/5)">⭐ - 1 Star</option>
+                        </select>
+                    </div>
+                    <div class="profile-form-group" style="margin-bottom: 12px;">
+                        <label for="prodReviewComment">Your Feedback</label>
+                        <textarea id="prodReviewComment" class="profile-input" rows="3" required placeholder="Share your experience with this item..." style="resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="save-profile-btn" style="background-color: #2B1B17; color: #E09F3E;">Submit Product Review</button>
+                </form>
+            </div>
+
+            <!-- Login Prompt for Product Review -->
+            <div id="prodReviewLoginPrompt" style="background: #FFFACD; padding: 20px; border-radius: 8px; border: 1px solid #E09F3E; text-align: center;">
+                <p style="color: #D9534F; font-weight: bold; margin: 0 0 10px 0;">इस प्रोडक्ट पर रिव्यू लिखने के लिए कृपया लॉगिन करें।</p>
+                <button class="item-btn" onclick="openLogin(true)" style="background-color: #2B1B17; color: #E09F3E; padding: 8px 16px;">Login Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full View Cart Section -->
+    <section id="cartFullSection">
+        <div>
+            <a class="back-link" onclick="closeCartFullView()">&larr; BACK</a>
+        </div>
+        <h2 style="color: #2B1B17; margin-top: 0; border-bottom: 2px solid #E09F3E; padding-bottom: 10px;">SHOPPING CART</h2>
+        <div id="cartFullListContainer" style="margin: 20px 0;"></div>
+        <button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
+    </section>
+
+    <!-- Bottom Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Solan Bamboo Furniture</h3>
+                <p>Eco-Friendly, Elegant & Durable Bamboo Living. Crafting high-quality, sustainable bamboo furniture.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showSection('homeSection')">Home</a></li>
+                    <li><a href="#" onclick="showSection('productsSection')">Products</a></li>
+                    <li><a href="#" onclick="showSection('reviewsSection')">Reviews</a></li>
+                    <li><a href="#" onclick="showSection('customerCareSection')">Customer Care</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Headquarters</h3>
+                <p>Village Dharja P.O Oachghat<br>Dist. Solan (H.P)<br>Email: contact@solanbamboofurniture.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Solan Bamboo Furniture. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Slide-out Sidebar Navigation Drawer -->
+    <div id="sideNav" class="side-nav">
+        <div class="side-nav-header">
+            <h3>Menu</h3>
+            <span class="close-side-btn" onclick="toggleMenu()">&times;</span>
+        </div>
+        <ul class="side-nav-links">
+            <li><a href="#" onclick="toggleMenu(); showSection('homeSection');">Home</a></li>
+            <li><a href="#" onclick="toggleMenu(); showSection('productsSection');">Products</a></li>       
+            <li><a href="#" onclick="toggleMenu(); openLogin(false);">Login</a></li>
+            <li><a href="#" onclick="toggleMenu(); openProfile();">My Profile</a></li>
+            <li><a href="#" onclick="toggleMenu(); showSection('customerCareSection');">Customer Care</a></li>
+
+        </ul>
+    </div>
+    <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-btn" onclick="closeLogin()">&times;</span>
+            <h2 class="modal-title">Member Login</h2>
+            <p id="loginWarningText" style="display: none; color: #D9534F; font-size: 14px; font-weight: bold; margin-top: -10px; margin-bottom: 15px;">
+                रिव्यू लिखने या कार्ट में जोड़ने के लिए कृपया पहले लॉगिन करें!
+            </p>
+            <div id="g_id_onload"
+                 data-client_id="1060493423838-3eigbnmes20dtq4lb11n0v4anugo9qgv.apps.googleusercontent.com"
+                 data-callback="handleGoogleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin" data-type="standard" data-size="large" data-width="100%"></div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-btn" onclick="closeProfile()">&times;</span>
+            <h2 class="modal-title">User Profile</h2>
+            <div class="profile-avatar-container">
+                <img id="profileAvatarImg" src="" alt="Profile Picture" style="display:none;">
+                <svg id="profileDefaultSvg" viewBox="0 0 24 24" width="36" height="36" fill="#FFFFFF">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+                <input type="file" id="avatarUploadInput" accept="image/*" onchange="previewAvatar(event)">
+            </div>
+            <div class="profile-form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" class="profile-input">
+            </div>
+            <div class="profile-form-group">
+                <label for="editEmail">Gmail ID</label>
+                <input type="email" id="editEmail" class="profile-input" readonly>
+            </div>
+            <button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
+            <button type="button" class="logout-btn" onclick="handleLogout()">Sign Out</button>
+        </div>
+    </div>
+
+    <!-- View Other User Profile Modal -->
+    <div id="viewProfileModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-btn" onclick="closeViewProfile()">&times;</span>
+            <h2 class="modal-title">Reviewer Profile</h2>
+            <div class="profile-avatar-container" style="cursor: default;">
+                <img id="viewProfileAvatarImg" src="" alt="Avatar" style="display:none; width:100%; height:100%; object-fit:cover;">
+                <svg id="viewProfileDefaultSvg" viewBox="0 0 24 24" width="36" height="36" fill="#FFFFFF">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+            </div>
+            <div class="profile-form-group">
+                <label>Name</label>
+                <input type="text" id="viewProfileName" class="profile-input" readonly>
+            </div>
+            <div class="profile-form-group">
+                <label>Email ID</label>
+                <input type="text" id="viewProfileEmail" class="profile-input" readonly>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        let productReviews = JSON.parse(localStorage.getItem('productReviews')) || {};
+        let generalReviews = JSON.parse(localStorage.getItem('generalReviews')) || [           
+        ];
+        let currentActiveProduct = "";
+        let previousView = "productsSection";
+        let lastScrollPosition = 0;
+        let slideIndex = 0;
+
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                onSuccessfulLogin();
+                loadProfileData();
+            } else {
+                updateReviewAccessUI();
+            }
+            updateCartUI();
+            updateHeaderProfilePic();
+            loadGeneralReviews();
+            showSlides();            
+        };
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            if (slides.length > 0) {
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1; }    
+                slides[slideIndex - 1].style.display = "block";  
+                setTimeout(showSlides, 3500);
+            }
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('fullProductSection').style.display = 'none';
+            document.getElementById('cartFullSection').style.display = 'none';
+            
+            document.getElementById(sectionId).classList.add('active');
+            previousView = sectionId;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openFullProduct(cardElement) {
+            lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+            const title = cardElement.querySelector('.item-title').textContent;
+            const desc = cardElement.querySelector('.item-description').textContent;
+            const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
+            const price = cardElement.getAttribute('data-price') || "₹15,499";
+
+            currentActiveProduct = title;
+            document.getElementById('simpleModalTitle').textContent = title;
+            document.getElementById('simpleModalDesc').textContent = desc;
+            document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
+            document.getElementById('productPriceTag').textContent = price;
+
+            loadProductReviews(title);
+            updateReviewAccessUI();
+
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('cartFullSection').style.display = 'none';
+            document.getElementById('fullProductSection').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const simpleCartBtn = document.getElementById('simpleCartBtn');
+            if (cartItems.includes(title)) {
+                simpleCartBtn.textContent = "Remove from Cart";
+            } else {
+                simpleCartBtn.textContent = "Add to Cart";
+            }
+        }
+
+        function updateReviewAccessUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            const genForm = document.getElementById('generalReviewFormContainer');
+            const genPrompt = document.getElementById('generalReviewLoginPrompt');
+            if (genForm && genPrompt) {
+                genForm.style.display = isLoggedIn ? 'block' : 'none';
+                genPrompt.style.display = isLoggedIn ? 'none' : 'block';
+            }
+
+            const prodForm = document.getElementById('prodReviewFormContainer');
+            const prodPrompt = document.getElementById('prodReviewLoginPrompt');
+            if (prodForm && prodPrompt) {
+                prodForm.style.display = isLoggedIn ? 'block' : 'none';
+                prodPrompt.style.display = isLoggedIn ? 'none' : 'block';
+            }
+        }
+
+        function loadGeneralReviews() {
+            const container = document.getElementById('reviewsListContainer');
+            if(!container) return;
+            container.innerHTML = '';
+
+            if (generalReviews.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-size: 14px;">अभी कोई रिव्यू नहीं है।</p>';
+                return;
+            }
+
+            generalReviews.forEach((rev, idx) => {
+                const currentUserEmail = localStorage.getItem('userEmail');
+                let deleteBtnHtml = '';
+                if (localStorage.getItem('isLoggedIn') === 'true' && rev.email && rev.email === currentUserEmail) {
+                    deleteBtnHtml = `<button onclick="deleteGeneralReview(${idx}, event)" style="background:#D9534F; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:11px; cursor:pointer; float:right;">Delete</button>`;
+                }
+
+                const reviewerData = encodeURIComponent(JSON.stringify({
+                    name: rev.name || "Anonymous",
+                    email: rev.email || "Not Provided",
+                    avatar: rev.avatar || ""
+                }));
+
+                container.innerHTML += `
+                    <div onclick="showReviewerProfile('${reviewerData}')" style="padding: 15px; background: #FFFACD; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #E09F3E; position:relative; cursor:pointer;" title="Click to view reviewer profile">
+                        ${deleteBtnHtml}
+                        <h4 style="margin: 0 0 3px 0; color: #2B1B17; text-decoration: underline;">${rev.name}</h4>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: #777;">${rev.date || ''}</p>
+                        <p style="margin: 0 0 5px 0; font-size: 13px; color: #E09F3E; font-weight: bold;">${rev.rating}</p>
+                        <p style="margin: 0; font-size: 14px; color: #444;">${rev.comment}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+
+            const name = localStorage.getItem('userName') || "Valued User";
+            const email = localStorage.getItem('userEmail') || "";
+            const avatar = localStorage.getItem('userAvatar') || "";
+            const rating = document.getElementById('reviewRating').value;
+            const comment = document.getElementById('reviewComment').value;
+            const date = new Date().toLocaleString();
+
+            generalReviews.unshift({ name, email, avatar, rating, comment, date });
+            localStorage.setItem('generalReviews', JSON.stringify(generalReviews));
+
+            loadGeneralReviews();
+            document.getElementById('reviewForm').reset();
+            alert("Thank you! Your review has been added successfully.");
+        }
+
+        function deleteGeneralReview(idx, event) {
+            if(event) event.stopPropagation();
+            if(confirm("क्या आप इस रिव्यू को हटाना चाहते हैं?")) {
+                generalReviews.splice(idx, 1);
+                localStorage.setItem('generalReviews', JSON.stringify(generalReviews));
+                loadGeneralReviews();
+            }
+        }
+
+        function loadProductReviews(productTitle) {
+            const container = document.getElementById('productReviewsContainer');
+            container.innerHTML = '';
+
+            const reviews = productReviews[productTitle] || [];
+            if (reviews.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-size: 14px;">अभी इस प्रोडक्ट पर कोई रिव्यू नहीं है। पहला रिव्यू आप लिख सकते हैं!</p>';
+            } else {
+                reviews.forEach((rev, idx) => {
+                    const currentUserEmail = localStorage.getItem('userEmail');
+                    let deleteBtnHtml = '';
+                    if (localStorage.getItem('isLoggedIn') === 'true' && rev.email && rev.email === currentUserEmail) {
+                        deleteBtnHtml = `<button onclick="deleteProductReview('${productTitle.replace(/'/g, "\\'")}', ${idx}, event)" style="background:#D9534F; color:white; border:none; padding:4px 10px; border-radius:4px; font-size:11px; cursor:pointer; float:right;">Delete</button>`;
+                    }
+
+                    const reviewerData = encodeURIComponent(JSON.stringify({
+                        name: rev.name || "Anonymous",
+                        email: rev.email || "Not Provided",
+                        avatar: rev.avatar || ""
+                    }));
+
+                    container.innerHTML += `
+                        <div onclick="showReviewerProfile('${reviewerData}')" style="padding: 12px; background: white; border-radius: 6px; margin-bottom: 10px; border-left: 4px solid #E09F3E; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position:relative; cursor:pointer;" title="Click to view reviewer profile">
+                            ${deleteBtnHtml}
+                            <h4 style="margin: 0 0 3px 0; color: #2B1B17; font-size: 15px; text-decoration: underline;">${rev.name}</h4>
+                            <p style="margin: 0 0 3px 0; font-size: 11px; color: #777;">${rev.date || ''}</p>
+                            <p style="margin: 0 0 3px 0; font-size: 12px; color: #E09F3E; font-weight: bold;">${rev.rating}</p>
+                            <p style="margin: 0; font-size: 13px; color: #444;">${rev.comment}</p>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function submitProductReview(event) {
+            event.preventDefault();
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+
+            const name = localStorage.getItem('userName') || "Valued User";
+            const email = localStorage.getItem('userEmail') || "";
+            const avatar = localStorage.getItem('userAvatar') || "";
+            const rating = document.getElementById('prodReviewRating').value;
+            const comment = document.getElementById('prodReviewComment').value;
+            const date = new Date().toLocaleString();
+
+            if (!productReviews[currentActiveProduct]) {
+                productReviews[currentActiveProduct] = [];
+            }
+
+            productReviews[currentActiveProduct].unshift({ name, email, avatar, rating, comment, date });
+            localStorage.setItem('productReviews', JSON.stringify(productReviews));
+
+            loadProductReviews(currentActiveProduct);
+            document.getElementById('productReviewForm').reset();
+            alert("आपका रिव्यू सफलतापूर्वक जोड़ दिया गया है!");
+        }
+
+        function deleteProductReview(productTitle, idx, event) {
+            if(event) event.stopPropagation();
+            if(confirm("क्या आप इस रिव्यू को हटाना चाहते हैं?")) {
+                productReviews[productTitle].splice(idx, 1);
+                localStorage.setItem('productReviews', JSON.stringify(productReviews));
+                loadProductReviews(productTitle);
+            }
+        }
+
+        function showReviewerProfile(encodedData) {
+            const data = JSON.parse(decodeURIComponent(encodedData));
+            document.getElementById('viewProfileName').value = data.name;
+            document.getElementById('viewProfileEmail').value = data.email;
+            
+            const imgEl = document.getElementById('viewProfileAvatarImg');
+            const svgEl = document.getElementById('viewProfileDefaultSvg');
+            if (data.avatar) {
+                imgEl.src = data.avatar;
+                imgEl.style.display = 'block';
+                svgEl.style.display = 'none';
+            } else {
+                imgEl.style.display = 'none';
+                svgEl.style.display = 'block';
+            }
+            document.getElementById('viewProfileModal').style.display = 'flex';
+        }
+
+        function closeViewProfile() {
+            document.getElementById('viewProfileModal').style.display = 'none';
+        }
+
+        function openProductByName(productTitle) {
+            const allCards = document.querySelectorAll('.item-card');
+            allCards.forEach(card => {
+                if (card.querySelector('.item-title').textContent.trim() === productTitle.trim()) {
+                    openFullProduct(card);
+                }
+            });
+        }
+
+        function goBack() {
+            document.getElementById('fullProductSection').style.display = 'none';
+            if (previousView === 'cartFullSection') {
+                openCartFullView();
+            } else {
+                showSection(previousView);
+                window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+            }
+        }
+
+        function toggleCart(itemName, event) {
+            if(event) event.stopPropagation();
+
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+
+            const index = cartItems.indexOf(itemName);
+            if (index > -1) {
+                cartItems.splice(index, 1);
+            } else {
+                cartItems.push(itemName);
+            }
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCartUI();
+
+            if(document.getElementById('fullProductSection').style.display === 'block' && currentActiveProduct === itemName) {
+                const simpleCartBtn = document.getElementById('simpleCartBtn');
+                simpleCartBtn.textContent = cartItems.includes(itemName) ? "Remove from Cart" : "Add to Cart";
+            }
+
+            if(document.getElementById('cartFullSection').style.display === 'block') {
+                openCartFullView();
+            }
+        }
+
+        function toggleCartFromSimpleView() {
+            if (currentActiveProduct) toggleCart(currentActiveProduct);
+        }
+
+        function buyNowFromSimpleView() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+            goBack();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartBadge').textContent = cartItems.length;
+        }
+
+        function openCartFullView() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('fullProductSection').style.display = 'none';
+            
+            const cartSection = document.getElementById('cartFullSection');
+            cartSection.style.display = 'block';
+            previousView = "cartFullSection";
+            
+            const container = document.getElementById('cartFullListContainer');
+            container.innerHTML = '';
+
+            if (cartItems.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:#777; padding:30px; font-size:16px;">आपका कार्ट खाली है</div>';
+            } else {
+                cartItems.forEach((itemName, idx) => {
+                    let itemImgSrc = "";
+                    document.querySelectorAll('.item-card').forEach(card => {
+                        if (card.querySelector('.item-title').textContent.trim() === itemName) {
+                            const imgEl = card.querySelector('.item-image-container img');
+                            if (imgEl) itemImgSrc = imgEl.src;
+                        }
+                    });
+
+                    container.innerHTML += `
+                        <div class="cart-full-row">
+                            <div class="cart-full-info" onclick="openProductByName('${itemName.replace(/'/g, "\\'")}')" title="Click to view product">
+                                ${itemImgSrc ? `<img src="${itemImgSrc}" class="cart-full-img" alt="Product">` : ''}
+                                <span style="font-size: 16px; font-weight: bold; color: #2B1B17;">${idx + 1}. ${itemName}</span>
+                            </div>
+                            <button class="item-btn" style="background:#D9534F; color:white; padding:8px 16px;" onclick="toggleCart('${itemName}', event)">Remove</button>
+                        </div>`;
+                });
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeCartFullView() {
+            document.getElementById('cartFullSection').style.display = 'none';
+            showSection('homeSection');
+        }
+
+        function checkoutCart() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                openLogin(true);
+                return;
+            }
+            if (cartItems.length === 0) return;
+            cartItems = [];
+            localStorage.removeItem('cartItems');
+            updateCartUI();
+            closeCartFullView();
+            alert("Order placed successfully!");
+        }
+
+        function loadProfileData() {
+            document.getElementById('editName').value = localStorage.getItem('userName') || "Valued Client";
+            document.getElementById('editEmail').value = localStorage.getItem('userEmail') || "client@gmail.com";
+        }
+
+        function updateHeaderProfilePic() {
+            const savedAvatar = localStorage.getItem('userAvatar');
+            if (savedAvatar) {
+                document.getElementById('headerProfileImg').src = savedAvatar;
+                document.getElementById('headerProfileImg').style.display = 'block';
+                document.getElementById('headerProfileSvg').style.display = 'none';
+            }
+        }
+
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem('userAvatar', e.target.result);
+                    document.getElementById('profileAvatarImg').src = e.target.result;
+                    document.getElementById('profileAvatarImg').style.display = 'block';
+                    updateHeaderProfilePic();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProfileDetails() {
+            localStorage.setItem('userName', document.getElementById('editName').value);
+            closeProfile();
+        }
+
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.item-card').forEach(card => {
+                const title = card.querySelector('.item-title').textContent.toLowerCase();
+                const desc = card.querySelector('.item-description').textContent.toLowerCase();
+                card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' : 'none';
+            });
+        }
+
+        function openLogin(showWarning = false) {
+            const warningEl = document.getElementById('loginWarningText');
+            if (warningEl) warningEl.style.display = showWarning ? 'block' : 'none';
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function openProfile() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') openLogin(false);
+            else {
+                loadProfileData();
+                document.getElementById('profileModal').style.display = 'flex';
+            }
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function onSuccessfulLogin() {
+            localStorage.setItem('isLoggedIn', 'true');
+            document.getElementById('loginHeaderBtn').style.display = 'none';
+            document.getElementById('profileBorderBtn').style.display = 'flex';
+            updateHeaderProfilePic();
+            updateReviewAccessUI();
+        }
+
+        function handleGoogleCredentialResponse(response) {
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            localStorage.setItem('userName', payload.name);
+            localStorage.setItem('userEmail', payload.email);
+            if (payload.picture) localStorage.setItem('userAvatar', payload.picture);
+            closeLogin();
+            onSuccessfulLogin();
+            loadProfileData();
+            loadGeneralReviews();
+        }
+
+        function handleLogout() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideNav').classList.toggle('open');
+            document.getElementById('navOverlay').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
