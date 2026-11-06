@@ -23,11 +23,12 @@ emailjs.init("bRG9LrHd7A--V5wxG");
 <style>
 * {
 box-sizing: border-box;
+-webkit-tap-highlight-color: transparent; /* मोबाइल पर क्लिक/टैप करने पर आने वाले नीले इफ़ेक्ट को हटाने के लिए */
 }
 
 body {
 margin: 0;
-background-color: #ffffff;
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
 font-family: Arial, sans-serif;
 overflow-x: hidden;
 padding-top: 140px; /* Header ki height ke barabar padding taaki content chup na ho */
@@ -120,6 +121,8 @@ animation: glowingBorder 4s linear infinite;
 
 .header-btn:hover {
 box-shadow: 0 0 20px rgba(224, 159, 62, 0.9);
+transform: scale(0.90);
+transition: transform 0.2s ease;
 }
 
 .border-home-btn {
@@ -147,7 +150,7 @@ top: 0;
 left: -280px;
 width: 280px;
 height: 100%;
-background-color: #2B1B17;
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
 color: #FFFFFF;
 z-index: 10000;
 box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
@@ -171,13 +174,13 @@ border-bottom: none;
 
 .side-nav-header h3 {
 margin: 0;
-color: #E09F3E;
+color: #000000;
 font-size: 18px;
 }
 
 .close-side-btn {
 font-size: 28px;
-color: #FFFFFF;
+color: #000000;
 cursor: pointer;
 line-height: 1;
 }
@@ -195,16 +198,20 @@ display: flex;
 align-items: center;
 gap: 12px;
 padding: 15px 20px;
-color: #FFFFFF;
+color: #000000;
 text-decoration: none;
 font-size: 15px;
 border-bottom: none;
 transition: background-color 0.2s ease, color 0.2s ease;
+} 
+
+.side-nav-links li a svg {
+fill: #000000;
 }
 
 .side-nav-links li a:hover {
 background-color: #E09F3E;
-color: #2B1B17;
+color: #FFFFFF;
 font-weight: bold;
 }
 
@@ -261,7 +268,7 @@ padding: 2px;
 .border-right-actions {
 position: absolute;
 bottom: -45px;
-right: 120px;
+right: 70px;
 display: flex;
 align-items: center;
 gap: 15px;
@@ -315,13 +322,14 @@ display: block;
 position: relative;
 width: 100%;
 margin: 0 auto;
-height: 1000px;
-margin-bottom: none;
+height: 800px;
+margin-bottom: 0;
 overflow: hidden;
 border-top: none;
 border-bottom: none;
 box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 background: #2B1B17;
+font-size: 0;
 }
 
 .slide {
@@ -335,6 +343,7 @@ position: relative;
 width: 100%;
 height: 100%;
 object-fit: cover;
+display: block;
 }
 
 .slide-caption {
@@ -359,7 +368,8 @@ color: #FFFFFF;
 }
 
 .slide-caption p {
-font-size: 14px;
+font-size: 20px;
+font-family: 'Dancing Script', cursive;
 margin: 0;
 color: #FFFACD;
 }
@@ -392,11 +402,13 @@ transition: box-shadow 0.2s ease;
 }
 
 .explore-btn:hover {
-box-shadow: 0 0 20px rgba(224, 159, 62, 0.9);
+box-shadow: 0 0 20px rgba(224, 159, 62, 1.0);
+transform: translateX(-50%)scale(1.05);
+transition: transform 0.2s ease;
 }
 
 .content-container {
-padding: 20px;
+padding: 0;
 display: flex;
 justify-content: center;
 flex-wrap: wrap;
@@ -404,78 +416,36 @@ width: 100%;
 margin: 0;
 }
 
-.item-card {
+/* --- होमपेज वाले पुराने बड़े कार्ड्स के लिए --- */
+.home-item-card {
 background-color: #FFFFFF;
-flex: 1 1 20%;
-min-width: 250px;
-padding: 20px;
-border: 1px solid #E09F3E;
-margin: 0;
+flex: 1 1 33.333%;
+min-width: 280px;
+padding: 0px;
+border: 1px solid #000000;
+margin: 0px;
 text-align: center;
 position: relative;
 cursor: pointer;
-transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
 }
 
-.item-card:hover {
-transform: translateY(-8px);
-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-z-index: 5;
-}
-
-.item-image-container {
+.home-image-container {
 width: 100%;
-height: 150px;
+height: 280px; 
 background-color: #F8F9FA;
-border-radius: 8px;
 overflow: hidden;
 display: flex;
 align-items: center;
 justify-content: center;
-margin-bottom: 15px;
+margin-bottom: 0;
+font-size: 0;
 }
 
-.item-image-container img {
+.home-image-container img {
 width: 100%;
 height: 100%;
-object-fit: contain;
-border-radius: 6px;
-}
-
-.item-title {
-color: #2B1B17;
-font-size: 17px;
-margin: 8px 0;
-}
-
-.item-description {
-color: #666666;
-font-size: 13px;
-line-height: 1.4;
-margin-bottom: 15px;
-}
-
-.button-group {
-display: flex;
-gap: 8px;
-justify-content: center;
-}
-
-.item-btn {
-padding: 8px 16px;
-background-color: #E09F3E;
-color: #2B1B17;
-border: none;
-border-radius: 5px;
-font-weight: bold;
-cursor: pointer;
-font-size: 13px;
-transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.item-btn:hover {
-background-color: #2B1B17;
-color: #FFFFFF;
+object-fit: cover;
+display: block;
 }
 
 .cart-btn {
@@ -543,6 +513,7 @@ border: 1px solid #ddd;
 width: 100%;
 height: 100%;
 object-fit: cover;
+display: block;
 }
 
 .product-detail-right {
@@ -581,10 +552,11 @@ object-fit: cover;
 background: #F8F9FA;
 border: 1px solid #ddd;
 border-radius: 6px;
+display: block;
 }
 
 .site-footer {
-background: linear-gradient(135deg, #2B1B17 100%);
+background: linear-gradient(130deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
 border-top: none;
 color: #FFFFFF;
 padding: 40px 20px 20px 20px;
@@ -600,7 +572,7 @@ justify-content: space-around;
 gap: 30px;
 text-align: left;
 padding-bottom: 30px;
-border-bottom: 1px solid rgba(224, 159, 62, 0.3);
+border-bottom: 1px solid black;
 }
 
 .footer-section {
@@ -609,14 +581,14 @@ min-width: 250px;
 }
 
 .footer-section h3 {
-color: #E09F3E;
+color: #000000;
 font-size: 16px;
 margin-bottom: 15px;
 }
 
 .footer-section p, .footer-section ul {
 font-size: 13px;
-color: #CCCCCC;
+color: #000000;
 line-height: 1.6;
 margin: 0;
 padding: 0;
@@ -628,19 +600,19 @@ margin-bottom: 8px;
 }
 
 .footer-section ul li a {
-color: #CCCCCC;
+color: #000000;
 text-decoration: none;
 transition: color 0.2s ease;
 }
 
 .footer-section ul li a:hover {
-color: #E09F3E;
+color: #000000;
 }
 
 .footer-bottom {
 margin-top: 20px;
 font-size: 13px;
-color: #AAAAAA;
+color: #000000;
 }
 
 .modal-overlay {
@@ -706,6 +678,7 @@ justify-content: center;
 width: 100%;
 height: 100%;
 object-fit: cover;
+display: block;
 }
 
 .profile-avatar-container input[type="file"] {
@@ -773,91 +746,198 @@ cursor: pointer;
 margin-top: 8px;
 }
 
-/* Responsive Media Queries for Mobile & Tablets */
-@media screen and (max-width: 768px) {
-  body {
-    padding-top: 110px;
-  }
+/* ===== FIXED PRODUCT GRID: 4 columns on desktop, 2 on mobile ===== */
+#productsSection #mainContentArea {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 25px 20px;
+    align-items: stretch;
+}
 
-  .header-gradient {
-    height: 110px;
-    padding: 0 10px;
-  }
+#productsSection #mainContentArea > .item-card {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    flex: none;
+    padding: 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  .logo-icon {
-    width: 45px;
-    height: 45px;
-  }
+#productsSection #mainContentArea > .item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
 
-  .company-title {
+#productsSection .item-image-container {
+    width: 100%;
+    height: 210px;
+    background-color: #F8F9FA;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 0;
+}
+
+#productsSection .item-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+#productsSection .item-title {
     font-size: 14px;
-  }
+    font-weight: bold;
+    color: #2B1B17;
+    margin: 8px 0 6px 0;
+    line-height: 1.3;
+}
 
-  .company-tagline {
-    font-size: 11px;
-  }
-
-  .header-btn {
-    right: 20px;
-    top: 18px;
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-
-  .border-search-container {
-    bottom: -32px;
-    padding: 2px 6px;
-  }
-
-  .border-search-input {
-    width: 110px;
-    font-size: 11px;
-  }
-
-  .border-right-actions {
-    bottom: -36px;
-    right: 15px;
-    gap: 8px;
-  }
-
-  .border-cart-btn, .border-profile-btn {
-    width: 30px;
-    height: 30px;
-  }
-
-  .slideshow-container {
-    height: 420px !important;
-  }
-
-  .slide-caption {
-    top: 50px;
-    width: 90%;
-    padding: 10px;
-  }
-
-  .slide-caption h1 {
-    font-size: 18px;
-  }
-
-  .slide-caption p {
+#productsSection .item-description {
     font-size: 12px;
-  }
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
-  .explore-btn {
-    bottom: 40px;
-    padding: 8px 20px;
-    font-size: 13px;
-  }
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 110px;
+    }
 
-  .item-card {
-    flex: 1 1 100% !important;
-    min-width: 100% !important;
-  }
+    .header-gradient {
+        height: 110px;
+        padding: 0 10px;
+    }
 
-  .product-detail-wrapper {
-    flex-direction: column;
-    gap: 15px;
-  }
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .company-title {
+        font-size: 14px;
+    }
+
+    .company-tagline {
+        font-size: 11px;
+    }
+
+    .header-btn {
+        right: 20px;
+        top: 18px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .border-search-container {
+        bottom: -32px;
+        left: 160px; 
+        padding: 2px 6px;
+    }
+
+    .border-search-input {
+        width: 110px;
+        font-size: 11px;
+    }
+
+    .border-right-actions {
+        bottom: -36px;
+        right: 60px;
+        gap: 8px;
+    }
+
+    .border-cart-btn, .border-profile-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .slideshow-container {
+        height: 420px !important;
+    }
+
+    .slide-caption {
+        top: 50px;
+        width: 90%;
+        padding: 10px;
+    }
+
+    .slide-caption h1 {
+        font-size: 18px;
+    }
+
+    .slide-caption p {
+        font-size: 12px;
+    }
+
+    .explore-btn {
+        bottom: 40px;
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+
+    #productsSection #mainContentArea {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px 8px;
+    }
+
+    #productsSection #mainContentArea > .item-card {
+        min-width: 0;
+        padding: 8px;
+    }
+
+    #productsSection .item-image-container {
+        height: 110px;
+        margin-bottom: 8px;
+    }
+
+    #productsSection .item-title {
+        font-size: 10px;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    #productsSection .item-description {
+        font-size: 8px;
+        line-height: 1.35;
+    }
+
+    .product-detail-wrapper {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #productsSection #mainContentArea {
+        gap: 7px;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    #productsSection .item-image-container {
+        height: 100px;
+    }
 }
 </style>
 </head>
@@ -923,7 +1003,7 @@ margin-top: 8px;
 <section id="homeSection" class="page-section active">
 <div class="slideshow-container">
 <div class="slide fade">
-<img src="https://i.ibb.co/21N17gGY/1-SET-converted.jpg" alt="1SET converted" border="0">
+<img src="https://i.ibb.co/XZpy80FY/95b4d9a4bd3c317480db65ea7a515cfe.jpg" alt="95b4d9a4bd3c317480db65ea7a515cfe" border="0">
 <div class="slide-caption">
 <h1>Welcome to Solan Bamboo Furniture</h1>
 <p>Discover sustainable, handcrafted, and elegant bamboo living solutions designed for ultimate comfort and durability.</p>
@@ -931,7 +1011,7 @@ margin-top: 8px;
 <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
 </div>
 <div class="slide fade">
-<img src="https://i.ibb.co/nswZpgHK/2-SET-converted.jpg" alt="2SET converted" border="0">
+<img src="https://i.ibb.co/wFSQPtKj/muoemlwsdyxkfrvkr5es.jpg" alt="muoemlwsdyxkfrvkr5es" border="0">
 <div class="slide-caption">
 <h1>Eco-Friendly Craftsmanship</h1>
 <p>Experience the finest natural materials shaped by skilled traditional artisans.</p>
@@ -947,7 +1027,7 @@ margin-top: 8px;
 <button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
 </div>
 <div class="slide fade">
-<img src="https://i.ibb.co/rRmdT12M/4-SET-converted.jpg" alt="4SET converted" border="0">
+<img src="https://i.ibb.co/rKQYFWBm/uyvt82kr3hz51xddnfkn.jpg" alt="uyvt82kr3hz51xddnfkn" border="0">
 <div class="slide-caption">
 <h1>Natural Bamboo Elegance</h1>
 <p>Add a touch of nature and class to your living spaces.</p>
@@ -956,43 +1036,26 @@ margin-top: 8px;
 </div>
 </div>
 
-<!-- 6-Boxes Section -->
-<div class="content-container" style="background-color: #fcf8f2; padding: 40px 20px;">
-  <div style="width: 100%; text-align: center; margin-bottom: 25px;">
-    <h2 style="color: #2B1B17; font-family: 'Oswald', sans-serif; font-size: 24px; letter-spacing: 1px;">FEATURED COLLECTION</h2>
-    <p style="color: #666; font-size: 14px;">Explore our curated selection</p>
-  </div>
-  
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; width: 100%; max-width: 1200px; margin: 0 auto;">
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 1</h3>
-      <p class="item-description">Description for featured item 1 goes here.</p>
+<!-- 6-Boxes Section (होमपेज वाले पुराने बड़े कार्ड्स) -->
+<div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
+  <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
+    <div class="home-item-card">       
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 2</h3>
-      <p class="item-description">Description for featured item 2 goes here.</p>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 3</h3>
-      <p class="item-description">Description for featured item 3 goes here.</p>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 4</h3>
-      <p class="item-description">Description for featured item 4 goes here.</p>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
     </div>
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 5</h3>
-      <p class="item-description">Description for featured item 5 goes here.</p>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
-    <div class="item-card" style="flex: 1 1 calc(33.333% - 20px); min-width: 280px; background: #fff; border-radius: 8px;">
-      <div class="item-image-container" style="height: 200px; background: #eee;"></div>
-      <h3 class="item-title">Featured Item 6</h3>
-      <p class="item-description">Description for featured item 6 goes here.</p>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
     </div>
   </div>
 </div>
@@ -1116,8 +1179,6 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
-
-
 </main>
 </section>
 
@@ -1301,6 +1362,7 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
 function goBack() {
 document.getElementById('fullProductSection').style.display = 'none';
 if (previousView === 'cartFullSection') {
+openCartFullType(); // fallback or openCartFullView
 openCartFullView();
 } else {
 showSection(previousView);
