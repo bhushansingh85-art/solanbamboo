@@ -23,7 +23,7 @@ emailjs.init("bRG9LrHd7A--V5wxG");
 <style>
 * {
 box-sizing: border-box;
--webkit-tap-highlight-color: transparent; /* मोबाइल पर क्लिक/टैप करने पर आने वाले नीले इफ़ेक्ट को हटाने के लिए */
+-webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -31,10 +31,9 @@ margin: 0;
 background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
 font-family: Arial, sans-serif;
 overflow-x: hidden;
-padding-top: 140px; /* Header ki height ke barabar padding taaki content chup na ho */
+padding-top: 140px;
 }
 
-/* Header Gradient Background (Sticky at Top) */
 .header-gradient {
 width: 100%;
 height: 140px;
@@ -84,7 +83,6 @@ font-size: 16px;
 margin-top: 2px;
 }
 
-/* Updated Login Button with Lighting / Glowing Border Animation */
 .header-btn {
 position: absolute;
 right: 65px;
@@ -416,7 +414,6 @@ width: 100%;
 margin: 0;
 }
 
-/* --- होमपेज वाले पुराने बड़े कार्ड्स के लिए --- */
 .home-item-card {
 background-color: #FFFFFF;
 flex: 1 1 33.333%;
@@ -530,34 +527,9 @@ color: #D9534F;
 margin: 10px 0 15px 0;
 }
 
-.cart-full-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 15px 0;
-border-bottom: 1px solid #eee;
-}
-
-.cart-full-info {
-display: flex;
-align-items: center;
-gap: 15px;
-cursor: pointer;
-}
-
-.cart-full-img {
-width: 60px;
-height: 60px;
-object-fit: cover;
-background: #F8F9FA;
-border: 1px solid #ddd;
-border-radius: 6px;
-display: block;
-}
-
 .site-footer {
-background: linear-gradient(130deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
-border-top: none;
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+border-top: 3px solid black;
 color: #FFFFFF;
 padding: 40px 20px 20px 20px;
 text-align: center;
@@ -593,20 +565,6 @@ line-height: 1.6;
 margin: 0;
 padding: 0;
 list-style: none;
-}
-
-.footer-section ul li {
-margin-bottom: 8px;
-}
-
-.footer-section ul li a {
-color: #000000;
-text-decoration: none;
-transition: color 0.2s ease;
-}
-
-.footer-section ul li a:hover {
-color: #000000;
 }
 
 .footer-bottom {
@@ -746,7 +704,6 @@ cursor: pointer;
 margin-top: 8px;
 }
 
-/* ===== FIXED PRODUCT GRID: 4 columns on desktop, 2 on mobile ===== */
 #productsSection #mainContentArea {
     display: grid !important;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -862,7 +819,7 @@ margin-top: 8px;
 
     .border-right-actions {
         bottom: -36px;
-        right: 60px;
+        right: 43px;
         gap: 8px;
     }
 
@@ -927,25 +884,12 @@ margin-top: 8px;
         gap: 15px;
     }
 }
-
-@media screen and (max-width: 360px) {
-    #productsSection #mainContentArea {
-        gap: 7px;
-        padding-left: 6px;
-        padding-right: 6px;
-    }
-
-    #productsSection .item-image-container {
-        height: 100px;
-    }
-}
 </style>
 </head>
 <body>
 
 <header class="header-gradient">
-<!-- LEFT SIDE: Unique Bamboo/Chair Logo Icon -->
-<div class="brand-container" onclick="showSection('aboutSection')">
+<div class="brand-container" onclick="showSection('homeSection', '/')">
 <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <path d="M25 65 L25 35 Q25 25 50 25 Q75 25 75 35 L75 65" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
 <line x1="15" y1="65" x2="85" y2="65" stroke="#E09F3E" stroke-width="6" stroke-linecap="round"/>
@@ -958,17 +902,14 @@ margin-top: 8px;
 </div>
 </div>
 
-<!-- RIGHT SIDE: Login Button with Lighting Border Effect -->
 <button id="loginHeaderBtn" class="header-btn" onclick="openLogin(false)">LOGIN</button>
 
-<!-- HAMBURGER MENU BUTTON -->
 <button class="border-home-btn" onclick="toggleMenu()" aria-label="Open Menu">
 <svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
 </svg>
 </button>
 
-<!-- BOTTOM BORDER: Search Bar -->
 <div class="border-search-container">
 <input type="text" id="searchInput" placeholder="Search..." class="border-search-input" onkeyup="filterCards()">
 <button class="border-search-btn" onclick="filterCards()">
@@ -978,9 +919,7 @@ margin-top: 8px;
 </button>
 </div>
 
-<!-- BOTTOM BORDER: Cart & Profile Actions -->
 <div class="border-right-actions">
-<!-- Cart Button Icon -->
 <button class="border-cart-btn" onclick="openCartFullView()" title="Shopping Cart">
 <svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
 <path d="M11 9H9V6H6V4h3V1h2v3h3v2h-3v3zm-4 9c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.75l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-3.58 6.49H8.42L7.3 8.41 5.75 5.5 4.88 4H1v2h2.21l3.56 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/>
@@ -988,7 +927,6 @@ margin-top: 8px;
 <span id="cartBadge" class="cart-badge">0</span>
 </button>
 
-<!-- Unique Profile Icon in Header -->
 <button id="profileBorderBtn" class="border-profile-btn" onclick="openProfile()" title="User Profile" style="display:none;">
 <img id="headerProfileImg" src="" alt="Profile" style="display:none; width:100%; height:100%; object-fit:cover;">
 <svg id="headerProfileSvg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1003,55 +941,45 @@ margin-top: 8px;
 <section id="homeSection" class="page-section active">
 <div class="slideshow-container">
 <div class="slide fade">
-<img src="https://i.ibb.co/XZpy80FY/95b4d9a4bd3c317480db65ea7a515cfe.jpg" alt="95b4d9a4bd3c317480db65ea7a515cfe" border="0">
+<img src="https://i.ibb.co/XZpy80FY/95b4d9a4bd3c317480db65ea7a515cfe.jpg" alt="Slide 1">
 <div class="slide-caption">
 <h1>Welcome to Solan Bamboo Furniture</h1>
 <p>Discover sustainable, handcrafted, and elegant bamboo living solutions designed for ultimate comfort and durability.</p>
 </div>
-<button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 <div class="slide fade">
-<img src="https://i.ibb.co/wFSQPtKj/muoemlwsdyxkfrvkr5es.jpg" alt="muoemlwsdyxkfrvkr5es" border="0">
+<img src="https://i.ibb.co/wFSQPtKj/muoemlwsdyxkfrvkr5es.jpg" alt="Slide 2">
 <div class="slide-caption">
 <h1>Eco-Friendly Craftsmanship</h1>
 <p>Experience the finest natural materials shaped by skilled traditional artisans.</p>
 </div>
-<button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 <div class="slide fade">
-<img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="3SET converted" border="0">
+<img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="Slide 3">
 <div class="slide-caption">
 <h1>Durable & Elegant Living</h1>
 <p>Bring timeless style and comfort to your home and outdoor spaces.</p>
 </div>
-<button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 <div class="slide fade">
-<img src="https://i.ibb.co/rKQYFWBm/uyvt82kr3hz51xddnfkn.jpg" alt="uyvt82kr3hz51xddnfkn" border="0">
+<img src="https://i.ibb.co/rKQYFWBm/uyvt82kr3hz51xddnfkn.jpg" alt="Slide 4">
 <div class="slide-caption">
 <h1>Natural Bamboo Elegance</h1>
 <p>Add a touch of nature and class to your living spaces.</p>
 </div>
-<button class="explore-btn" onclick="showSection('productsSection')">Explore Products</button>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 </div>
 
-<!-- 6-Boxes Section (होमपेज वाले पुराने बड़े कार्ड्स) -->
 <div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
   <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
     <div class="home-item-card">       
       <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
-    </div>
-    <div class="home-item-card">
+    </div>       
+     <div class="home-item-card">
       <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
     <div class="home-item-card">
@@ -1064,38 +992,11 @@ margin-top: 8px;
 <!-- ABOUT SECTION -->
 <section id="aboutSection" class="page-section">
 <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-<a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
 <h2 style="color: #2B1B17; margin-top: 10px; font-size: 26px;">About Solan Bamboo Furniture</h2>
 <p style="color: #444; line-height: 1.8; font-size: 15px;">
 Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination for sustainable, handcrafted, and durable bamboo living solutions. Located in the pristine hills of Himachal Pradesh (Village Dharja, Oachghat, Solan), we take pride in blending traditional artisan craftsmanship with modern, eco-friendly designs.
 </p>
-</div>
-</section>
-
-<!-- CUSTOMER REVIEWS SECTION -->
-<section id="reviewsSection" class="page-section">
-<div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-<a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
-<h2 style="color: #2B1B17; margin-top: 10px; font-size: 26px;">Customer Reviews</h2>
-<div id="reviewsListContainer" style="margin-bottom: 30px;"></div>
-<div id="generalReviewFormContainer" style="border-top: 2px solid #eee; padding-top: 20px; display: none;">
-<h3 style="color: #2B1B17; margin-bottom: 15px;">Leave Your Review</h3>
-<form id="reviewForm" onsubmit="submitReview(event)">
-<div class="profile-form-group" style="margin-bottom: 15px;">
-<label for="reviewRating">Rating</label>
-<select id="reviewRating" class="profile-input" required>
-<option value="⭐⭐⭐⭐⭐ (5/5)">⭐⭐⭐⭐⭐ - 5 Stars</option>
-<option value="⭐⭐⭐⭐ (4/5)">⭐⭐⭐⭐ - 4 Stars</option>
-<option value="⭐⭐⭐ (3/5)">⭐⭐⭐ - 3 Stars</option>
-</select>
-</div>
-<div class="profile-form-group" style="margin-bottom: 15px;">
-<label for="reviewComment">Your Review</label>
-<textarea id="reviewComment" class="profile-input" rows="4" required placeholder="Write your review here..."></textarea>
-</div>
-<button type="submit" class="save-profile-btn" style="background-color: #E09F3E; color: #2B1B17;">Submit Review</button>
-</form>
-</div>
 </div>
 </section>
 
@@ -1144,48 +1045,13 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
-<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
-<div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
-</div>
-<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
-<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
-</div>
-<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
-<div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
-</div>
-<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
-<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
-</div>
-<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
-<div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
-</div>
-<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
-<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
-</div>
-<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
-<div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
-</div>
-<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
-<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
-</div>
-<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
-<div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
-</div>
-<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
-<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
-</div>
 </main>
 </section>
 
 <!-- 3. CUSTOMER CARE SECTION -->
 <section id="customerCareSection" class="page-section">
 <div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-<a class="back-link" onclick="showSection('homeSection')">&larr; BACK TO HOME</a>
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
 <h2 style="color: #2B1B17; margin-top: 0; font-size: 24px;">Customer Care & Support</h2>
 <p style="color: #666; line-height: 1.6; font-size: 15px;">We are here to assist you with any questions regarding your orders.</p>
 </div>
@@ -1246,20 +1112,20 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 <span class="close-side-btn" onclick="toggleMenu()">&times;</span>
 </div>
 <ul class="side-nav-links">
-<li><a href="#" onclick="toggleMenu(); showSection('homeSection');">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('homeSection', '/');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"/></svg>
 Home</a></li>
-<li><a href="#" onclick="toggleMenu(); showSection('productsSection');">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('productsSection', '/products');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
 Products</a></li>
-<li><a href="#" onclick="toggleMenu(); openLogin(false);">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); openLogin(false);">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
 Login</a></li>
-<li><a href="#" onclick="toggleMenu(); openProfile();">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile();">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
 My Profile</a></li>
-<li><a href="#" onclick="toggleMenu(); showSection('customerCareSection');">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('customerCareSection', '/customer-care');">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1 z"/></svg>
 Customer Care</a></li>
 </ul>
 </div>
@@ -1316,7 +1182,31 @@ loadProfileData();
 updateCartUI();
 updateHeaderProfilePic();
 showSlides();
+handleInitialRoute();
 };
+
+window.onpopstate = function(event) {
+handleInitialRoute();
+};
+
+function handleInitialRoute() {
+const path = window.location.pathname;
+if (path.includes('/products')) {
+showSection('productsSection', '/products', false);
+} else if (path.includes('/my-profile')) {
+showSection('homeSection', '/', false);
+openProfile();
+} else if (path.includes('/customer-care')) {
+showSection('customerCareSection', '/customer-care', false);
+} else if (path.includes('/login')) {
+showSection('homeSection', '/', false);
+openLogin(false);
+} else if (path.includes('/cart')) {
+openCartFullView(false);
+} else {
+showSection('homeSection', '/', false);
+}
+}
 
 function showSlides() {
 let slides = document.getElementsByClassName("slide");
@@ -1331,12 +1221,16 @@ setTimeout(showSlides, 3500);
 }
 }
 
-function showSection(sectionId) {
+function showSection(sectionId, urlPath, pushHistory = true) {
 document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 document.getElementById('fullProductSection').style.display = 'none';
 document.getElementById('cartFullSection').style.display = 'none';
 document.getElementById(sectionId).classList.add('active');
 previousView = sectionId;
+
+if (pushHistory) {
+history.pushState({section: sectionId}, "", urlPath);
+}
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1356,16 +1250,17 @@ document.getElementById('productPriceTag').textContent = price;
 document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 document.getElementById('cartFullSection').style.display = 'none';
 document.getElementById('fullProductSection').style.display = 'block';
+
+history.pushState({product: title}, "", "/product-detail");
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function goBack() {
 document.getElementById('fullProductSection').style.display = 'none';
 if (previousView === 'cartFullSection') {
-openCartFullType(); // fallback or openCartFullView
 openCartFullView();
 } else {
-showSection(previousView);
+showSection(previousView, previousView === 'productsSection' ? '/products' : '/');
 window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 }
 }
@@ -1399,7 +1294,7 @@ function updateCartUI() {
 document.getElementById('cartBadge').textContent = cartItems.length;
 }
 
-function openCartFullView() {
+function openCartFullView(pushHistory = true) {
 if (localStorage.getItem('isLoggedIn') !== 'true') {
 openLogin(true);
 return;
@@ -1408,12 +1303,16 @@ document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('
 document.getElementById('fullProductSection').style.display = 'none';
 document.getElementById('cartFullSection').style.display = 'block';
 previousView = "cartFullSection";
+
+if (pushHistory) {
+history.pushState({cart: true}, "", "/cart");
+}
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function closeCartFullView() {
 document.getElementById('cartFullSection').style.display = 'none';
-showSection('homeSection');
+showSection('homeSection', '/');
 }
 
 function checkoutCart() {
@@ -1468,22 +1367,27 @@ card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' :
 
 function openLogin(showWarning = false) {
 document.getElementById('loginModal').style.display = 'flex';
+history.pushState({login: true}, "", "/login");
 }
 
 function closeLogin() {
 document.getElementById('loginModal').style.display = 'none';
+history.pushState({}, "", window.location.pathname.replace('/login', '') || '/');
 }
 
 function openProfile() {
-if (localStorage.getItem('isLoggedIn') !== 'true') openLogin(false);
-else {
+if (localStorage.getItem('isLoggedIn') !== 'true') {
+openLogin(false);
+} else {
 loadProfileData();
 document.getElementById('profileModal').style.display = 'flex';
+history.pushState({profile: true}, "", "/my-profile");
 }
 }
 
 function closeProfile() {
 document.getElementById('profileModal').style.display = 'none';
+history.pushState({}, "", window.location.pathname.replace('/my-profile', '') || '/');
 }
 
 function onSuccessfulLogin() {
@@ -1505,7 +1409,7 @@ loadProfileData();
 
 function handleLogout() {
 localStorage.clear();
-location.reload();
+location.href = '/';
 }
 
 function toggleMenu() {
