@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Solan Bamboo Furniture</title>
-<link rel="icon" type="image/png" href="watermarked_img_2947117657766956068.png">    
 <!-- Importing Google Font for the Cursive Tagline -->
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <!-- Importing Oswald Font for Company Title -->
@@ -30,7 +29,9 @@ box-sizing: border-box;
 body {
 margin: 0;
 background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+background-attachment: fixed;
 font-family: Arial, sans-serif;
+height: 100vh;
 overflow-x: hidden;
 padding-top: 140px;
 }
@@ -468,19 +469,16 @@ position: relative;
 .back-link {
 display: inline-block;
 margin-bottom: 20px;
-position: sticky;
-top: 20px;
-color: #2B1B17;
+position: absolute;
+top: 10px;
+left: 10px;
+color: #FFFFFF;
 font-weight: bold;
 text-decoration: none;
 cursor: pointer;
-background: #E09F3E;
+background: #000000;
 padding: 6px 14px;
 border-radius: 4px;
-}
-.back-link:hover {
-background: #2B1B17;
-color: #FFF;
 }
 
 .product-detail-wrapper {
@@ -545,7 +543,6 @@ justify-content: space-around;
 gap: 30px;
 text-align: left;
 padding-bottom: 30px;
-border-bottom: 1px solid black;
 }
 
 .footer-section {
@@ -703,6 +700,63 @@ font-weight: bold;
 font-size: 14px;
 cursor: pointer;
 margin-top: 8px;
+}
+
+/* 3D Flip Card Animation Styles */
+.auth-container {
+    perspective: 1000px;
+    max-width: 450px;
+    margin: 40px auto;
+    position: relative;
+}
+
+.unique-login-card {
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #fcf8f2 100%);
+    padding: 35px;
+    border-radius: 16px;
+    border: 2px solid #000000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(224, 159, 62, 0.3);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(5px);
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.4s ease;
+    backface-visibility: hidden;
+}
+
+/* Welcome Floating Banner Animation */
+@keyframes slideDownBounce {
+    0% { transform: translateY(-50px); opacity: 0; }
+    60% { transform: translateY(10px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.welcome-banner {
+    background: linear-gradient(45deg, #2B1B17, #E09F3E);
+    color: #FFFACD;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: slideDownBounce 0.8s ease forwards;
+    border-bottom: 2px solid #000;
+}
+
+/* Confirm Button Hover Effect */
+.confirm-btn {
+background-color: #000000;
+color: #FFFFFF;
+transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.confirm-btn:hover {
+background-color: #E09F3E !important;
+color: #2B1B17 !important;
+transform: scale(0.98);
+box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
 }
 
 #productsSection #mainContentArea {
@@ -903,15 +957,17 @@ margin-top: 8px;
 </div>
 </div>
 
-<button id="loginHeaderBtn" class="header-btn" onclick="openLogin(false)">LOGIN</button>
+<button id="loginHeaderBtn" class="header-btn" onclick="showSection('loginSection', '/login')">LOGIN</button>
 
-<button class="border-home-btn" onclick="toggleMenu()" aria-label="Open Menu">
+<!-- Hamburger Menu Button -->
+<button id="hamburgerBtn" class="border-home-btn" onclick="toggleMenu()" aria-label="Open Menu">
 <svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
 </svg>
 </button>
 
-<div class="border-search-container">
+<!-- Search Bar Container -->
+<div id="searchContainerBar" class="border-search-container">
 <input type="text" id="searchInput" placeholder="Search..." class="border-search-input" onkeyup="filterCards()">
 <button class="border-search-btn" onclick="filterCards()">
 <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF">
@@ -920,7 +976,8 @@ margin-top: 8px;
 </button>
 </div>
 
-<div class="border-right-actions">
+<!-- Cart and Profile Actions -->
+<div id="rightActionsBar" class="border-right-actions">
 <button class="border-cart-btn" onclick="openCartFullView()" title="Shopping Cart">
 <svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
 <path d="M11 9H9V6H6V4h3V1h2v3h3v2h-3v3zm-4 9c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.75l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-3.58 6.49H8.42L7.3 8.41 5.75 5.5 4.88 4H1v2h2.21l3.56 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/>
@@ -940,6 +997,9 @@ margin-top: 8px;
 
 <!-- 1. HOME PAGE SECTION -->
 <section id="homeSection" class="page-section active">
+<!-- Dynamic Welcome Banner -->
+<div id="welcomeBannerContainer"></div>
+
 <div class="slideshow-container">
 <div class="slide fade">
 <img src="https://i.ibb.co/XZpy80FY/95b4d9a4bd3c317480db65ea7a515cfe.jpg" alt="Slide 1">
@@ -1058,6 +1118,71 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 </div>
 </section>
 
+<!-- AUTH CONTAINER WITH FLIP ANIMATION -->
+<div class="auth-container">
+<!-- LOGIN SECTION -->
+<section id="loginSection" class="page-section unique-login-card">
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK</a>
+<h2 class="modal-title" style="margin-bottom: 20px; color: #2B1B17;">Member Login</h2>
+
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Email</label>
+<input type="email" id="loginEmailInput" placeholder="Enter your email" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 15px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Password</label>
+<input type="password" id="loginPasswordInput" placeholder="Enter your password" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+
+<div id="loginErrorMsg" style="color: #D9534F; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: none;"></div>
+
+<button type="button" class="confirm-btn" onclick="handleManualLogin()" style="width: 60%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 12px;">Confirm</button>
+
+<div style="margin: 15px 0; color: #666; font-size: 14px; font-weight: bold;">OR</div>
+
+<div id="g_id_onload"
+data-client_id="1060493423838-3eigbnmes20dtq4lb11n0v4anugo9qgv.apps.googleusercontent.com"
+data-callback="handleGoogleCredentialResponse"
+data-auto_prompt="false">
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 15px;">
+<div class="g_id_signin" data-type="standard" data-size="large" data-width="200"></div>
+</div>
+
+<div style="margin-top: 18px; font-size: 13px; color: #000000;">
+Don't have an account? <a href="javascript:void(0);" style="color: #E09F3E; font-weight: bold; text-decoration: none;" onclick="flipAuthCard('registerSection', '/register')">Create account</a>
+</div>
+</section>
+
+<!-- CREATE ACCOUNT SECTION -->
+<section id="registerSection" class="page-section unique-login-card" style="transform: rotateY(180deg); position: absolute; top: 0; left: 0; width: 100%;">
+<a class="back-link" onclick="flipAuthCard('loginSection', '/login')">&larr; BACK</a>
+<h2 class="modal-title" style="margin-bottom: 20px; color: #2B1B17;">Create Account</h2>
+
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Full Name</label>
+<input type="text" id="regNameInput" placeholder="Enter your name" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Email</label>
+<input type="email" id="regEmailInput" placeholder="Enter your email" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 15px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Password</label>
+<input type="password" id="regPasswordInput" placeholder="Enter your password" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+
+<div id="regErrorMsg" style="color: #D9534F; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: none;"></div>
+
+<button type="button" class="confirm-btn" onclick="handleManualRegister()" style="width: 60%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 12px;">Register</button>
+
+<div style="margin-top: 18px; font-size: 13px; color: #000000;">
+Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; font-weight: bold; text-decoration: none;" onclick="flipAuthCard('loginSection', '/login')">Login</a>
+</div>
+</section>
+</div>
+
 <!-- Simple Full Product View Section -->
 <section id="fullProductSection">
 <div>
@@ -1090,7 +1215,7 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 </section>
 
 <!-- Bottom Footer Section -->
-<footer class="site-footer">
+<footer id="mainFooter" class="site-footer">
 <div class="footer-content">
 <div class="footer-section">
 <h3>Solan Bamboo Furniture</h3>
@@ -1119,11 +1244,11 @@ Home</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('productsSection', '/products');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
 Products</a></li>
-<li><a href="javascript:void(0)" onclick="toggleMenu(); openLogin(false);">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('loginSection', '/login');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
 Login</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile();">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22 z"/></svg>
 My Profile</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('customerCareSection', '/customer-care');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1 z"/></svg>
@@ -1131,20 +1256,6 @@ Customer Care</a></li>
 </ul>
 </div>
 <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
-
-<!-- Login Modal -->
-<div id="loginModal" class="modal-overlay">
-<div class="modal-card">
-<span class="close-btn" onclick="closeLogin()">&times;</span>
-<h2 class="modal-title">Member Login</h2>
-<div id="g_id_onload"
-data-client_id="1060493423838-3eigbnmes20dtq4lb11n0v4anugo9qgv.apps.googleusercontent.com"
-data-callback="handleGoogleCredentialResponse"
-data-auto_prompt="false">
-</div>
-<div class="g_id_signin" data-type="standard" data-size="large" data-width="100%"></div>
-</div>
-</div>
 
 <!-- User Profile Modal -->
 <div id="profileModal" class="modal-overlay">
@@ -1200,8 +1311,9 @@ openProfile();
 } else if (path.includes('/customer-care')) {
 showSection('customerCareSection', '/customer-care', false);
 } else if (path.includes('/login')) {
-showSection('homeSection', '/', false);
-openLogin(false);
+showSection('loginSection', '/login', false);
+} else if (path.includes('/register')) {
+flipAuthCard('registerSection', '/register', false);
 } else if (path.includes('/cart')) {
 openCartFullView(false);
 } else {
@@ -1229,8 +1341,69 @@ document.getElementById('cartFullSection').style.display = 'none';
 document.getElementById(sectionId).classList.add('active');
 previousView = sectionId;
 
+const hamburger = document.getElementById('hamburgerBtn');
+const searchBar = document.getElementById('searchContainerBar');
+const rightActions = document.getElementById('rightActionsBar');
+const loginBtn = document.getElementById('loginHeaderBtn');
+const footer = document.getElementById('mainFooter');
+
+if (sectionId === 'loginSection' || sectionId === 'registerSection') {
+if (hamburger) hamburger.style.display = 'none';
+if (searchBar) searchBar.style.display = 'none';
+if (rightActions) rightActions.style.display = 'none';
+if (loginBtn) loginBtn.style.display = 'none';
+if (footer) footer.style.display = 'none';
+} else {
+if (hamburger) hamburger.style.display = 'flex';
+if (searchBar) searchBar.style.display = 'flex';
+if (rightActions) rightActions.style.display = 'flex';
+if (loginBtn && localStorage.getItem('isLoggedIn') !== 'true') loginBtn.style.display = 'block';
+if (footer) footer.style.display = 'block';
+}
+
 if (pushHistory) {
 history.pushState({section: sectionId}, "", urlPath);
+}
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 3D Flip Animation Function for Login & Register cards
+function flipAuthCard(targetSectionId, urlPath, pushHistory = true) {
+const loginCard = document.getElementById('loginSection');
+const registerCard = document.getElementById('registerSection');
+const hamburger = document.getElementById('hamburgerBtn');
+const searchBar = document.getElementById('searchContainerBar');
+const rightActions = document.getElementById('rightActionsBar');
+const loginBtn = document.getElementById('loginHeaderBtn');
+const footer = document.getElementById('mainFooter');
+
+if (hamburger) hamburger.style.display = 'none';
+if (searchBar) searchBar.style.display = 'none';
+if (rightActions) rightActions.style.display = 'none';
+if (loginBtn) loginBtn.style.display = 'none';
+if (footer) footer.style.display = 'none';
+
+document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+document.getElementById('fullProductSection').style.display = 'none';
+document.getElementById('cartFullSection').style.display = 'none';
+
+// Apply Flip Rotation
+if (targetSectionId === 'registerSection') {
+loginCard.style.transform = 'rotateY(180deg)';
+loginCard.style.opacity = '0';
+registerCard.style.transform = 'rotateY(0deg)';
+registerCard.style.opacity = '1';
+registerCard.classList.add('active');
+} else {
+registerCard.style.transform = 'rotateY(180deg)';
+registerCard.style.opacity = '0';
+loginCard.style.transform = 'rotateY(0deg)';
+loginCard.style.opacity = '1';
+loginCard.classList.add('active');
+}
+
+if (pushHistory) {
+history.pushState({section: targetSectionId}, "", urlPath);
 }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1269,7 +1442,7 @@ window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 function toggleCart(itemName, event) {
 if(event) event.stopPropagation();
 if (localStorage.getItem('isLoggedIn') !== 'true') {
-openLogin(true);
+showSection('loginSection', '/login');
 return;
 }
 const index = cartItems.indexOf(itemName);
@@ -1285,7 +1458,7 @@ if (currentActiveProduct) toggleCart(currentActiveProduct);
 
 function buyNowFromSimpleView() {
 if (localStorage.getItem('isLoggedIn') !== 'true') {
-openLogin(true);
+showSection('loginSection', '/login');
 return;
 }
 goBack();
@@ -1297,7 +1470,7 @@ document.getElementById('cartBadge').textContent = cartItems.length;
 
 function openCartFullView(pushHistory = true) {
 if (localStorage.getItem('isLoggedIn') !== 'true') {
-openLogin(true);
+showSection('loginSection', '/login');
 return;
 }
 document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -1366,19 +1539,9 @@ card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' :
 });
 }
 
-function openLogin(showWarning = false) {
-document.getElementById('loginModal').style.display = 'flex';
-history.pushState({login: true}, "", "/login");
-}
-
-function closeLogin() {
-document.getElementById('loginModal').style.display = 'none';
-history.pushState({}, "", window.location.pathname.replace('/login', '') || '/');
-}
-
 function openProfile() {
 if (localStorage.getItem('isLoggedIn') !== 'true') {
-openLogin(false);
+showSection('loginSection', '/login');
 } else {
 loadProfileData();
 document.getElementById('profileModal').style.display = 'flex';
@@ -1396,6 +1559,62 @@ localStorage.setItem('isLoggedIn', 'true');
 document.getElementById('loginHeaderBtn').style.display = 'none';
 document.getElementById('profileBorderBtn').style.display = 'flex';
 updateHeaderProfilePic();
+showSection('homeSection', '/');
+
+// Display animated Welcome Message on successful login
+const userName = localStorage.getItem('userName') || "Valued Client";
+const bannerContainer = document.getElementById('welcomeBannerContainer');
+bannerContainer.innerHTML = `<div class="welcome-banner">🎉 Welcome back, ${userName}! Enjoy Handcrafted Bamboo Living Solutions.</div>`;
+
+// Automatically fade out welcome banner after 5 seconds
+setTimeout(() => {
+    bannerContainer.innerHTML = '';
+}, 5000);
+}
+
+function handleManualLogin() {
+const emailInput = document.getElementById('loginEmailInput').value.trim();
+const passwordInput = document.getElementById('loginPasswordInput').value.trim();
+const errorMsgElem = document.getElementById('loginErrorMsg');
+
+if (!emailInput || !passwordInput) {
+errorMsgElem.textContent = "Please enter both email and password!";
+errorMsgElem.style.display = 'block';
+return;
+}
+
+const savedEmail = localStorage.getItem('userEmail');
+
+if (savedEmail && savedEmail === emailInput) {
+errorMsgElem.style.display = 'none';
+localStorage.setItem('isLoggedIn', 'true');
+onSuccessfulLogin();
+loadProfileData();
+} else {
+errorMsgElem.textContent = "Account doesn't exist! Please create an account first.";
+errorMsgElem.style.display = 'block';
+}
+}
+
+function handleManualRegister() {
+const nameInput = document.getElementById('regNameInput').value.trim();
+const emailInput = document.getElementById('regEmailInput').value.trim();
+const passwordInput = document.getElementById('regPasswordInput').value.trim();
+const errorMsgElem = document.getElementById('regErrorMsg');
+
+if (!nameInput || !emailInput || !passwordInput) {
+errorMsgElem.textContent = "Please fill in all fields!";
+errorMsgElem.style.display = 'block';
+return;
+}
+
+localStorage.setItem('userName', nameInput);
+localStorage.setItem('userEmail', emailInput);
+localStorage.setItem('userPassword', passwordInput);
+errorMsgElem.style.display = 'none';
+
+alert("Account created successfully! Please login.");
+flipAuthCard('loginSection', '/login');
 }
 
 function handleGoogleCredentialResponse(response) {
@@ -1403,7 +1622,6 @@ const payload = JSON.parse(atob(response.credential.split('.')[1]));
 localStorage.setItem('userName', payload.name);
 localStorage.setItem('userEmail', payload.email);
 if (payload.picture) localStorage.setItem('userAvatar', payload.picture);
-closeLogin();
 onSuccessfulLogin();
 loadProfileData();
 }
