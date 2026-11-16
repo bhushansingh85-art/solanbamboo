@@ -1294,18 +1294,14 @@ let lastScrollPosition = 0;
 let slideIndex = 0;
 
 window.onload = function() {
-if (localStorage.getItem('isLoggedIn') === 'true') {
-onSuccessfulLogin();
-loadProfileData();
-}
-updateCartUI();
-updateHeaderProfilePic();
-showSlides();
-handleInitialRoute();
+  updateCartUI();
+  updateHeaderProfilePic();
+  showSlides();
+  handleInitialRoute();
 };
 
 window.onpopstate = function(event) {
-handleInitialRoute();
+  handleInitialRoute();
 };
 
 function handleInitialRoute() {
@@ -1562,66 +1558,86 @@ history.pushState({}, "", window.location.pathname.replace('/my-profile', '') ||
 }
 
 function onSuccessfulLogin() {
-localStorage.setItem('isLoggedIn', 'true');
-document.getElementById('loginHeaderBtn').style.display = 'none';
-document.getElementById('profileBorderBtn').style.display = 'flex';
-updateHeaderProfilePic();
-showSection('homeSection', '/');
+  document.getElementById('loginHeaderBtn').style.display = 'none';
+  document.getElementById('profileBorderBtn').style.display = 'flex';
 
-// Display animated Welcome Message on successful login
-const userName = localStorage.getItem('userName') || "Valued Client";
-const bannerContainer = document.getElementById('welcomeBannerContainer');
-bannerContainer.innerHTML = `<div class="welcome-banner">🎉 Welcome back, ${userName}! Enjoy Handcrafted Bamboo Living Solutions.</div>`;
-
-// Automatically fade out welcome banner after 5 seconds
-setTimeout(() => {
-    bannerContainer.innerHTML = '';
-}, 5000);
+  updateHeaderProfilePic();
+  showSection('homeSection', '/');
 }
 
-function handleManualLogin() {
-const emailInput = document.getElementById('loginEmailInput').value.trim();
-const passwordInput = document.getElementById('loginPasswordInput').value.trim();
-const errorMsgElem = document.getElementById('loginErrorMsg');
+async function handleManualLogin() {
+  const emailInput = document.getElementById('loginEmailInput').value.trim();
+  const passwordInput = document.getElementById('loginPasswordInput').value;
+  const errorMsgElem = document.getElementById('loginErrorMsg');
 
-if (!emailInput || !passwordInput) {
-errorMsgElem.textContent = "Please enter both email and password!";
-errorMsgElem.style.display = 'block';
-return;
+  if (!emailInput || !passwordInput) {
+    errorMsgElem.textContent = "Please enter both email and password!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
+
+  try {
+    errorMsgElem.style.display = 'none';
+
+    await window.signInWithEmailAndPassword(
+      window.firebaseAuth,
+      emailInput,
+      passwordInput
+    );
+
+  } catch (error) {
+    errorMsgElem.textContent =
+      error.code === "auth/invalid-credential"
+        ? "Incorrect email or password."
+        : "Login failed: " + error.message;
+
+    errorMsgElem.style.display = 'block';
+  }
 }
 
-const savedEmail = localStorage.getItem('userEmail');
+async function handleManualRegister() {
+  const nameInput = document.getElementById('regNameInput').value.trim();
+  const emailInput = document.getElementById('regEmailInput').value.trim();
+  const passwordInput = document.getElementById('regPasswordInput').value;
+  const errorMsgElem = document.getElementById('regErrorMsg');
 
-if (savedEmail && savedEmail === emailInput) {
-errorMsgElem.style.display = 'none';
-localStorage.setItem('isLoggedIn', 'true');
-onSuccessfulLogin();
-loadProfileData();
-} else {
-errorMsgElem.textContent = "Account doesn't exist! Please create an account first.";
-errorMsgElem.style.display = 'block';
-}
-}
+  if (!nameInput || !emailInput || !passwordInput) {
+    errorMsgElem.textContent = "Please fill in all fields!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
 
-function handleManualRegister() {
-const nameInput = document.getElementById('regNameInput').value.trim();
-const emailInput = document.getElementById('regEmailInput').value.trim();
-const passwordInput = document.getElementById('regPasswordInput').value.trim();
-const errorMsgElem = document.getElementById('regErrorMsg');
+  if (passwordInput.length < 6) {
+    errorMsgElem.textContent = "Password must be at least 6 characters!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
 
-if (!nameInput || !emailInput || !passwordInput) {
-errorMsgElem.textContent = "Please fill in all fields!";
-errorMsgElem.style.display = 'block';
-return;
-}
+  try {
+    errorMsgElem.style.display = 'none';
 
-localStorage.setItem('userName', nameInput);
-localStorage.setItem('userEmail', emailInput);
-localStorage.setItem('userPassword', passwordInput);
-errorMsgElem.style.display = 'none';
+    const result = await window.createUserWithEmailAndPassword(
+      window.firebaseAuth,
+      emailInput,
+      passwordInput
+    );
 
-alert("Account created successfully! Please login.");
-flipAuthCard('loginSection', '/login');
+    await window.updateProfile(result.user, {
+      displayName: nameInput
+    });
+
+    alert("Account created successfully!");
+
+  } catch (error) {
+    errorMsgElem.textContent =
+      error.code === "auth/email-already-in-use"
+        ? "This email is already registered."
+        : error.code === "auth/weak-password"
+        ? "Password is too weak."
+        : "Registration failed: " + error.message;
+
+    errorMsgElem.style.display = 'block';
+  }
 }
 
 function handleGoogleCredentialResponse(response) {
@@ -1645,8 +1661,13 @@ document.getElementById('navOverlay').classList.toggle('active');
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+ import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   const firebaseConfig = {
     apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
     authDomain: "solan-bamboo-furniture.firebaseapp.com",
@@ -1658,6 +1679,25 @@ document.getElementById('navOverlay').classList.toggle('active');
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  window.firebaseAuth = auth;
+  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+  window.updateProfile = updateProfile;  
+
+onAuthStateChanged(auth, (user) => {
+  window.currentFirebaseUser = user;
+
+  if (user) {
+    onSuccessfulLogin();
+    loadProfileData();
+  } else {
+    localStorage.removeItem('isLoggedIn');
+
+    document.getElementById('loginHeaderBtn').style.display = 'flex';
+    document.getElementById('profileBorderBtn').style.display = 'none';
+  }
+});  
+  window.firebaseAuth = auth;
+  window.signInWithEmailAndPassword = signInWithEmailAndPassword;    
 
   console.log("Firebase connected!");
 </script>
