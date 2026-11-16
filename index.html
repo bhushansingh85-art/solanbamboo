@@ -1360,7 +1360,15 @@ if (footer) footer.style.display = 'none';
 if (hamburger) hamburger.style.display = 'flex';
 if (searchBar) searchBar.style.display = 'flex';
 if (rightActions) rightActions.style.display = 'flex';
-if (loginBtn && localStorage.getItem('isLoggedIn') !== 'true') loginBtn.style.display = 'block';
+if (loginBtn) {
+    loginBtn.style.display = window.currentFirebaseUser ? 'none' : 'block';
+}
+
+const profileBtn = document.getElementById('profileBorderBtn');
+
+if (profileBtn) {
+    profileBtn.style.display = window.currentFirebaseUser ? 'flex' : 'none';
+}
 if (footer) footer.style.display = 'block';
 }
 
@@ -1543,13 +1551,16 @@ card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' :
 }
 
 function openProfile() {
-if (localStorage.getItem('isLoggedIn') !== 'true') {
-showSection('loginSection', '/login');
-} else {
-loadProfileData();
-document.getElementById('profileModal').style.display = 'flex';
-history.pushState({profile: true}, "", "/my-profile");
-}
+    if (!window.currentFirebaseUser) {
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    loadProfileData();
+
+    document.getElementById('profileModal').style.display = 'flex';
+
+    history.pushState({profile: true}, "", "/my-profile");
 }
 
 function closeProfile() {
@@ -1623,10 +1634,19 @@ async function handleManualRegister() {
     );
 
     await window.updateProfile(result.user, {
-      displayName: nameInput
-    });
+  displayName: nameInput
+});
 
-    alert("Account created successfully!");
+// Registration के बाद automatic login बंद करें
+await window.signOut(window.firebaseAuth);
+
+// Login page पर वापस भेजें
+document.getElementById('loginEmailInput').value = emailInput;
+document.getElementById('loginPasswordInput').value = '';
+
+alert("Account created successfully! Please login.");
+
+showSection('loginSection', '/login');
 
   } catch (error) {
     errorMsgElem.textContent =
@@ -1661,12 +1681,13 @@ document.getElementById('navOverlay').classList.toggle('active');
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
- import {
+import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   const firebaseConfig = {
     apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
@@ -1697,7 +1718,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });  
   window.firebaseAuth = auth;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;    
+  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+  window.signOut = signOut;  
 
   console.log("Firebase connected!");
 </script>
