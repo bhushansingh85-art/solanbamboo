@@ -1669,9 +1669,20 @@ onSuccessfulLogin();
 loadProfileData();
 }
 
-function handleLogout() {
-localStorage.clear();
-location.href = '/';
+async function handleLogout() {
+    try {
+        await window.signOut(window.firebaseAuth);
+
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+
+        location.href = '/';
+
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Sign out failed. Please try again.");
+    }
 }
 
 function toggleMenu() {
