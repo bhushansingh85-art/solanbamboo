@@ -1528,13 +1528,22 @@ function loadProfileData(user = window.currentFirebaseUser) {
     }
 }
 
-function updateHeaderProfilePic() {
-const savedAvatar = localStorage.getItem('userAvatar');
-if (savedAvatar) {
-document.getElementById('headerProfileImg').src = savedAvatar;
-document.getElementById('headerProfileImg').style.display = 'block';
-document.getElementById('headerProfileSvg').style.display = 'none';
-}
+function updateHeaderProfilePic(user = window.currentFirebaseUser) {
+
+    const img = document.getElementById('headerProfileImg');
+    const svg = document.getElementById('headerProfileSvg');
+
+    if (!img || !svg) return;
+
+    if (user && user.photoURL) {
+        img.src = user.photoURL;
+        img.style.display = 'block';
+        svg.style.display = 'none';
+    } else {
+        img.removeAttribute('src');
+        img.style.display = 'none';
+        svg.style.display = 'block';
+    }
 }
 
 function previewAvatar(event) {
@@ -1695,7 +1704,7 @@ async function handleGoogleCredentialResponse(response) {
         });
 
         onSuccessfulLogin();
-        loadProfileData();
+        loadProfileData(user);
 
     } catch (error) {
         console.error("Google Login Error:", error);
@@ -1754,17 +1763,22 @@ import {
   window.signInWithCredential = signInWithCredential;  
 
 onAuthStateChanged(auth, (user) => {
-  window.currentFirebaseUser = user;
+    window.currentFirebaseUser = user;
 
-  if (user) {
-    onSuccessfulLogin();
-    loadProfileData();
-  } else {
-    localStorage.removeItem('isLoggedIn');
+    if (user) {
+        onSuccessfulLogin();
+        updateHeaderProfilePic(user);
+        loadProfileData(user);
 
-    document.getElementById('loginHeaderBtn').style.display = 'flex';
-    document.getElementById('profileBorderBtn').style.display = 'none';
-  }
+    } else {
+        localStorage.removeItem('isLoggedIn');
+
+        document.getElementById('loginHeaderBtn').style.display = 'flex';
+        document.getElementById('profileBorderBtn').style.display = 'none';
+
+        updateHeaderProfilePic(null);
+        loadProfileData(null);
+    }
 });  
   window.firebaseAuth = auth;
   window.signInWithEmailAndPassword = signInWithEmailAndPassword;
