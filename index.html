@@ -1508,9 +1508,24 @@ closeCartFullView();
 alert("Order placed successfully!");
 }
 
-function loadProfileData() {
-document.getElementById('editName').value = localStorage.getItem('userName') || "Valued Client";
-document.getElementById('editEmail').value = localStorage.getItem('userEmail') || "client@gmail.com";
+function loadProfileData(user = window.currentFirebaseUser) {
+
+    const nameField = document.getElementById('editName');
+    const emailField = document.getElementById('editEmail');
+
+    if (!user) {
+        if (nameField) nameField.value = "Valued Client";
+        if (emailField) emailField.value = "";
+        return;
+    }
+
+    if (nameField) {
+        nameField.value = user.displayName || "Valued Client";
+    }
+
+    if (emailField) {
+        emailField.value = user.email || "";
+    }
 }
 
 function updateHeaderProfilePic() {
@@ -1660,13 +1675,32 @@ showSection('loginSection', '/login');
   }
 }
 
-function handleGoogleCredentialResponse(response) {
-const payload = JSON.parse(atob(response.credential.split('.')[1]));
-localStorage.setItem('userName', payload.name);
-localStorage.setItem('userEmail', payload.email);
-if (payload.picture) localStorage.setItem('userAvatar', payload.picture);
-onSuccessfulLogin();
-loadProfileData();
+async function handleGoogleCredentialResponse(response) {
+    try {
+        const credential = window.GoogleAuthProvider.credential(
+            response.credential
+        );
+
+        const result = await window.signInWithCredential(
+            window.firebaseAuth,
+            credential
+        );
+
+        const user = result.user;
+
+        console.log("Firebase Google Login Successful:", {
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL
+        });
+
+        onSuccessfulLogin();
+        loadProfileData();
+
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        alert("Google Sign-In failed: " + error.message);
+    }
 }
 
 async function handleLogout() {
@@ -1698,7 +1732,9 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   onAuthStateChanged,
-  signOut
+  signOut,
+  GoogleAuthProvider,
+  signInWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   const firebaseConfig = {
     apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
@@ -1713,7 +1749,9 @@ import {
   const auth = getAuth(app);
   window.firebaseAuth = auth;
   window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window.updateProfile = updateProfile;  
+  window.updateProfile = updateProfile;
+  window.GoogleAuthProvider = GoogleAuthProvider;
+  window.signInWithCredential = signInWithCredential;  
 
 onAuthStateChanged(auth, (user) => {
   window.currentFirebaseUser = user;
