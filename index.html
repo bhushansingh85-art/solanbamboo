@@ -945,7 +945,78 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
         flex-direction: column;
         gap: 15px;
     }
+
+    /* ADMIN DASHBOARD */
+
+#adminSection {
+    display: none;
+    padding: 35px 5%;
+    min-height: 70vh;
 }
+
+.admin-dashboard {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.admin-dashboard h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.admin-dashboard > p {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.admin-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #9b6338;
+}
+
+.admin-card h3 {
+    font-size: 16px;
+    color: #666;
+}
+
+.admin-card p {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.admin-orders {
+    background: #fff;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.admin-orders button {
+    background: #754522;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+#adminOrdersList {
+    overflow-x: auto;
+}
+}    
 </style>
 </head>
 <body>
@@ -1221,6 +1292,49 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 <div id="cartFullListContainer" style="margin: 20px 0;"></div>
 <button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
 </section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="adminSection" class="page-section">
+
+    <div class="admin-dashboard">
+
+        <h2>Admin Dashboard</h2>
+        <p>Manage your store and customer orders.</p>
+
+        <div class="admin-stats">
+
+            <div class="admin-card">
+                <h3>Total Orders</h3>
+                <p id="totalOrders">0</p>
+            </div>
+
+            <div class="admin-card">
+                <h3>Pending Orders</h3>
+                <p id="pendingOrders">0</p>
+            </div>
+
+            <div class="admin-card">
+                <h3>Completed Orders</h3>
+                <p id="completedOrders">0</p>
+            </div>
+
+        </div>
+
+        <div class="admin-orders">
+            <h3>Customer Orders</h3>
+
+            <button onclick="loadAdminOrders()">
+                Refresh Orders
+            </button>
+
+            <div id="adminOrdersList">
+                <p>Orders will appear here.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>    
 
 <!-- Bottom Footer Section -->
 <footer id="mainFooter" class="site-footer">
@@ -2013,7 +2127,9 @@ import {
   setDoc,
   serverTimestamp,
   collection,
-  addDoc
+  addDoc,
+  getDocs,
+  updateDoc  
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -2168,6 +2284,110 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 console.log("Firebase Authentication and Firestore connected!");
+    
+// LOAD CUSTOMER ORDERS IN ADMIN DASHBOARD
+
+function escapeAdminHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+window.loadAdminOrders = async function() {
+    const container = document.getElementById("adminOrdersList");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        container.textContent = "Access denied. Admin login required.";
+        return;
+    }
+
+    container.textContent = "Loading orders...";
+
+    try {
+        const snapshot = await getDocs(collection(db, "orders"));
+        const orders = snapshot.docs.map(orderDoc => ({
+            id: orderDoc.id,
+            ...orderDoc.data()
+        }));
+
+        const total = orders.length;
+        const pending = orders.filter(o => o.status === "Pending").length;
+        const completed = orders.filter(o => o.status === "Completed").length;
+
+        document.getElementById("totalOrders").textContent = total;
+        document.getElementById("pendingOrders").textContent = pending;
+        document.getElementById("completedOrders").textContent = completed;
+
+        if (!orders.length) {
+            container.textContent = "No customer orders found.";
+            return;
+        }
+
+        container.innerHTML = `
+            <table style="width:100%; border-collapse:collapse; margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${orders.map(order => `
+                        <tr>
+                            <td>${escapeAdminHTML(order.id.slice(0, 8))}</td>
+                            <td>${escapeAdminHTML(order.customerName || "Customer")}</td>
+                            <td>${escapeAdminHTML(order.customerEmail || "-")}</td>
+                            <td>${(order.items || []).map(item =>
+                                `${escapeAdminHTML(item.productName)} × ${escapeAdminHTML(item.quantity)}`
+                            ).join("<br>")}</td>
+                            <td>₹${escapeAdminHTML(order.totalAmount ?? 0)}</td>
+                            <td>
+                                <select class="admin-order-status"
+                                    data-order-id="${escapeAdminHTML(order.id)}">
+                                    ${["Pending", "Processing", "Completed", "Cancelled"].map(status => `
+                                        <option value="${status}" ${order.status === status ? "selected" : ""}>
+                                            ${status}
+                                        </option>
+                                    `).join("")}
+                                </select>
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        `;
+
+        container.querySelectorAll(".admin-order-status").forEach(select => {
+            select.addEventListener("change", async function() {
+                try {
+                    await updateDoc(doc(db, "orders", this.dataset.orderId), {
+                        status: this.value
+                    });
+
+                    alert("Order status updated!");
+                    await window.loadAdminOrders();
+
+                } catch (error) {
+                    console.error("Status update error:", error);
+                    alert("Could not update order status: " + error.message);
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Admin orders error:", error);
+        container.textContent = "Could not load orders: " + error.message;
+    }
+};
+    
 </script>
 </body>
 </html>
