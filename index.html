@@ -1687,10 +1687,11 @@ async function checkoutCart() {
         const orderId = await window.placeOrderToFirestore();
 
         cartItems = [];
-        localStorage.removeItem('cartItems');
+saveCart();
 
-        updateCartUI();
-        closeCartFullView();
+updateCartUI();
+updateSimpleCartButton();
+closeCartFullView();
 
         alert("Order placed successfully! Order ID: " + orderId);
 
@@ -2067,6 +2068,17 @@ window.saveUserProfileToFirestore = async function(user, extraData = {}) {
 };
 
 // Read a customer's profile from Firestore
+window.getUserProfileFromFirestore = async function(user) {
+    if (!user) return null;
+
+    const userRef = doc(db, "users", user.uid);
+    const userSnapshot = await getDoc(userRef);
+
+    return userSnapshot.exists()
+        ? userSnapshot.data()
+        : null;
+};
+    
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
 
