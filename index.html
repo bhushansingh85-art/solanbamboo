@@ -1451,22 +1451,44 @@ window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 }
 }
 
+
 function toggleCart(itemName, event) {
-if(event) event.stopPropagation();
-if (!window.currentFirebaseUser) {
-showSection('loginSection', '/login');
-return;
-}
-const index = cartItems.indexOf(itemName);
-if (index > -1) { cartItems.splice(index, 1); }
-else { cartItems.push(itemName); }
-localStorage.setItem('cartItems', JSON.stringify(cartItems));
-updateCartUI();
+    if (event) event.stopPropagation();
+
+    if (!window.currentFirebaseUser) {
+        alert("Please login first!");
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    if (!itemName) {
+        alert("Product not selected!");
+        return;
+    }
+
+    if (cartItems.includes(itemName)) {
+        alert("This product is already in your cart!");
+        return;
+    }
+
+    cartItems.push(itemName);
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    updateCartUI();
+
+    alert(itemName + " added to cart successfully!");
 }
 
 function toggleCartFromSimpleView() {
-if (currentActiveProduct) toggleCart(currentActiveProduct);
+    if (!currentActiveProduct) {
+        alert("Please select a product first!");
+        return;
+    }
+
+    toggleCart(currentActiveProduct);
 }
+
 
 
 function buyNowFromSimpleView() {
