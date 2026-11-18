@@ -1288,8 +1288,10 @@ Customer Care</a></li>
 </div>
 
 <script>
-let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+let cartItems = [];
 let currentActiveProduct = "";
+let currentActiveProductData = null;
+    
 let previousView = "productsSection";
 let lastScrollPosition = 0;
 let slideIndex = 0;
@@ -1428,6 +1430,18 @@ const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
 const price = cardElement.getAttribute('data-price') || "₹15,499";
 
 currentActiveProduct = title;
+const productImage = cardElement.querySelector('.item-image-container img');
+
+currentActiveProductData = {
+    title: title,
+    description: desc,
+    imageURL: productImage ? productImage.src : "",
+    price: price,
+    quantity: 1
+};
+
+updateSimpleCartButton();
+    
 document.getElementById('simpleModalTitle').textContent = title;
 document.getElementById('simpleModalDesc').textContent = desc;
 document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
@@ -1452,57 +1466,188 @@ window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 }
 
 
-function toggleCart(itemName, event) {
+
+function getCartPrice(item) {
+    const value = String(item.price || "")
+        .replace(/,/g, "")
+        .replace(/[^\d.]/g, "");
+
+    return Number(value) || 0;
+}
+
+function formatCartPrice(amount) {
+    return "₹" + amount.toLocaleString("en-IN");
+}
+
+function saveCart() {
+    const user = window.currentFirebaseUser;
+
+    if (user) {
+        localStorage.setItem(
+            "cartItems_" + user.uid,
+            JSON.stringify(cartItems)
+        );
+    }
+}
+
+function updateSimpleCartButton() {
+    const button = document.getElementById("simpleCartBtn");
+
+    if (!button || !currentActiveProductData) return;
+
+    const exists = cartItems.some(
+        item => item.title === currentActiveProductData.title
+    );
+
+    button.textContent = exists ? "Remove Item" : "Add to Cart";
+}
+
+function toggleCart(product, event) {
     if (event) event.stopPropagation();
 
     if (!window.currentFirebaseUser) {
         alert("Please login first!");
-        showSection('loginSection', '/login');
+        showSection("loginSection", "/login");
         return;
     }
 
-    if (!itemName) {
-        alert("Product not selected!");
-        return;
+    if (!product) return;
+
+    const index = cartItems.findIndex(
+        item => item.title === product.title
+    );
+
+    if (index >= 0) {
+        cartItems.splice(index, 1);
+    } else {
+        cartItems.push({
+            ...product,
+            quantity: 1
+        });
     }
 
-    if (cartItems.includes(itemName)) {
-        alert("This product is already in your cart!");
-        return;
-    }
-
-    cartItems.push(itemName);
-
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
+    saveCart();
     updateCartUI();
-
-    alert(itemName + " added to cart successfully!");
+    updateSimpleCartButton();
 }
 
 function toggleCartFromSimpleView() {
-    if (!currentActiveProduct) {
+    if (!currentActiveProductData) {
         alert("Please select a product first!");
         return;
     }
 
-    toggleCart(currentActiveProduct);
+    toggleCart(currentActiveProductData);
 }
 
+function changeCartQuantity(index, amount) {
+    if (!cartItems[index]) return;
 
+    cartItems[index].quantity += amount;
 
-function buyNowFromSimpleView() {
-    if (!window.currentFirebaseUser) {
-        showSection('loginSection', '/login');
+    if (cartItems[index].quantity <= 0) {
+        cartItems.splice(index, 1);
+    }
+
+    saveCart();
+    updateCartUI();
+    updateSimpleCartButton();
+}
+
+function removeCartItem(index) {
+    cartItems.splice(index, 1);
+
+    saveCart();
+    updateCartUI();
+    updateSimpleCartButton();
+}
+
+function updateCartUI() {
+    const badge = document.getElementById("cartBadge");
+
+    if (badge) {
+        badge.textContent = cartItems.reduce(
+            (total, item) => total + item.quantity, 0
+        );
+    }
+
+    const container = document.getElementById("cartFullListContainer");
+
+    if (!container) return;
+
+    if (cartItems.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:40px 15px;">
+                <h3>Your Cart is Empty</h3>
+                <p>Explore our bamboo furniture collection.</p>
+            </div>
+        `;
         return;
     }
 
-    goBack();
-}
+    let total = 0;
 
+    container.innerHTML = cartItems.map((item, index) => {
+        const price = getCartPrice(item);
+        const subtotal = price * item.quantity;
+        total += subtotal;
 
-function updateCartUI() {
-document.getElementById('cartBadge').textContent = cartItems.length;
+        const title = String(item.title).replace(/[&<>"']/g, c =>
+            ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])
+        );
+
+        return `
+            <div style="
+                display:flex;
+                gap:15px;
+                padding:15px;
+                margin-bottom:15px;
+                border:1px solid #ddd;
+                border-radius:10px;
+                background:#fff;
+                align-items:center;
+                flex-wrap:wrap;
+            ">
+                <div style="width:110px;height:110px;flex-shrink:0;">
+                    ${item.imageURL ? `
+                        <img src="${item.imageURL}"
+                        alt="${title}"
+                        style="width:100%;height:100%;object-fit:contain;">
+                    ` : `
+                        <div style="padding:25px 5px;">No Image</div>
+                    `}
+                </div>
+
+                <div style="flex:1;min-width:140px;">
+                    <h3 style="margin:0 0 8px;color:#2B1B17;">
+                        ${title}
+                    </h3>
+
+                    <p style="margin:5px 0;">
+                        Price: ${formatCartPrice(price)}
+                    </p>
+
+                    <p style="margin:5px 0;font-weight:bold;">
+                        Subtotal: ${formatCartPrice(subtotal)}
+                    </p>
+
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+                        <button onclick="changeCartQuantity(${index},-1)">−</button>
+                        <strong>${item.quantity}</strong>
+                        <button onclick="changeCartQuantity(${index},1)">+</button>
+                        <button onclick="removeCartItem(${index})"
+                        style="color:#c62828;">Remove</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("") + `
+        <div style="padding:18px;border-top:2px solid #E09F3E;">
+            <h2 style="text-align:right;color:#2B1B17;">
+                Total: ${formatCartPrice(total)}
+            </h2>
+        </div>
+    `;
 }
 
 function openCartFullView(pushHistory = true) {
@@ -1826,6 +1971,25 @@ function toggleMenu() {
 document.getElementById('sideNav').classList.toggle('open');
 document.getElementById('navOverlay').classList.toggle('active');
 }
+
+
+window.syncCartForAuth = function(user) {
+    if (user) {
+        try {
+            cartItems = JSON.parse(
+                localStorage.getItem("cartItems_" + user.uid)
+            ) || [];
+        } catch (error) {
+            cartItems = [];
+        }
+    } else {
+        cartItems = [];
+        localStorage.removeItem("cartItems");
+    }
+
+    updateCartUI();
+    updateSimpleCartButton();
+};    
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -1903,15 +2067,6 @@ window.saveUserProfileToFirestore = async function(user, extraData = {}) {
 };
 
 // Read a customer's profile from Firestore
-window.getUserProfileFromFirestore = async function(user) {
-  if (!user) return null;
-
-  const userRef = doc(db, "users", user.uid);
-  const userSnapshot = await getDoc(userRef);
-
-  return userSnapshot.exists() ? userSnapshot.data() : null;
-};
-
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
 
@@ -1919,7 +2074,7 @@ window.placeOrderToFirestore = async function() {
         throw new Error("Please login first.");
     }
 
-    if (!Array.isArray(cartItems) || cartItems.length === 0) {
+    if (!cartItems.length) {
         throw new Error("Your cart is empty.");
     }
 
@@ -1927,19 +2082,20 @@ window.placeOrderToFirestore = async function() {
         userId: user.uid,
         customerName: user.displayName || "",
         customerEmail: user.email || "",
-        items: cartItems.map(name => ({
-            productName: name,
-            quantity: 1
+        items: cartItems.map(item => ({
+            productName: item.title,
+            quantity: item.quantity,
+            unitPrice: getCartPrice(item)
         })),
+        totalAmount: cartItems.reduce(
+            (sum, item) => sum + getCartPrice(item) * item.quantity,
+            0
+        ),
         status: "Pending",
         createdAt: serverTimestamp()
     };
 
-    const orderRef = await addDoc(
-        collection(db, "orders"),
-        orderData
-    );
-
+    const orderRef = await addDoc(collection(db, "orders"), orderData);
     return orderRef.id;
 };
     
@@ -1947,6 +2103,9 @@ window.placeOrderToFirestore = async function() {
 // Watch Firebase login state
 onAuthStateChanged(auth, async (user) => {
   window.currentFirebaseUser = user;
+  if (window.syncCartForAuth) {
+    window.syncCartForAuth(user);
+}  
 
   if (user) {
     try {
