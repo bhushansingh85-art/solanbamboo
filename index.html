@@ -2078,6 +2078,34 @@ window.getUserProfileFromFirestore = async function(user) {
         ? userSnapshot.data()
         : null;
 };
+// Check whether the logged-in user is an admin
+window.checkAdminAccess = async function(user) {
+    if (!user) {
+        window.isAdminUser = false;
+        return false;
+    }
+
+    try {
+        const adminRef = doc(db, "admins", user.uid);
+        const adminSnapshot = await getDoc(adminRef);
+
+        window.isAdminUser =
+            adminSnapshot.exists() &&
+            adminSnapshot.data().role === "admin";
+
+        console.log(
+            "Admin access:",
+            window.isAdminUser
+        );
+
+        return window.isAdminUser;
+
+    } catch (error) {
+        console.error("Admin verification error:", error);
+        window.isAdminUser = false;
+        return false;
+    }
+};    
     
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
@@ -2122,6 +2150,7 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
       await window.saveUserProfileToFirestore(user);
+      await window.checkAdminAccess(user);  
 
       onSuccessfulLogin();
       updateHeaderProfilePic(user);
