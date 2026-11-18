@@ -1452,7 +1452,7 @@ window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 
 function toggleCart(itemName, event) {
 if(event) event.stopPropagation();
-if (localStorage.getItem('isLoggedIn') !== 'true') {
+if (!window.currentFirebaseUser) {
 showSection('loginSection', '/login');
 return;
 }
@@ -1468,7 +1468,7 @@ if (currentActiveProduct) toggleCart(currentActiveProduct);
 }
 
 function buyNowFromSimpleView() {
-if (localStorage.getItem('isLoggedIn') !== 'true') {
+if !window.currentFirebaseUser) {
 showSection('loginSection', '/login');
 return;
 }
@@ -1480,7 +1480,7 @@ document.getElementById('cartBadge').textContent = cartItems.length;
 }
 
 function openCartFullView(pushHistory = true) {
-if (localStorage.getItem('isLoggedIn') !== 'true') {
+if (!window.currentFirebaseUser) {
 showSection('loginSection', '/login');
 return;
 }
@@ -1508,23 +1508,38 @@ closeCartFullView();
 alert("Order placed successfully!");
 }
 
-function loadProfileData(user = window.currentFirebaseUser) {
-
+async function loadProfileData(user = window.currentFirebaseUser) {
     const nameField = document.getElementById('editName');
     const emailField = document.getElementById('editEmail');
+    const avatar = document.getElementById('profileAvatarImg');
 
     if (!user) {
-        if (nameField) nameField.value = "Valued Client";
+        if (nameField) nameField.value = "";
         if (emailField) emailField.value = "";
+        if (avatar) avatar.style.display = "none";
         return;
     }
 
-    if (nameField) {
-        nameField.value = user.displayName || "Valued Client";
-    }
+    try {
+        const profile = await window.getUserProfileFromFirestore(user);
 
-    if (emailField) {
-        emailField.value = user.email || "";
+        if (nameField) {
+            nameField.value =
+                profile?.displayName || user.displayName || "";
+        }
+
+        if (emailField) {
+            emailField.value = user.email || "";
+        }
+
+        const photo = profile?.photoURL || user.photoURL;
+
+        if (avatar && photo) {
+            avatar.src = photo;
+            avatar.style.display = "block";
+        }
+    } catch (error) {
+        console.error("Unable to load profile:", error);
     }
 }
 
@@ -1560,9 +1575,36 @@ reader.readAsDataURL(file);
 }
 }
 
-function saveProfileDetails() {
-localStorage.setItem('userName', document.getElementById('editName').value);
-closeProfile();
+async function saveProfileDetails() {
+    const user = window.currentFirebaseUser;
+    const name = document.getElementById('editName').value.trim();
+
+    if (!user) {
+        alert("Please login first.");
+        return;
+    }
+
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    try {
+        await window.updateProfile(user, {
+            displayName: name
+        });
+
+        await window.saveUserProfileToFirestore(user, {
+            displayName: name
+        });
+
+        alert("Profile saved successfully!");
+        closeProfile();
+
+    } catch (error) {
+        console.error("Profile save error:", error);
+        alert("Profile could not be saved: " + error.message);
+    }
 }
 
 function filterCards() {
@@ -1661,6 +1703,10 @@ async function handleManualRegister() {
   displayName: nameInput
 });
 
+await window.saveUserProfileToFirestore(result.user, {
+  displayName: nameInput
+});      
+
 // Registration के बाद automatic login बंद करें
 await window.signOut(window.firebaseAuth);
 
@@ -1734,7 +1780,8 @@ document.getElementById('navOverlay').classList.toggle('active');
 }
 </script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -1745,46 +1792,99 @@ import {
   GoogleAuthProvider,
   signInWithCredential
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
-    authDomain: "solan-bamboo-furniture.firebaseapp.com",
-    projectId: "solan-bamboo-furniture",
-    storageBucket: "solan-bamboo-furniture.firebasestorage.app",
-    messagingSenderId: "583152922039",
-    appId: "1:583152922039:web:d5e6e77d7292ffcd4a4c32"
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
+  authDomain: "solan-bamboo-furniture.firebaseapp.com",
+  projectId: "solan-bamboo-furniture",
+  storageBucket: "solan-bamboo-furniture.firebasestorage.app",
+  messagingSenderId: "583152922039",
+  appId: "1:583152922039:web:d5e6e77d7292ffcd4a4c32"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Make Firebase functions available to your existing website code
+window.firebaseAuth = auth;
+window.firebaseDb = db;
+
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.updateProfile = updateProfile;
+window.signOut = signOut;
+window.GoogleAuthProvider = GoogleAuthProvider;
+window.signInWithCredential = signInWithCredential;
+
+// Save a customer's profile in Firestore
+window.saveUserProfileToFirestore = async function(user, extraData = {}) {
+  if (!user) throw new Error("User is not logged in.");
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnapshot = await getDoc(userRef);
+
+  const profileData = {
+    uid: user.uid,
+    displayName: extraData.displayName ?? user.displayName ?? "",
+    email: user.email ?? "",
+    photoURL: user.photoURL ?? "",
+    provider: user.providerData?.[0]?.providerId ?? "password",
+    updatedAt: serverTimestamp()
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  window.firebaseAuth = auth;
-  window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-  window.updateProfile = updateProfile;
-  window.GoogleAuthProvider = GoogleAuthProvider;
-  window.signInWithCredential = signInWithCredential;  
+  // Only create this timestamp for a new profile
+  if (!userSnapshot.exists()) {
+    profileData.createdAt = serverTimestamp();
+  }
 
-onAuthStateChanged(auth, (user) => {
-    window.currentFirebaseUser = user;
+  await setDoc(userRef, profileData, { merge: true });
 
-    if (user) {
-        onSuccessfulLogin();
-        updateHeaderProfilePic(user);
-        loadProfileData(user);
+  return profileData;
+};
 
-    } else {
-        localStorage.removeItem('isLoggedIn');
+// Read a customer's profile from Firestore
+window.getUserProfileFromFirestore = async function(user) {
+  if (!user) return null;
 
-        document.getElementById('loginHeaderBtn').style.display = 'flex';
-        document.getElementById('profileBorderBtn').style.display = 'none';
+  const userRef = doc(db, "users", user.uid);
+  const userSnapshot = await getDoc(userRef);
 
-        updateHeaderProfilePic(null);
-        loadProfileData(null);
+  return userSnapshot.exists() ? userSnapshot.data() : null;
+};
+
+// Watch Firebase login state
+onAuthStateChanged(auth, async (user) => {
+  window.currentFirebaseUser = user;
+
+  if (user) {
+    try {
+      await window.saveUserProfileToFirestore(user);
+
+      onSuccessfulLogin();
+      updateHeaderProfilePic(user);
+      await loadProfileData(user);
+    } catch (error) {
+      console.error("Profile sync error:", error);
     }
-});  
-  window.firebaseAuth = auth;
-  window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-  window.signOut = signOut;  
+  } else {
+    document.getElementById("loginHeaderBtn").style.display = "flex";
+    document.getElementById("profileBorderBtn").style.display = "none";
 
-  console.log("Firebase connected!");
+    updateHeaderProfilePic(null);
+    loadProfileData(null);
+  }
+});
+
+console.log("Firebase Authentication and Firestore connected!");
 </script>
 </body>
 </html>
