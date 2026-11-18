@@ -1467,13 +1467,16 @@ function toggleCartFromSimpleView() {
 if (currentActiveProduct) toggleCart(currentActiveProduct);
 }
 
+
 function buyNowFromSimpleView() {
-if !window.currentFirebaseUser) {
-showSection('loginSection', '/login');
-return;
+    if (!window.currentFirebaseUser) {
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    goBack();
 }
-goBack();
-}
+
 
 function updateCartUI() {
 document.getElementById('cartBadge').textContent = cartItems.length;
