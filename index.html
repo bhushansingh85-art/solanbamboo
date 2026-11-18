@@ -1504,13 +1504,35 @@ document.getElementById('cartFullSection').style.display = 'none';
 showSection('homeSection', '/');
 }
 
-function checkoutCart() {
-cartItems = [];
-localStorage.removeItem('cartItems');
-updateCartUI();
-closeCartFullView();
-alert("Order placed successfully!");
+
+async function checkoutCart() {
+    if (!window.currentFirebaseUser) {
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    if (!cartItems || cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    try {
+        const orderId = await window.placeOrderToFirestore();
+
+        cartItems = [];
+        localStorage.removeItem('cartItems');
+
+        updateCartUI();
+        closeCartFullView();
+
+        alert("Order placed successfully! Order ID: " + orderId);
+
+    } catch (error) {
+        console.error("Order Error:", error);
+        alert("Order could not be placed: " + error.message);
+    }
 }
+
 
 async function loadProfileData(user = window.currentFirebaseUser) {
     const nameField = document.getElementById('editName');
@@ -1802,8 +1824,11 @@ import {
   doc,
   getDoc,
   setDoc,
-  serverTimestamp
+  serverTimestamp,
+  collection,
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
@@ -1864,6 +1889,38 @@ window.getUserProfileFromFirestore = async function(user) {
 
   return userSnapshot.exists() ? userSnapshot.data() : null;
 };
+
+window.placeOrderToFirestore = async function() {
+    const user = window.currentFirebaseUser;
+
+    if (!user) {
+        throw new Error("Please login first.");
+    }
+
+    if (!Array.isArray(cartItems) || cartItems.length === 0) {
+        throw new Error("Your cart is empty.");
+    }
+
+    const orderData = {
+        userId: user.uid,
+        customerName: user.displayName || "",
+        customerEmail: user.email || "",
+        items: cartItems.map(name => ({
+            productName: name,
+            quantity: 1
+        })),
+        status: "Pending",
+        createdAt: serverTimestamp()
+    };
+
+    const orderRef = await addDoc(
+        collection(db, "orders"),
+        orderData
+    );
+
+    return orderRef.id;
+};
+    
 
 // Watch Firebase login state
 onAuthStateChanged(auth, async (user) => {
