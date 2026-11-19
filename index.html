@@ -1381,6 +1381,13 @@ My Profile</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('customerCareSection', '/customer-care');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1 z"/></svg>
 Customer Care</a></li>
+<li id="adminMenuItem" style="display:none;">
+    <a href="javascript:void(0)"
+       onclick="toggleMenu(); openAdminPanel();">
+        <span style="color:#E09F3E;">⚙</span>
+        Admin Panel
+    </a>
+</li>    
 </ul>
 </div>
 <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
@@ -2094,6 +2101,16 @@ document.getElementById('sideNav').classList.toggle('open');
 document.getElementById('navOverlay').classList.toggle('active');
 }
 
+function openAdminPanel() {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        alert("Admin access denied!");
+        return;
+    }
+
+    showSection("adminSection", "/admin");
+    window.loadAdminOrders();
+}    
+
 
 window.syncCartForAuth = function(user) {
     if (user) {
@@ -2275,6 +2292,8 @@ onAuthStateChanged(auth, async (user) => {
         if (user) {
             await window.saveUserProfileToFirestore(user);
             await window.checkAdminAccess(user);
+            document.getElementById("adminMenuItem").style.display =
+            window.isAdminUser ? "block" : "none";
 
             onSuccessfulLogin();
             updateHeaderProfilePic(user);
@@ -2285,6 +2304,7 @@ onAuthStateChanged(auth, async (user) => {
 
             document.getElementById("loginHeaderBtn").style.display = "flex";
             document.getElementById("profileBorderBtn").style.display = "none";
+            document.getElementById("adminMenuItem").style.display = "none";
 
             updateHeaderProfilePic(null);
             await loadProfileData(null);
