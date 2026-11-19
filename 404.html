@@ -1299,48 +1299,108 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 <button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
 </section>
 
-<!-- ADMIN DASHBOARD -->
+
+<!-- ADMIN PANEL -->
 <section id="adminSection" class="page-section">
 
-    <div class="admin-dashboard">
+    <div class="admin-layout">
 
-        <h2>Admin Dashboard</h2>
-        <p>Manage your store and customer orders.</p>
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
 
-        <div class="admin-stats">
+            <h2>ADMIN PANEL</h2>
 
-            <div class="admin-card">
-                <h3>Total Orders</h3>
-                <p id="totalOrders">0</p>
-            </div>
-
-            <div class="admin-card">
-                <h3>Pending Orders</h3>
-                <p id="pendingOrders">0</p>
-            </div>
-
-            <div class="admin-card">
-                <h3>Completed Orders</h3>
-                <p id="completedOrders">0</p>
-            </div>
-
-        </div>
-
-        <div class="admin-orders">
-            <h3>Customer Orders</h3>
-
-            <button onclick="loadAdminOrders()">
-                Refresh Orders
+            <button onclick="showAdminPage('dashboard')">
+                Dashboard
             </button>
 
-            <div id="adminOrdersList">
-                <p>Orders will appear here.</p>
+            <button onclick="showAdminPage('products')">
+                Products
+            </button>
+
+            <button onclick="showAdminPage('orders')">
+                Orders
+            </button>
+
+            <button onclick="showAdminPage('customers')">
+                Customers
+            </button>
+
+            <button onclick="showAdminPage('settings')">
+                Settings
+            </button>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="admin-main">
+
+            <!-- DASHBOARD PAGE -->
+            <div id="admin-dashboard-page" class="admin-page">
+
+                <h2>Admin Dashboard</h2>
+                <p>Manage your store and customer orders.</p>
+
+                <div class="admin-stats">
+
+                    <div class="admin-card">
+                        <h3>Total Orders</h3>
+                        <p id="totalOrders">0</p>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Pending Orders</h3>
+                        <p id="pendingOrders">0</p>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Completed Orders</h3>
+                        <p id="completedOrders">0</p>
+                    </div>
+
+                </div>
+
             </div>
+
+            <!-- PRODUCTS PAGE -->
+            <div id="admin-products-page" class="admin-page" style="display:none;">
+                <h2>Product Management</h2>
+                <p>Add, edit and manage your store products.</p>
+                <div id="adminProductsList">
+                    <p>Products section is ready.</p>
+                </div>
+            </div>
+
+            <!-- ORDERS PAGE -->
+            <div id="admin-orders-page" class="admin-page" style="display:none;">
+                <h2>Customer Orders</h2>
+
+                <button onclick="loadAdminOrders()">
+                    Refresh Orders
+                </button>
+
+                <div id="adminOrdersList">
+                    <p>Orders will appear here.</p>
+                </div>
+            </div>
+
+            <!-- CUSTOMERS PAGE -->
+            <div id="admin-customers-page" class="admin-page" style="display:none;">
+                <h2>Customers</h2>
+                <p>Customer management will appear here.</p>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="admin-settings-page" class="admin-page" style="display:none;">
+                <h2>Store Settings</h2>
+                <p>Store settings will appear here.</p>
+            </div>
+
         </div>
 
     </div>
 
-</section>    
+</section>
 
 <!-- Bottom Footer Section -->
 <footer id="mainFooter" class="site-footer">
@@ -2109,7 +2169,28 @@ function openAdminPanel() {
 
     showSection("adminSection", "/admin");
     window.loadAdminOrders();
-}    
+}
+
+
+function showAdminPage(pageName) {
+
+    document.querySelectorAll(".admin-page").forEach(page => {
+        page.style.display = "none";
+    });
+
+    const selectedPage = document.getElementById(
+        "admin-" + pageName + "-page"
+    );
+
+    if (selectedPage) {
+        selectedPage.style.display = "block";
+    }
+
+    if (pageName === "orders" && window.loadAdminOrders) {
+        window.loadAdminOrders();
+    }
+}
+    
 
 
 window.syncCartForAuth = function(user) {
