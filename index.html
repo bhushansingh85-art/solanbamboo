@@ -2386,6 +2386,30 @@ window.loadAdminOrders = async function() {
         console.error("Admin orders error:", error);
         container.textContent = "Could not load orders: " + error.message;
     }
+
+    window.testAdminDocument = async function() {
+    try {
+        const user = window.currentFirebaseUser;
+
+        if (!user) {
+            return "No logged-in user";
+        }
+
+        const adminRef = doc(db, "admins", user.uid);
+        const snapshot = await getDoc(adminRef);
+
+        return {
+            exists: snapshot.exists(),
+            data: snapshot.exists() ? snapshot.data() : null
+        };
+
+    } catch (error) {
+        return {
+            error: error.code,
+            message: error.message
+        };
+    }
+};
 };
     
 </script>
