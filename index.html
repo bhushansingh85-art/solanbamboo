@@ -1,1 +1,2702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Quality Bamboo Furniture at Solan Bamboo Furniture</title>
 
+<!-- Updated Favicon & Logo Links for Google Search -->
+<link rel="icon" type="image/png" sizes="48x48" href="https://solanbamboo.in/Logo.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://solanbamboo.in/Logo.png">
+<link rel="shortcut icon" href="https://solanbamboo.in/Logo.png">
+<link rel="apple-touch-icon" href="https://solanbamboo.in/Logo.png">
+
+<!-- Importing Google Font for the Cursive Tagline -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<!-- Importing Oswald Font for Company Title -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+
+<!-- Google Sign-In API Script -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- EmailJS CDN Script -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+(function(){
+emailjs.init("bRG9LrHd7A--V5wxG");
+})();
+</script>
+
+<style>
+* {
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+}
+
+body {
+margin: 0;
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+background-attachment: fixed;
+font-family: Arial, sans-serif;
+height: 100vh;
+overflow-x: hidden;
+padding-top: 140px;
+}
+
+.header-gradient {
+width: 100%;
+height: 140px;
+background: linear-gradient(45deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+position: fixed;
+border-bottom: 50px solid black;
+top: 0;
+left: 0;
+z-index: 1000;
+}
+
+.brand-container {
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+}
+
+.logo-icon {
+width: 70px;
+height: 70px;
+flex-shrink: 0;
+}
+
+.brand-text {
+display: flex;
+flex-direction: column;
+}
+
+.company-title {
+color: #000000;
+font-size: 21px;
+font-weight: bold;
+font-family: 'Oswald', sans-serif;  
+letter-spacing: 1px;
+margin: 0;
+}
+
+.company-tagline {
+color: #000000;
+font-family: 'Dancing Script', cursive;
+font-size: 16px;
+margin-top: 2px;
+}
+
+.header-btn {
+position: absolute;
+right: 65px;
+top: 30px;  
+padding: 9px 20px;
+background-color: #2B1B17;
+color: #FFFFFF;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+cursor: pointer;
+overflow: hidden;
+z-index: 10;
+box-shadow: 0 0 10px rgba(224, 159, 62, 0.5);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.header-btn::before {
+content: '';
+position: absolute;
+top: -2px; left: -2px; right: -2px; bottom: -2px;
+background: linear-gradient(45deg, #E09F3E, #FAEDCD, #D4A373, #E09F3E);
+background-size: 300%;
+z-index: -1;
+border-radius: 8px;
+animation: glowingBorder 4s linear infinite;
+}
+
+@keyframes glowingBorder {
+0% { background-position: 0 0; }
+50% { background-position: 300% 0; }
+100% { background-position: 0 0; }
+}
+
+.header-btn:hover {
+box-shadow: 0 0 20px rgba(224, 159, 62, 0.9);
+transform: scale(0.90);
+transition: transform 0.2s ease;
+}
+
+.border-home-btn {
+position: absolute;
+bottom: -40px;
+left: 15px;
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+display: flex;
+align-items: center;
+transition: transform 0.15s ease, opacity 0.15s ease;
+z-index: 10;
+}
+
+.border-home-btn:hover {
+transform: translateY(2px) scale(0.95);
+opacity: 0.85;
+}
+
+.side-nav {
+position: fixed;
+top: 0;
+left: -280px;
+width: 280px;
+height: 100%;
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+color: #FFFFFF;
+z-index: 10000;
+box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+transition: left 0.3s ease;
+display: flex;
+flex-direction: column;
+border-right: none;
+}
+
+.side-nav.open {
+left: 0;
+}
+
+.side-nav-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+border-bottom: none;
+}
+
+.side-nav-header h3 {
+margin: 0;
+color: #000000;
+font-size: 18px;
+}
+
+.close-side-btn {
+font-size: 28px;
+color: #000000;
+cursor: pointer;
+line-height: 1;
+}
+
+.side-nav-links {
+list-style: none;
+padding: 0;
+margin: 0;
+display: flex;
+flex-direction: column;
+}
+
+.side-nav-links li a {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 15px 20px;
+color: #000000;
+text-decoration: none;
+font-size: 15px;
+border-bottom: none;
+transition: background-color 0.2s ease, color 0.2s ease;
+} 
+
+.side-nav-links li a svg {
+fill: #000000;
+}
+
+.side-nav-links li a:hover {
+background-color: #E09F3E;
+color: #FFFFFF;
+font-weight: bold;
+}
+
+.nav-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 9998;
+}
+
+.nav-overlay.active {
+display: block;
+}
+
+.border-search-container {
+position: absolute;
+bottom: -37px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+align-items: center;
+background-color: rgba(255, 255, 255, 0.2);
+border-radius: 20px;
+padding: 2px 8px 2px 12px;
+border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.border-search-input {
+background: transparent;
+border: none;
+outline: none;
+color: #FFFFFF;
+font-size: 13px;
+width: 140px;
+}
+
+.border-search-input::placeholder {
+color: rgba(255, 255, 255, 0.8);
+}
+
+.border-search-btn {
+background: transparent;
+border: none;
+cursor: pointer;
+display: flex;
+align-items: center;
+padding: 2px;
+}
+
+.border-right-actions {
+position: absolute;
+bottom: -45px;
+right: 70px;
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.border-cart-btn, .border-profile-btn {
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.15s ease, opacity 0.15s ease;
+position: relative;
+width: 36px;
+height: 36px;
+}
+
+.border-profile-btn {
+border-radius: 50%;
+overflow: hidden;
+border: 2px solid #FFFFFF;
+background-color: #2B1B17;
+}
+
+.cart-badge {
+position: absolute;
+top: -5px;
+right: -8px;
+background-color: #D9534F;
+color: white;
+font-size: 11px;
+font-weight: bold;
+padding: 2px 6px;
+border-radius: 50%;
+}
+
+.page-section {
+display: none;
+padding: 0;
+width: 100%;
+margin: 0;
+}
+
+.page-section.active {
+display: block;
+}
+
+.slideshow-container {
+position: relative;
+width: 100%;
+margin: 0 auto;
+height: 800px;
+margin-bottom: 0;
+overflow: hidden;
+border-top: none;
+border-bottom: none;
+box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+background: #2B1B17;
+font-size: 0;
+}
+
+.slide {
+display: none;
+width: 100%;
+height: 100%;
+position: relative;
+}
+
+.slide img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+.slide-caption {
+position: absolute;
+top: 100px;
+left: 50%;
+transform: translateX(-50%);
+text-align: center;
+color: #FFFFFF;
+width: 85%;
+max-width: 800px;
+background: rgba(43, 27, 23, 0.7);
+padding: 20px;
+border-radius: 10px;
+border: none;
+}
+
+.slide-caption h1 {
+font-size: 28px;
+margin: 0 0 8px 0;
+color: #FFFFFF;
+}
+
+.slide-caption p {
+font-size: 20px;
+font-family: 'Dancing Script', cursive;
+margin: 0;
+color: #FFFACD;
+}
+
+.fade {
+animation: fadeEffect 1.5s ease-in-out;
+}
+
+@keyframes fadeEffect {
+from { opacity: 0.4; }
+to { opacity: 1; }
+}
+
+.explore-btn {
+position: absolute;
+bottom: 450px;
+left: 50%;
+transform: translateX(-50%);
+background-color: #E09F3E;
+color: #2B1B17;
+padding: 12px 35px;
+font-size: 16px;
+font-weight: bold;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+z-index: 5;
+box-shadow: 0 0 10px rgba(224, 159, 62, 0.5);
+transition: box-shadow 0.2s ease;
+}
+
+.explore-btn:hover {
+box-shadow: 0 0 20px rgba(224, 159, 62, 1.0);
+transform: translateX(-50%)scale(1.05);
+transition: transform 0.2s ease;
+}
+
+.content-container {
+padding: 0;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+width: 100%;
+margin: 0;
+}
+
+.home-item-card {
+background-color: #FFFFFF;
+flex: 1 1 33.333%;
+min-width: 280px;
+padding: 0px;
+border: 1px solid #000000;
+margin: 0px;
+text-align: center;
+position: relative;
+cursor: pointer;
+}
+
+.home-image-container {
+width: 100%;
+height: 280px; 
+background-color: #F8F9FA;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 0;
+font-size: 0;
+}
+
+.home-image-container img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+.cart-btn {
+background-color: #2B1B17;
+color: #E09F3E;
+border: 1px solid #E09F3E;
+}
+
+#fullProductSection, #cartFullSection {
+display: none;
+max-width: 900px;
+margin: 40px auto;
+background: #FFFFFF;
+border: 2px solid #E09F3E;
+border-radius: 12px;
+padding: 30px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+text-align: left;
+position: relative;
+}
+
+.back-link {
+display: inline-block;
+margin-bottom: 20px;
+position: absolute;
+top: 10px;
+left: 10px;
+color: #FFFFFF;
+font-weight: bold;
+text-decoration: none;
+cursor: pointer;
+background: #000000;
+padding: 6px 14px;
+border-radius: 4px;
+}
+
+.product-detail-wrapper {
+display: flex;
+flex-wrap: wrap;
+gap: 30px;
+align-items: flex-start;
+}
+
+.product-detail-left {
+flex: 1;
+min-width: 300px;
+}
+
+.simple-product-img {
+width: 100%;
+height: 350px;
+background-color: #F8F9FA;
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+border: 1px solid #ddd;
+}
+
+.simple-product-img img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+.product-detail-right {
+flex: 1;
+min-width: 300px;
+display: flex;
+flex-direction: column;
+}
+
+.product-price {
+font-size: 24px;
+font-weight: bold;
+color: #D9534F;
+margin: 10px 0 15px 0;
+}
+
+.site-footer {
+background: linear-gradient(180deg, #E09F3E, #FAEDCD, #D4A373, #2B1B17);
+border-top: 3px solid black;
+color: #FFFFFF;
+padding: 70px 70px 70px 70px;
+text-align: center;
+}
+
+.footer-content {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+gap: 30px;
+text-align: left;
+padding-bottom: 30px;
+}
+
+.footer-section {
+flex: 1;
+min-width: 250px;
+}
+
+.footer-section h3 {
+color: #000000;
+font-size: 16px;
+margin-bottom: 15px;
+}
+
+.footer-section p, .footer-section ul {
+font-size: 13px;
+color: #000000;
+line-height: 1.6;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+
+.footer-bottom {
+margin-top: 20px;
+font-size: 13px;
+color: #000000;
+}
+
+.modal-overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.65);
+z-index: 9999;
+justify-content: center;
+align-items: center;
+}
+
+.modal-card {
+background-color: #FFFFFF;
+padding: 30px;
+border-radius: 12px;
+width: 90%;
+max-width: 400px;
+position: relative;
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+border: 2px solid #E09F3E;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.close-btn {
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 26px;
+font-weight: bold;
+color: #2B1B17;
+cursor: pointer;
+line-height: 1;
+}
+
+.modal-title {
+margin: 0 0 20px 0;
+color: #2B1B17;
+}
+
+.profile-avatar-container {
+position: relative;
+width: 90px;
+height: 90px;
+margin: 0 auto 15px auto;
+border-radius: 50%;
+overflow: hidden;
+border: 3px solid #E09F3E;
+cursor: pointer;
+background-color: #2B1B17;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.profile-avatar-container img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+.profile-avatar-container input[type="file"] {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+opacity: 0;
+cursor: pointer;
+}
+
+.profile-form-group {
+margin-bottom: 12px;
+text-align: left;
+width: 100%;
+}
+
+.profile-form-group label {
+font-size: 12px;
+font-weight: bold;
+color: #555;
+display: block;
+margin-bottom: 4px;
+}
+
+.profile-input {
+width: 100%;
+padding: 8px 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 14px;
+outline: none;
+}
+
+.profile-input[readonly] {
+background-color: #e9ecef;
+color: #495057;
+cursor: not-allowed;
+}
+
+.save-profile-btn {
+width: 100%;
+padding: 10px;
+background-color: #5CB85C;
+color: #FFFFFF;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+font-size: 15px;
+cursor: pointer;
+margin-top: 10px;
+}
+
+.logout-btn {
+width: 100%;
+padding: 9px;
+background-color: #D9534F;
+color: #FFFFFF;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+font-size: 14px;
+cursor: pointer;
+margin-top: 8px;
+}
+
+/* 3D Flip Card Animation Styles */
+.auth-container {
+    perspective: 1000px;
+    max-width: 450px;
+    margin: 40px auto;
+    position: relative;
+}
+
+.unique-login-card {
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #fcf8f2 100%);
+    padding: 35px;
+    border-radius: 16px;
+    border: 2px solid #000000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(224, 159, 62, 0.3);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(5px);
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.4s ease;
+    backface-visibility: hidden;
+}
+
+/* Welcome Floating Banner Animation */
+@keyframes slideDownBounce {
+    0% { transform: translateY(-50px); opacity: 0; }
+    60% { transform: translateY(10px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.welcome-banner {
+    background: linear-gradient(45deg, #2B1B17, #E09F3E);
+    color: #FFFACD;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: slideDownBounce 0.8s ease forwards;
+    border-bottom: 2px solid #000;
+}
+
+/* Confirm Button Hover Effect */
+.confirm-btn {
+background-color: #000000;
+color: #FFFFFF;
+transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.confirm-btn:hover {
+background-color: #E09F3E !important;
+color: #2B1B17 !important;
+transform: scale(0.98);
+box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
+}
+
+#productsSection #mainContentArea {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 25px 20px;
+    align-items: stretch;
+}
+
+#productsSection #mainContentArea > .item-card {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    flex: none;
+    padding: 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#productsSection #mainContentArea > .item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+#productsSection .item-image-container {
+    width: 100%;
+    height: 210px;
+    background-color: #F8F9FA;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 0;
+}
+
+#productsSection .item-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+#productsSection .item-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2B1B17;
+    margin: 8px 0 6px 0;
+    line-height: 1.3;
+}
+
+#productsSection .item-description {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 110px;
+    }
+
+    .header-gradient {
+        height: 110px;
+        padding: 0 10px;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .company-title {
+        font-size: 14px;
+    }
+
+    .company-tagline {
+        font-size: 11px;
+    }
+
+    .header-btn {
+        right: 20px;
+        top: 18px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .border-search-container {
+        bottom: -28px;
+        left: 175px; 
+        padding: 2px 6px;
+    }
+
+    .border-search-input {
+        width: 110px;
+        font-size: 11px;
+    }
+
+    .border-right-actions {
+        bottom: -36px;
+        right: 32px;
+        gap: 8px;
+    }
+
+    .border-cart-btn, .border-profile-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .slideshow-container {
+        height: 420px !important;
+    }
+
+    .slide-caption {
+        top: 50px;
+        width: 90%;
+        padding: 10px;
+    }
+
+    .slide-caption h1 {
+        font-size: 18px;
+    }
+
+    .slide-caption p {
+        font-size: 12px;
+    }
+
+    .explore-btn {
+        bottom: 40px;
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+
+    #productsSection #mainContentArea {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px 8px;
+    }
+
+    #productsSection #mainContentArea > .item-card {
+        min-width: 0;
+        padding: 8px;
+    }
+
+    #productsSection .item-image-container {
+        height: 110px;
+        margin-bottom: 8px;
+    }
+
+    #productsSection .item-title {
+        font-size: 10px;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    #productsSection .item-description {
+        font-size: 8px;
+        line-height: 1.35;
+    }
+
+    .product-detail-wrapper {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* ADMIN DASHBOARD */
+
+#adminSection {
+    display: none;
+    padding: 35px 5%;
+    min-height: 70vh;
+}
+
+.admin-dashboard {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.admin-dashboard h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.admin-dashboard > p {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.admin-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #9b6338;
+}
+
+.admin-card h3 {
+    font-size: 16px;
+    color: #666;
+}
+
+.admin-card p {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.admin-orders {
+    background: #fff;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.admin-orders button {
+    background: #754522;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+#adminOrdersList {
+    overflow-x: auto;
+}
+
+/* Prevent login/profile button flicker */
+body.auth-loading #loginHeaderBtn,
+body.auth-loading #profileBorderBtn {
+    visibility: hidden !important;
+}
+
+
+/* ===== PROFESSIONAL ADMIN PANEL ===== */
+
+#adminSection {
+    padding: 25px 3%;
+    background: #f3f1ed;
+    min-height: 80vh;
+}
+
+.admin-layout {
+    display: flex;
+    max-width: 1450px;
+    margin: auto;
+    min-height: 650px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+/* SIDEBAR */
+
+.admin-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: #29231e;
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-sidebar h2 {
+    color: #e5ad68;
+    font-size: 21px;
+    padding: 5px 12px 25px;
+    letter-spacing: 1px;
+}
+
+.admin-sidebar button {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #e8e3dc;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.admin-sidebar button:hover,
+.admin-sidebar button.active {
+    background: #9b6338;
+    color: white;
+}
+
+/* MAIN CONTENT */
+
+.admin-main {
+    flex: 1;
+    min-width: 0;
+    padding: 35px;
+    background: #f8f7f4;
+}
+
+.admin-page h2 {
+    color: #33271f;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.admin-page > p {
+    color: #81776f;
+    margin-bottom: 25px;
+}
+
+/* STATISTICS */
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.admin-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee6dc;
+    border-left: 5px solid #9b6338;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.admin-card h3 {
+    color: #76695e;
+    font-size: 15px;
+}
+
+.admin-card p {
+    color: #39291f;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+/* ORDERS */
+
+.admin-orders {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee6dc;
+}
+
+.admin-orders button,
+#admin-orders-page > button {
+    background: #754522;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+#adminOrdersList {
+    overflow-x: auto;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+    #adminSection {
+        padding: 10px;
+    }
+
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+
+    .admin-sidebar h2 {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .admin-sidebar button {
+        width: auto;
+        flex: 1 1 40%;
+        text-align: center;
+        padding: 12px 8px;
+    }
+
+    .admin-main {
+        padding: 20px 14px;
+    }
+}    
+}    
+</style>
+</head>
+<body>
+
+<header class="header-gradient">
+<div class="brand-container" onclick="showSection('homeSection', '/')">
+<svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<path d="M25 65 L25 35 Q25 25 50 25 Q75 25 75 35 L75 65" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+<line x1="15" y1="65" x2="85" y2="65" stroke="#E09F3E" stroke-width="6" stroke-linecap="round"/>
+<line x1="30" y1="65" x2="20" y2="85" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+<line x1="70" y1="65" x2="80" y2="85" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
+</svg>
+<div class="brand-text">
+<h1 class="company-title">SOLAN BAMBOO FURNITURE</h1>
+<span class="company-tagline">Eco-Friendly, Elegant & Durable Bamboo Living</span>
+</div>
+</div>
+
+<button id="loginHeaderBtn" class="header-btn" onclick="showSection('loginSection', '/login')">LOGIN</button>
+
+<!-- Hamburger Menu Button -->
+<button id="hamburgerBtn" class="border-home-btn" onclick="toggleMenu()" aria-label="Open Menu">
+<svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
+<path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+</svg>
+</button>
+
+<!-- Search Bar Container -->
+<div id="searchContainerBar" class="border-search-container">
+<input type="text" id="searchInput" placeholder="Search..." class="border-search-input" onkeyup="filterCards()">
+<button class="border-search-btn" onclick="filterCards()">
+<svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF">
+<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+</svg>
+
+</button>
+</div>
+
+<!-- Cart and Profile Actions -->
+<div id="rightActionsBar" class="border-right-actions">
+<button class="border-cart-btn" onclick="openCartFullView()" title="Shopping Cart">
+<svg viewBox="0 0 24 24" width="32" height="32" fill="#FFFFFF">
+<path d="M11 9H9V6H6V4h3V1h2v3h3v2h-3v3zm-4 9c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.75l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-3.58 6.49H8.42L7.3 8.41 5.75 5.5 4.88 4H1v2h2.21l3.56 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25z"/>
+</svg>
+<span id="cartBadge" class="cart-badge">0</span>
+</button>
+
+<button id="profileBorderBtn" class="border-profile-btn" onclick="openProfile()" title="User Profile" style="display:none;">
+<img id="headerProfileImg" src="" alt="Profile" style="display:none; width:100%; height:100%; object-fit:cover;">
+<svg id="headerProfileSvg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M12 5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/>
+<path d="M5 20c0-2.5 3-4 7-4s7 1.5 7 4"/>
+</svg>
+</button>
+</div>
+</header>
+
+<!-- 1. HOME PAGE SECTION -->
+<section id="homeSection" class="page-section active">
+<!-- Dynamic Welcome Banner -->
+<div id="welcomeBannerContainer"></div>
+
+<div class="slideshow-container">
+<div class="slide fade">
+<img src="https://i.ibb.co/XZpy80FY/95b4d9a4bd3c317480db65ea7a515cfe.jpg" alt="Slide 1">
+<div class="slide-caption">
+<h1>Welcome to Solan Bamboo Furniture</h1>
+<p>Discover sustainable, handcrafted, and elegant bamboo living solutions designed for ultimate comfort and durability.</p>
+</div>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
+</div>
+<div class="slide fade">
+<img src="https://i.ibb.co/wFSQPtKj/muoemlwsdyxkfrvkr5es.jpg" alt="Slide 2">
+<div class="slide-caption">
+<h1>Eco-Friendly Craftsmanship</h1>
+<p>Experience the finest natural materials shaped by skilled traditional artisans.</p>
+</div>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
+</div>
+<div class="slide fade">
+<img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="Slide 3">
+<div class="slide-caption">
+<h1>Durable & Elegant Living</h1>
+<p>Bring timeless style and comfort to your home and outdoor spaces.</p>
+</div>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
+</div>
+<div class="slide fade">
+<img src="https://i.ibb.co/rKQYFWBm/uyvt82kr3hz51xddnfkn.jpg" alt="Slide 4">
+<div class="slide-caption">
+<h1>Natural Bamboo Elegance</h1>
+<p>Add a touch of nature and class to your living spaces.</p>
+</div>
+<button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
+</div>
+</div>
+
+<div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
+  <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
+    <div class="home-item-card">       
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
+    </div>       
+     <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
+    </div>
+    <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="aboutSection" class="page-section">
+<div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
+<h2 style="color: #2B1B17; margin-top: 10px; font-size: 26px;">About Solan Bamboo Furniture</h2>
+<p style="color: #444; line-height: 1.8; font-size: 15px;">
+Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination for sustainable, handcrafted, and durable bamboo living solutions. Located in the pristine hills of Himachal Pradesh (Village Dharja, Oachghat, Solan), we take pride in blending traditional artisan craftsmanship with modern, eco-friendly designs.
+</p>
+</div>
+</section>
+
+<!-- 2. PRODUCTS SECTION -->
+<section id="productsSection" class="page-section">
+<main class="content-container" id="mainContentArea">
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg" alt="image 353892b2 converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+<div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
+<div class="item-image-container">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
+</div>
+<h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
+<p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
+</div>
+</main>
+</section>
+
+<!-- 3. CUSTOMER CARE SECTION -->
+<section id="customerCareSection" class="page-section">
+<div style="max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 12px; border: 2px solid #E09F3E; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
+<h2 style="color: #2B1B17; margin-top: 0; font-size: 24px;">Customer Care & Support</h2>
+<p style="color: #666; line-height: 1.6; font-size: 15px;">We are here to assist you with any questions regarding your orders.</p>
+</div>
+</section>
+
+<!-- AUTH CONTAINER WITH FLIP ANIMATION -->
+<div class="auth-container">
+<!-- LOGIN SECTION -->
+<section id="loginSection" class="page-section unique-login-card">
+<a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK</a>
+<h2 class="modal-title" style="margin-bottom: 20px; color: #2B1B17;">Member Login</h2>
+
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Email</label>
+<input type="email" id="loginEmailInput" placeholder="Enter your email" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 15px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Password</label>
+<input type="password" id="loginPasswordInput" placeholder="Enter your password" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+
+<div id="loginErrorMsg" style="color: #D9534F; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: none;"></div>
+
+<button type="button" class="confirm-btn" onclick="handleManualLogin()" style="width: 60%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 12px;">Confirm</button>
+
+<div style="margin: 15px 0; color: #666; font-size: 14px; font-weight: bold;">OR</div>
+
+<div id="g_id_onload"
+data-client_id="583152922039-8650vvpn8h9dgohecmefsf63ro36svrc.apps.googleusercontent.com"
+data-callback="handleGoogleCredentialResponse"
+data-auto_prompt="false">
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 15px;">
+<div class="g_id_signin" data-type="standard" data-size="large" data-width="200"></div>
+</div>
+
+<div style="margin-top: 18px; font-size: 13px; color: #000000;">
+Don't have an account? <a href="javascript:void(0);" style="color: #E09F3E; font-weight: bold; text-decoration: none;" onclick="flipAuthCard('registerSection', '/register')">Create account</a>
+</div>
+</section>
+
+<!-- CREATE ACCOUNT SECTION -->
+<section id="registerSection" class="page-section unique-login-card" style="transform: rotateY(180deg); position: absolute; top: 0; left: 0; width: 100%;">
+<a class="back-link" onclick="flipAuthCard('loginSection', '/login')">&larr; BACK</a>
+<h2 class="modal-title" style="margin-bottom: 20px; color: #2B1B17;">Create Account</h2>
+
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Full Name</label>
+<input type="text" id="regNameInput" placeholder="Enter your name" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 12px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Email</label>
+<input type="email" id="regEmailInput" placeholder="Enter your email" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+<div style="text-align: left; margin-bottom: 15px;">
+<label style="font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 4px;">Password</label>
+<input type="password" id="regPasswordInput" placeholder="Enter your password" style="width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; outline: none;">
+</div>
+
+<div id="regErrorMsg" style="color: #D9534F; font-size: 13px; font-weight: bold; margin-bottom: 10px; display: none;"></div>
+
+<button type="button" class="confirm-btn" onclick="handleManualRegister()" style="width: 60%; padding: 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 12px;">Register</button>
+
+<div style="margin-top: 18px; font-size: 13px; color: #000000;">
+Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; font-weight: bold; text-decoration: none;" onclick="flipAuthCard('loginSection', '/login')">Login</a>
+</div>
+</section>
+</div>
+
+<!-- Simple Full Product View Section -->
+<section id="fullProductSection">
+<div>
+<a class="back-link" onclick="goBack()">&larr; BACK</a>
+</div>
+<div class="product-detail-wrapper">
+<div class="product-detail-left">
+<div id="simpleModalImageContainer" class="simple-product-img"></div>
+</div>
+<div class="product-detail-right">
+<h2 id="simpleModalTitle" class="modal-title" style="margin-bottom: 10px; color: #2B1B17;"></h2>
+<div id="productPriceTag" class="product-price">₹15,499</div>
+<p id="simpleModalDesc" style="color: #555; font-size: 15px; margin-bottom: 20px; line-height: 1.6;"></p>
+<div class="button-group" style="justify-content: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 25px;">
+<button id="simpleCartBtn" class="item-btn cart-btn" style="padding: 12px 20px; font-size: 14px;" onclick="toggleCartFromSimpleView()">Add to Cart</button>
+<button class="item-btn" style="padding: 12px 20px; font-size: 14px; background-color: #5CB85C; color: white;" onclick="buyNowFromSimpleView()">Buy Now</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Full View Cart Section -->
+<section id="cartFullSection">
+<div>
+<a class="back-link" onclick="closeCartFullView()">&larr; BACK</a>
+</div>
+<h2 style="color: #2B1B17; margin-top: 0; border-bottom: 2px solid #E09F3E; padding-bottom: 10px;">SHOPPING CART</h2>
+<div id="cartFullListContainer" style="margin: 20px 0;"></div>
+<button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
+</section>
+
+
+<!-- ADMIN PANEL -->
+<section id="adminSection" class="page-section">
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+
+            <h2>ADMIN PANEL</h2>
+
+            <button onclick="showAdminPage('dashboard')">
+                Dashboard
+            </button>
+
+            <button onclick="showAdminPage('products')">
+                Products
+            </button>
+
+            <button onclick="showAdminPage('orders')">
+                Orders
+            </button>
+
+            <button onclick="showAdminPage('customers')">
+                Customers
+            </button>
+
+            <button onclick="showAdminPage('settings')">
+                Settings
+            </button>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="admin-main">
+
+            <!-- DASHBOARD PAGE -->
+            <div id="admin-dashboard-page" class="admin-page">
+
+                <h2>Admin Dashboard</h2>
+                <p>Manage your store and customer orders.</p>
+
+                <div class="admin-stats">
+
+                    <div class="admin-card">
+                        <h3>Total Orders</h3>
+                        <p id="totalOrders">0</p>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Pending Orders</h3>
+                        <p id="pendingOrders">0</p>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3>Completed Orders</h3>
+                        <p id="completedOrders">0</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PRODUCTS PAGE -->
+            <div id="admin-products-page" class="admin-page" style="display:none;">
+                <h2>Product Management</h2>
+                <p>Add, edit and manage your store products.</p>
+                <div id="adminProductsList">
+                    <p>Products section is ready.</p>
+                </div>
+            </div>
+
+            <!-- ORDERS PAGE -->
+            <div id="admin-orders-page" class="admin-page" style="display:none;">
+                <h2>Customer Orders</h2>
+
+                <button onclick="loadAdminOrders()">
+                    Refresh Orders
+                </button>
+
+                <div id="adminOrdersList">
+                    <p>Orders will appear here.</p>
+                </div>
+            </div>
+
+            <!-- CUSTOMERS PAGE -->
+            <div id="admin-customers-page" class="admin-page" style="display:none;">
+                <h2>Customers</h2>
+                <p>Customer management will appear here.</p>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="admin-settings-page" class="admin-page" style="display:none;">
+                <h2>Store Settings</h2>
+                <p>Store settings will appear here.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Bottom Footer Section -->
+<footer id="mainFooter" class="site-footer">
+<div class="footer-content">
+<div class="footer-section">
+<h3>Solan Bamboo Furniture</h3>
+<p>Eco-Friendly, Elegant & Durable Bamboo Living.</p>
+</div>
+<div class="footer-section">
+<h3>Headquarters</h3>
+<p>Village Dharja P.O Oachghat<br>Dist. Solan (H.P)<br>Email: contact@solanbamboofurniture.com</p>
+</div>
+</div>
+<div class="footer-bottom">
+&copy; 2026 Solan Bamboo Furniture. All Rights Reserved.
+</div>
+</footer>
+
+<!-- Slide-out Sidebar Navigation Drawer -->
+<div id="sideNav" class="side-nav">
+<div class="side-nav-header">
+<h3>Menu</h3>
+<span class="close-side-btn" onclick="toggleMenu()">&times;</span>
+</div>
+<ul class="side-nav-links">
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('homeSection', '/');">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"/></svg>
+Home</a></li>
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('productsSection', '/products');">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
+Products</a></li>
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('loginSection', '/login');">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
+Login</a></li>
+<li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile();">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22 z"/></svg>
+My Profile</a></li>
+<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('customerCareSection', '/customer-care');">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1 z"/></svg>
+Customer Care</a></li>
+<li id="adminMenuItem" style="display:none;">
+    <a href="javascript:void(0)"
+       onclick="toggleMenu(); openAdminPanel();">
+        <span style="color:#000000; size:7px;">⚙</span>
+        Admin Panel
+    </a>
+</li>    
+</ul>
+</div>
+<div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
+
+<!-- User Profile Modal -->
+<div id="profileModal" class="modal-overlay">
+<div class="modal-card">
+<span class="close-btn" onclick="closeProfile()">&times;</span>
+<h2 class="modal-title">User Profile</h2>
+<div class="profile-avatar-container">
+<img id="profileAvatarImg" src="" alt="Profile Picture" style="display:none;">
+<input type="file" id="avatarUploadInput" accept="image/*" onchange="previewAvatar(event)">
+</div>
+<div class="profile-form-group">
+<label for="editName">Full Name</label>
+<input type="text" id="editName" class="profile-input">
+</div>
+<div class="profile-form-group">
+<label for="editEmail">Gmail ID</label>
+<input type="email" id="editEmail" class="profile-input" readonly>
+</div>
+<button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
+<button type="button" class="logout-btn" onclick="handleLogout()">Sign Out</button>
+</div>
+</div>
+
+<script>
+document.body.classList.add("auth-loading");    
+let cartItems = [];
+let currentActiveProduct = "";
+let currentActiveProductData = null;
+    
+let previousView = "productsSection";
+let lastScrollPosition = 0;
+let slideIndex = 0;
+
+window.onload = function() {
+  updateCartUI();
+  updateHeaderProfilePic();
+  showSlides();
+  handleInitialRoute();
+};
+
+window.onpopstate = function(event) {
+  handleInitialRoute();
+};
+
+function handleInitialRoute() {
+const path = window.location.pathname;
+if (path.includes('/products')) {
+showSection('productsSection', '/products', false);
+} else if (path.includes('/my-profile')) {
+showSection('homeSection', '/', false);
+openProfile();
+} else if (path.includes('/customer-care')) {
+showSection('customerCareSection', '/customer-care', false);
+} else if (path.includes('/login')) {
+showSection('loginSection', '/login', false);
+} else if (path.includes('/register')) {
+flipAuthCard('registerSection', '/register', false);
+} else if (path.includes('/cart')) {
+openCartFullView(false);
+} else {
+showSection('homeSection', '/', false);
+}
+}
+
+function showSlides() {
+let slides = document.getElementsByClassName("slide");
+if (slides.length > 0) {
+for (let i = 0; i < slides.length; i++) {
+slides[i].style.display = "none";
+}
+slideIndex++;
+if (slideIndex > slides.length) { slideIndex = 1; }
+slides[slideIndex - 1].style.display = "block";
+setTimeout(showSlides, 3500);
+}
+}
+
+function showSection(sectionId, urlPath, pushHistory = true) {
+document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+document.getElementById('fullProductSection').style.display = 'none';
+document.getElementById('cartFullSection').style.display = 'none';
+document.getElementById(sectionId).classList.add('active');
+previousView = sectionId;
+
+const hamburger = document.getElementById('hamburgerBtn');
+const searchBar = document.getElementById('searchContainerBar');
+const rightActions = document.getElementById('rightActionsBar');
+const loginBtn = document.getElementById('loginHeaderBtn');
+const footer = document.getElementById('mainFooter');
+
+if (sectionId === 'loginSection' || sectionId === 'registerSection') {
+if (hamburger) hamburger.style.display = 'none';
+if (searchBar) searchBar.style.display = 'none';
+if (rightActions) rightActions.style.display = 'none';
+if (loginBtn) loginBtn.style.display = 'none';
+if (footer) footer.style.display = 'none';
+} else {
+if (hamburger) hamburger.style.display = 'flex';
+if (searchBar) searchBar.style.display = 'flex';
+if (rightActions) rightActions.style.display = 'flex';
+if (loginBtn) {
+    loginBtn.style.display = window.currentFirebaseUser ? 'none' : 'block';
+}
+
+const profileBtn = document.getElementById('profileBorderBtn');
+
+if (profileBtn) {
+    profileBtn.style.display = window.currentFirebaseUser ? 'flex' : 'none';
+}
+if (footer) footer.style.display = 'block';
+}
+
+if (pushHistory) {
+history.pushState({section: sectionId}, "", urlPath);
+}
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 3D Flip Animation Function for Login & Register cards
+function flipAuthCard(targetSectionId, urlPath, pushHistory = true) {
+const loginCard = document.getElementById('loginSection');
+const registerCard = document.getElementById('registerSection');
+const hamburger = document.getElementById('hamburgerBtn');
+const searchBar = document.getElementById('searchContainerBar');
+const rightActions = document.getElementById('rightActionsBar');
+const loginBtn = document.getElementById('loginHeaderBtn');
+const footer = document.getElementById('mainFooter');
+
+if (hamburger) hamburger.style.display = 'none';
+if (searchBar) searchBar.style.display = 'none';
+if (rightActions) rightActions.style.display = 'none';
+if (loginBtn) loginBtn.style.display = 'none';
+if (footer) footer.style.display = 'none';
+
+document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+document.getElementById('fullProductSection').style.display = 'none';
+document.getElementById('cartFullSection').style.display = 'none';
+
+// Apply Flip Rotation
+if (targetSectionId === 'registerSection') {
+loginCard.style.transform = 'rotateY(180deg)';
+loginCard.style.opacity = '0';
+registerCard.style.transform = 'rotateY(0deg)';
+registerCard.style.opacity = '1';
+registerCard.classList.add('active');
+} else {
+registerCard.style.transform = 'rotateY(180deg)';
+registerCard.style.opacity = '0';
+loginCard.style.transform = 'rotateY(0deg)';
+loginCard.style.opacity = '1';
+loginCard.classList.add('active');
+}
+
+if (pushHistory) {
+history.pushState({section: targetSectionId}, "", urlPath);
+}
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openFullProduct(cardElement) {
+lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+const title = cardElement.querySelector('.item-title').textContent;
+const desc = cardElement.querySelector('.item-description').textContent;
+const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
+const price = cardElement.getAttribute('data-price') || "₹15,499";
+
+currentActiveProduct = title;
+const productImage = cardElement.querySelector('.item-image-container img');
+
+currentActiveProductData = {
+    title: title,
+    description: desc,
+    imageURL: productImage ? productImage.src : "",
+    price: price,
+    quantity: 1
+};
+
+updateSimpleCartButton();
+    
+document.getElementById('simpleModalTitle').textContent = title;
+document.getElementById('simpleModalDesc').textContent = desc;
+document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
+document.getElementById('productPriceTag').textContent = price;
+
+document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+document.getElementById('cartFullSection').style.display = 'none';
+document.getElementById('fullProductSection').style.display = 'block';
+
+history.pushState({product: title}, "", "/product-detail");
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+document.getElementById('fullProductSection').style.display = 'none';
+if (previousView === 'cartFullSection') {
+openCartFullView();
+} else {
+showSection(previousView, previousView === 'productsSection' ? '/products' : '/');
+window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+}
+}
+
+
+
+function getCartPrice(item) {
+    const value = String(item.price || "")
+        .replace(/,/g, "")
+        .replace(/[^\d.]/g, "");
+
+    return Number(value) || 0;
+}
+
+function formatCartPrice(amount) {
+    return "₹" + amount.toLocaleString("en-IN");
+}
+
+function saveCart() {
+    const user = window.currentFirebaseUser;
+
+    if (user) {
+        localStorage.setItem(
+            "cartItems_" + user.uid,
+            JSON.stringify(cartItems)
+        );
+    }
+}
+
+function updateSimpleCartButton() {
+    const button = document.getElementById("simpleCartBtn");
+
+    if (!button || !currentActiveProductData) return;
+
+    const exists = cartItems.some(
+        item => item.title === currentActiveProductData.title
+    );
+
+    button.textContent = exists ? "Remove Item" : "Add to Cart";
+}
+
+function toggleCart(product, event) {
+    if (event) event.stopPropagation();
+
+    if (!window.currentFirebaseUser) {
+        alert("Please login first!");
+        showSection("loginSection", "/login");
+        return;
+    }
+
+    if (!product) return;
+
+    const index = cartItems.findIndex(
+        item => item.title === product.title
+    );
+
+    if (index >= 0) {
+        cartItems.splice(index, 1);
+    } else {
+        cartItems.push({
+            ...product,
+            quantity: 1
+        });
+    }
+
+    saveCart();
+    updateCartUI();
+    updateSimpleCartButton();
+}
+
+function toggleCartFromSimpleView() {
+    if (!currentActiveProductData) {
+        alert("Please select a product first!");
+        return;
+    }
+
+    toggleCart(currentActiveProductData);
+}
+
+function changeCartQuantity(index, amount) {
+    if (!cartItems[index]) return;
+
+    cartItems[index].quantity += amount;
+
+    if (cartItems[index].quantity <= 0) {
+        cartItems.splice(index, 1);
+    }
+
+    saveCart();
+    updateCartUI();
+    updateSimpleCartButton();
+}
+
+function removeCartItem(index) {
+    cartItems.splice(index, 1);
+
+    saveCart();
+    updateCartUI();
+    updateSimpleCartButton();
+}
+
+function updateCartUI() {
+    const badge = document.getElementById("cartBadge");
+
+    if (badge) {
+        badge.textContent = cartItems.reduce(
+            (total, item) => total + item.quantity, 0
+        );
+    }
+
+    const container = document.getElementById("cartFullListContainer");
+
+    if (!container) return;
+
+    if (cartItems.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:40px 15px;">
+                <h3>Your Cart is Empty</h3>
+                <p>Explore our bamboo furniture collection.</p>
+            </div>
+        `;
+        return;
+    }
+
+    let total = 0;
+
+    container.innerHTML = cartItems.map((item, index) => {
+        const price = getCartPrice(item);
+        const subtotal = price * item.quantity;
+        total += subtotal;
+
+        const title = String(item.title).replace(/[&<>"']/g, c =>
+            ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])
+        );
+
+        return `
+            <div style="
+                display:flex;
+                gap:15px;
+                padding:15px;
+                margin-bottom:15px;
+                border:1px solid #ddd;
+                border-radius:10px;
+                background:#fff;
+                align-items:center;
+                flex-wrap:wrap;
+            ">
+                <div style="width:110px;height:110px;flex-shrink:0;">
+                    ${item.imageURL ? `
+                        <img src="${item.imageURL}"
+                        alt="${title}"
+                        style="width:100%;height:100%;object-fit:contain;">
+                    ` : `
+                        <div style="padding:25px 5px;">No Image</div>
+                    `}
+                </div>
+
+                <div style="flex:1;min-width:140px;">
+                    <h3 style="margin:0 0 8px;color:#2B1B17;">
+                        ${title}
+                    </h3>
+
+                    <p style="margin:5px 0;">
+                        Price: ${formatCartPrice(price)}
+                    </p>
+
+                    <p style="margin:5px 0;font-weight:bold;">
+                        Subtotal: ${formatCartPrice(subtotal)}
+                    </p>
+
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+                        <button onclick="changeCartQuantity(${index},-1)">−</button>
+                        <strong>${item.quantity}</strong>
+                        <button onclick="changeCartQuantity(${index},1)">+</button>
+                        <button onclick="removeCartItem(${index})"
+                        style="color:#c62828;">Remove</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("") + `
+        <div style="padding:18px;border-top:2px solid #E09F3E;">
+            <h2 style="text-align:right;color:#2B1B17;">
+                Total: ${formatCartPrice(total)}
+            </h2>
+        </div>
+    `;
+}
+
+function openCartFullView(pushHistory = true) {
+if (!window.currentFirebaseUser) {
+showSection('loginSection', '/login');
+return;
+}
+document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+document.getElementById('fullProductSection').style.display = 'none';
+document.getElementById('cartFullSection').style.display = 'block';
+previousView = "cartFullSection";
+
+if (pushHistory) {
+history.pushState({cart: true}, "", "/cart");
+}
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeCartFullView() {
+document.getElementById('cartFullSection').style.display = 'none';
+showSection('homeSection', '/');
+}
+
+
+async function checkoutCart() {
+    if (!window.currentFirebaseUser) {
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    if (!cartItems || cartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    try {
+        const orderId = await window.placeOrderToFirestore();
+
+        cartItems = [];
+saveCart();
+
+updateCartUI();
+updateSimpleCartButton();
+closeCartFullView();
+
+        alert("Order placed successfully! Order ID: " + orderId);
+
+    } catch (error) {
+        console.error("Order Error:", error);
+        alert("Order could not be placed: " + error.message);
+    }
+}
+
+
+async function loadProfileData(user = window.currentFirebaseUser) {
+    const nameField = document.getElementById('editName');
+    const emailField = document.getElementById('editEmail');
+    const avatar = document.getElementById('profileAvatarImg');
+
+    if (!user) {
+        if (nameField) nameField.value = "";
+        if (emailField) emailField.value = "";
+        if (avatar) avatar.style.display = "none";
+        return;
+    }
+
+    try {
+        const profile = await window.getUserProfileFromFirestore(user);
+
+        if (nameField) {
+            nameField.value =
+                profile?.displayName || user.displayName || "";
+        }
+
+        if (emailField) {
+            emailField.value = user.email || "";
+        }
+
+        const photo = profile?.photoURL || user.photoURL;
+
+        if (avatar && photo) {
+            avatar.src = photo;
+            avatar.style.display = "block";
+        }
+    } catch (error) {
+        console.error("Unable to load profile:", error);
+    }
+}
+
+function updateHeaderProfilePic(user = window.currentFirebaseUser) {
+
+    const img = document.getElementById('headerProfileImg');
+    const svg = document.getElementById('headerProfileSvg');
+
+    if (!img || !svg) return;
+
+    if (user && user.photoURL) {
+        img.src = user.photoURL;
+        img.style.display = 'block';
+        svg.style.display = 'none';
+    } else {
+        img.removeAttribute('src');
+        img.style.display = 'none';
+        svg.style.display = 'block';
+    }
+}
+
+function previewAvatar(event) {
+const file = event.target.files[0];
+if (file) {
+const reader = new FileReader();
+reader.onload = function(e) {
+localStorage.setItem('userAvatar', e.target.result);
+document.getElementById('profileAvatarImg').src = e.target.result;
+document.getElementById('profileAvatarImg').style.display = 'block';
+updateHeaderProfilePic();
+}
+reader.readAsDataURL(file);
+}
+}
+
+async function saveProfileDetails() {
+    const user = window.currentFirebaseUser;
+    const name = document.getElementById('editName').value.trim();
+
+    if (!user) {
+        alert("Please login first.");
+        return;
+    }
+
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    try {
+        await window.updateProfile(user, {
+            displayName: name
+        });
+
+        await window.saveUserProfileToFirestore(user, {
+            displayName: name
+        });
+
+        alert("Profile saved successfully!");
+        closeProfile();
+
+    } catch (error) {
+        console.error("Profile save error:", error);
+        alert("Profile could not be saved: " + error.message);
+    }
+}
+
+function filterCards() {
+const query = document.getElementById('searchInput').value.toLowerCase();
+document.querySelectorAll('.item-card').forEach(card => {
+const title = card.querySelector('.item-title').textContent.toLowerCase();
+const desc = card.querySelector('.item-description').textContent.toLowerCase();
+card.style.display = (title.includes(query) || desc.includes(query)) ? 'block' : 'none';
+});
+}
+
+function openProfile() {
+    if (!window.currentFirebaseUser) {
+        showSection('loginSection', '/login');
+        return;
+    }
+
+    loadProfileData();
+
+    document.getElementById('profileModal').style.display = 'flex';
+
+    history.pushState({profile: true}, "", "/my-profile");
+}
+
+function closeProfile() {
+document.getElementById('profileModal').style.display = 'none';
+history.pushState({}, "", window.location.pathname.replace('/my-profile', '') || '/');
+}
+
+function onSuccessfulLogin() {
+  document.getElementById('loginHeaderBtn').style.display = 'none';
+  document.getElementById('profileBorderBtn').style.display = 'flex';
+
+  updateHeaderProfilePic();
+  showSection('homeSection', '/');
+}
+
+async function handleManualLogin() {
+  const emailInput = document.getElementById('loginEmailInput').value.trim();
+  const passwordInput = document.getElementById('loginPasswordInput').value;
+  const errorMsgElem = document.getElementById('loginErrorMsg');
+
+  if (!emailInput || !passwordInput) {
+    errorMsgElem.textContent = "Please enter both email and password!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
+
+  try {
+    errorMsgElem.style.display = 'none';
+
+    await window.signInWithEmailAndPassword(
+      window.firebaseAuth,
+      emailInput,
+      passwordInput
+    );
+
+  } catch (error) {
+    errorMsgElem.textContent =
+      error.code === "auth/invalid-credential"
+        ? "Incorrect email or password."
+        : "Login failed: " + error.message;
+
+    errorMsgElem.style.display = 'block';
+  }
+}
+
+async function handleManualRegister() {
+  const nameInput = document.getElementById('regNameInput').value.trim();
+  const emailInput = document.getElementById('regEmailInput').value.trim();
+  const passwordInput = document.getElementById('regPasswordInput').value;
+  const errorMsgElem = document.getElementById('regErrorMsg');
+
+  if (!nameInput || !emailInput || !passwordInput) {
+    errorMsgElem.textContent = "Please fill in all fields!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
+
+  if (passwordInput.length < 6) {
+    errorMsgElem.textContent = "Password must be at least 6 characters!";
+    errorMsgElem.style.display = 'block';
+    return;
+  }
+
+  try {
+    errorMsgElem.style.display = 'none';
+
+    const result = await window.createUserWithEmailAndPassword(
+      window.firebaseAuth,
+      emailInput,
+      passwordInput
+    );
+
+    await window.updateProfile(result.user, {
+  displayName: nameInput
+});
+
+await window.saveUserProfileToFirestore(result.user, {
+  displayName: nameInput
+});      
+
+// Registration के बाद automatic login बंद करें
+await window.signOut(window.firebaseAuth);
+
+// Login page पर वापस भेजें
+document.getElementById('loginEmailInput').value = emailInput;
+document.getElementById('loginPasswordInput').value = '';
+
+alert("Account created successfully! Please login.");
+
+showSection('loginSection', '/login');
+
+  } catch (error) {
+    errorMsgElem.textContent =
+      error.code === "auth/email-already-in-use"
+        ? "This email is already registered."
+        : error.code === "auth/weak-password"
+        ? "Password is too weak."
+        : "Registration failed: " + error.message;
+
+    errorMsgElem.style.display = 'block';
+  }
+}
+
+async function handleGoogleCredentialResponse(response) {
+    try {
+        const credential = window.GoogleAuthProvider.credential(
+            response.credential
+        );
+
+        const result = await window.signInWithCredential(
+            window.firebaseAuth,
+            credential
+        );
+
+        const user = result.user;
+
+        console.log("Firebase Google Login Successful:", {
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL
+        });
+
+        onSuccessfulLogin();
+        loadProfileData(user);
+
+    } catch (error) {
+        console.error("Google Login Error:", error);
+        alert("Google Sign-In failed: " + error.message);
+    }
+}
+
+async function handleLogout() {
+    try {
+        await window.signOut(window.firebaseAuth);
+
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userEmail');
+
+        location.href = '/';
+
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Sign out failed. Please try again.");
+    }
+}
+
+function toggleMenu() {
+document.getElementById('sideNav').classList.toggle('open');
+document.getElementById('navOverlay').classList.toggle('active');
+}
+
+function openAdminPanel() {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        alert("Admin access denied!");
+        return;
+    }
+
+    showSection("adminSection", "/admin");
+    window.loadAdminOrders();
+}
+
+
+function showAdminPage(pageName) {
+
+    document.querySelectorAll(".admin-page").forEach(page => {
+        page.style.display = "none";
+    });
+
+    const selectedPage = document.getElementById(
+        "admin-" + pageName + "-page"
+    );
+
+    if (selectedPage) {
+        selectedPage.style.display = "block";
+    }
+
+    document.querySelectorAll(".admin-sidebar button").forEach(button => {
+    button.classList.remove("active");
+});
+
+const activeButton = [...document.querySelectorAll(".admin-sidebar button")]
+    .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
+
+if (activeButton) activeButton.classList.add("active");
+
+    if (pageName === "orders" && window.loadAdminOrders) {
+        window.loadAdminOrders();
+    }
+} 
+
+window.syncCartForAuth = function(user) {
+    if (user) {
+        try {
+            cartItems = JSON.parse(
+                localStorage.getItem("cartItems_" + user.uid)
+            ) || [];
+        } catch (error) {
+            cartItems = [];
+        }
+    } else {
+        cartItems = [];
+        localStorage.removeItem("cartItems");
+    }
+
+    updateCartUI();
+    updateSimpleCartButton();
+};    
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signOut,
+  GoogleAuthProvider,
+  signInWithCredential
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc  
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
+  authDomain: "solan-bamboo-furniture.firebaseapp.com",
+  projectId: "solan-bamboo-furniture",
+  storageBucket: "solan-bamboo-furniture.firebasestorage.app",
+  messagingSenderId: "583152922039",
+  appId: "1:583152922039:web:d5e6e77d7292ffcd4a4c32"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Make Firebase functions available to your existing website code
+window.firebaseAuth = auth;
+window.firebaseDb = db;
+
+window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+window.updateProfile = updateProfile;
+window.signOut = signOut;
+window.GoogleAuthProvider = GoogleAuthProvider;
+window.signInWithCredential = signInWithCredential;
+
+// Save a customer's profile in Firestore
+window.saveUserProfileToFirestore = async function(user, extraData = {}) {
+  if (!user) throw new Error("User is not logged in.");
+
+  const userRef = doc(db, "users", user.uid);
+  const userSnapshot = await getDoc(userRef);
+
+  const profileData = {
+    uid: user.uid,
+    displayName: extraData.displayName ?? user.displayName ?? "",
+    email: user.email ?? "",
+    photoURL: user.photoURL ?? "",
+    provider: user.providerData?.[0]?.providerId ?? "password",
+    updatedAt: serverTimestamp()
+  };
+
+  // Only create this timestamp for a new profile
+  if (!userSnapshot.exists()) {
+    profileData.createdAt = serverTimestamp();
+  }
+
+  await setDoc(userRef, profileData, { merge: true });
+
+  return profileData;
+};
+
+// Read a customer's profile from Firestore
+window.getUserProfileFromFirestore = async function(user) {
+    if (!user) return null;
+
+    const userRef = doc(db, "users", user.uid);
+    const userSnapshot = await getDoc(userRef);
+
+    return userSnapshot.exists()
+        ? userSnapshot.data()
+        : null;
+};
+// Check whether the logged-in user is an admin
+window.checkAdminAccess = async function(user) {
+    if (!user) {
+        window.isAdminUser = false;
+        return false;
+    }
+
+    try {
+        const adminRef = doc(db, "ADMIN", user.uid);
+        const adminSnapshot = await getDoc(adminRef);
+
+        window.isAdminUser =
+            adminSnapshot.exists() &&
+            adminSnapshot.data().role === "admin";
+
+        console.log(
+            "Admin access:",
+            window.isAdminUser
+        );
+
+        return window.isAdminUser;
+
+    } catch (error) {
+        console.error("Admin verification error:", error);
+        window.isAdminUser = false;
+        return false;
+    }
+};    
+    
+window.placeOrderToFirestore = async function() {
+    const user = window.currentFirebaseUser;
+
+    if (!user) {
+        throw new Error("Please login first.");
+    }
+
+    if (!cartItems.length) {
+        throw new Error("Your cart is empty.");
+    }
+
+    const orderData = {
+        userId: user.uid,
+        customerName: user.displayName || "",
+        customerEmail: user.email || "",
+        items: cartItems.map(item => ({
+            productName: item.title,
+            quantity: item.quantity,
+            unitPrice: getCartPrice(item)
+        })),
+        totalAmount: cartItems.reduce(
+            (sum, item) => sum + getCartPrice(item) * item.quantity,
+            0
+        ),
+        status: "Pending",
+        createdAt: serverTimestamp()
+    };
+
+    const orderRef = await addDoc(collection(db, "orders"), orderData);
+    return orderRef.id;
+};
+    
+
+// Watch Firebase login state
+onAuthStateChanged(auth, async (user) => {
+    window.currentFirebaseUser = user;
+
+    try {
+        if (window.syncCartForAuth) {
+            window.syncCartForAuth(user);
+        }
+
+        if (user) {
+            await window.saveUserProfileToFirestore(user);
+            await window.checkAdminAccess(user);
+            document.getElementById("adminMenuItem").style.display =
+            window.isAdminUser ? "block" : "none";
+
+            onSuccessfulLogin();
+            updateHeaderProfilePic(user);
+            await loadProfileData(user);
+
+        } else {
+            window.isAdminUser = false;
+
+            document.getElementById("loginHeaderBtn").style.display = "flex";
+            document.getElementById("profileBorderBtn").style.display = "none";
+            document.getElementById("adminMenuItem").style.display = "none";
+
+            updateHeaderProfilePic(null);
+            await loadProfileData(null);
+        }
+
+    } catch (error) {
+        console.error("Authentication state error:", error);
+
+    } finally {
+        document.body.classList.remove("auth-loading");
+    }
+});    
+
+// LOAD CUSTOMER ORDERS IN ADMIN DASHBOARD
+
+function escapeAdminHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+window.loadAdminOrders = async function() {
+    const container = document.getElementById("adminOrdersList");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        container.textContent = "Access denied. Admin login required.";
+        return;
+    }
+
+    container.textContent = "Loading orders...";
+
+    try {
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        const orders = snapshot.docs.map(orderDoc => ({
+            id: orderDoc.id,
+            ...orderDoc.data()
+        }));
+
+        document.getElementById("totalOrders").textContent = orders.length;
+        document.getElementById("pendingOrders").textContent =
+            orders.filter(o => o.status === "Pending").length;
+        document.getElementById("completedOrders").textContent =
+            orders.filter(o => o.status === "Completed").length;
+
+        if (!orders.length) {
+            container.textContent = "No customer orders found.";
+            return;
+        }
+
+        container.innerHTML = `
+            <table style="width:100%; border-collapse:collapse; margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${orders.map(order => `
+                        <tr>
+                            <td>${escapeAdminHTML(order.id.slice(0, 8))}</td>
+                            <td>${escapeAdminHTML(order.customerName || "Customer")}</td>
+                            <td>${escapeAdminHTML(order.customerEmail || "-")}</td>
+                            <td>${(order.items || []).map(item =>
+                                `${escapeAdminHTML(item.productName)} × ${escapeAdminHTML(item.quantity)}`
+                            ).join("<br>")}</td>
+                            <td>₹${escapeAdminHTML(order.totalAmount ?? 0)}</td>
+                            <td>
+                                <select class="admin-order-status"
+                                    data-order-id="${escapeAdminHTML(order.id)}">
+                                    ${["Pending", "Processing", "Completed", "Cancelled"].map(status => `
+                                        <option value="${status}" ${order.status === status ? "selected" : ""}>
+                                            ${status}
+                                        </option>
+                                    `).join("")}
+                                </select>
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        `;
+
+        container.querySelectorAll(".admin-order-status").forEach(select => {
+            select.addEventListener("change", async function() {
+                try {
+                    await updateDoc(doc(db, "orders", this.dataset.orderId), {
+                        status: this.value
+                    });
+
+                    alert("Order status updated!");
+                    await window.loadAdminOrders();
+
+                } catch (error) {
+                    console.error("Status update error:", error);
+                    alert("Could not update status: " + error.message);
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Admin orders error:", error);
+        container.textContent = "Could not load orders: " + error.message;
+    }
+};
+
+// ADMIN DOCUMENT TEST — OUTSIDE loadAdminOrders
+window.testAdminDocument = async function() {
+    try {
+        const user = window.currentFirebaseUser;
+
+        if (!user) return "No logged-in user";
+
+        const ref = doc(db, "ADMIN", user.uid);
+        const result = await getDoc(ref);
+
+        console.log("Document exists:", result.exists());
+        console.log("Document data:", result.data());
+
+        return result.exists() ? result.data() : "Document not found";
+
+    } catch (error) {
+        console.error("Admin test error:", error);
+        return error.code + ": " + error.message;
+    }
+};
+
+console.log("Admin functions loaded successfully.");
+</script>
+</body>
+</html>
