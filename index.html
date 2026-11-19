@@ -2391,27 +2391,21 @@ window.loadAdminOrders = async function() {
     try {
         const user = window.currentFirebaseUser;
 
-        if (!user) {
-            return "No logged-in user";
-        }
+        if (!user) return "No logged-in user";
 
-        const adminRef = doc(db, "admins", user.uid);
-        const snapshot = await getDoc(adminRef);
+        const ref = doc(db, "admins", user.uid);
+        const result = await getDoc(ref);
 
-        return {
-            exists: snapshot.exists(),
-            data: snapshot.exists() ? snapshot.data() : null
-        };
+        console.log("Document exists:", result.exists());
+        console.log("Document data:", result.data());
+
+        return result.exists() ? result.data() : "Document not found";
 
     } catch (error) {
-        return {
-            error: error.code,
-            message: error.message
-        };
+        console.error("Admin test error:", error);
+        return error.code + ": " + error.message;
     }
-};
-};
-    
+};    
 </script>
 </body>
 </html>
