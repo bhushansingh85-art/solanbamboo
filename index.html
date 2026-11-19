@@ -1016,6 +1016,12 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
 #adminOrdersList {
     overflow-x: auto;
 }
+
+/* Prevent login/profile button flicker */
+body.auth-loading #loginHeaderBtn,
+body.auth-loading #profileBorderBtn {
+    visibility: hidden !important;
+}    
 }    
 </style>
 </head>
@@ -1402,6 +1408,7 @@ Customer Care</a></li>
 </div>
 
 <script>
+document.body.classList.add("auth-loading");    
 let cartItems = [];
 let currentActiveProduct = "";
 let currentActiveProductData = null;
@@ -2258,33 +2265,38 @@ window.placeOrderToFirestore = async function() {
 
 // Watch Firebase login state
 onAuthStateChanged(auth, async (user) => {
-  window.currentFirebaseUser = user;
-  if (window.syncCartForAuth) {
-    window.syncCartForAuth(user);
-}  
+    window.currentFirebaseUser = user;
 
-  if (user) {
     try {
-      await window.saveUserProfileToFirestore(user);
-      await window.checkAdminAccess(user);  
+        if (window.syncCartForAuth) {
+            window.syncCartForAuth(user);
+        }
 
-      onSuccessfulLogin();
-      updateHeaderProfilePic(user);
-      await loadProfileData(user);
+        if (user) {
+            await window.saveUserProfileToFirestore(user);
+            await window.checkAdminAccess(user);
+
+            onSuccessfulLogin();
+            updateHeaderProfilePic(user);
+            await loadProfileData(user);
+
+        } else {
+            window.isAdminUser = false;
+
+            document.getElementById("loginHeaderBtn").style.display = "flex";
+            document.getElementById("profileBorderBtn").style.display = "none";
+
+            updateHeaderProfilePic(null);
+            await loadProfileData(null);
+        }
+
     } catch (error) {
-      console.error("Profile sync error:", error);
+        console.error("Authentication state error:", error);
+
+    } finally {
+        document.body.classList.remove("auth-loading");
     }
-  } else {
-    document.getElementById("loginHeaderBtn").style.display = "flex";
-    document.getElementById("profileBorderBtn").style.display = "none";
-
-    updateHeaderProfilePic(null);
-    loadProfileData(null);
-  }
-});
-
-console.log("Firebase Authentication and Firestore connected!");
-    
+});    
 
 // LOAD CUSTOMER ORDERS IN ADMIN DASHBOARD
 
