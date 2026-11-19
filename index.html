@@ -2423,6 +2423,10 @@ if (activeButton) activeButton.classList.add("active");
     if (pageName === "orders" && window.loadAdminOrders) {
         window.loadAdminOrders();
     }
+
+    if (pageName === "products" && window.loadAdminProducts) {
+    window.loadAdminProducts();
+}
 } 
 
 window.syncCartForAuth = function(user) {
