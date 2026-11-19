@@ -1529,13 +1529,72 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
             </div>
 
             <!-- PRODUCTS PAGE -->
-            <div id="admin-products-page" class="admin-page" style="display:none;">
-                <h2>Product Management</h2>
-                <p>Add, edit and manage your store products.</p>
-                <div id="adminProductsList">
-                    <p>Products section is ready.</p>
-                </div>
-            </div>
+<div id="admin-products-page" class="admin-page" style="display:none;">
+
+    <div class="admin-page-header">
+        <div>
+            <h2>Product Management</h2>
+            <p>Manage your Solan Bamboo Furniture store.</p>
+        </div>
+
+        <button class="admin-add-btn" onclick="openProductForm()">
+            + Add New Product
+        </button>
+    </div>
+
+    <!-- PRODUCT FORM -->
+    <div id="productFormBox" style="display:none;">
+
+        <h3 id="productFormTitle">Add New Product</h3>
+
+        <input type="hidden" id="editProductId">
+
+        <label>Product Name</label>
+        <input type="text" id="productName" placeholder="Enter product name">
+
+        <label>Price (₹)</label>
+        <input type="number" id="productPrice" placeholder="Enter price" min="0">
+
+        <label>Category</label>
+        <select id="productCategory">
+            <option value="">Select Category</option>
+            <option value="Bamboo Furniture">Bamboo Furniture</option>
+            <option value="Tables">Tables</option>
+            <option value="Chairs">Chairs</option>
+            <option value="Beds">Beds</option>
+            <option value="Sofas">Sofas</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Stock Quantity</label>
+        <input type="number" id="productStock" placeholder="Enter stock" min="0">
+
+        <label>Product Image URL</label>
+        <input type="url" id="productImage" placeholder="Paste image URL">
+
+        <label>Description</label>
+        <textarea id="productDescription"
+            placeholder="Enter product description"></textarea>
+
+        <div>
+            <button onclick="saveAdminProduct()">Save Product</button>
+            <button onclick="closeProductForm()">Cancel</button>
+        </div>
+
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="admin-products-container">
+
+        <h3>All Products</h3>
+
+        <div id="adminProductsList">
+            <p>Loading products...</p>
+        </div>
+
+    </div>
+
+</div>
 
             <!-- ORDERS PAGE -->
             <div id="admin-orders-page" class="admin-page" style="display:none;">
@@ -2400,14 +2459,15 @@ import {
 
 import {
   getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  serverTimestamp,
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc  
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp,
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -2584,118 +2644,195 @@ function escapeAdminHTML(value) {
     })[char]);
 }
 
-window.loadAdminOrders = async function() {
-    const container = document.getElementById("adminOrdersList");
 
-    if (!auth.currentUser || !window.isAdminUser) {
-        container.textContent = "Access denied. Admin login required.";
-        return;
-    }
+// ===============================
+// ADMIN PRODUCT MANAGEMENT
+// ===============================
 
-    container.textContent = "Loading orders...";
+window.adminProductCache = {};
 
+function escapeProductHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+// OPEN PRODUCT FORM
+window.openProductForm = function () {
+    document.getElementById("productFormBox").style.display = "block";
+    document.getElementById("productFormTitle").textContent = "Add New Product";
+    document.getElementById("editProductId").value = "";
+
+    document.getElementById("productName").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productCategory").value = "";
+    document.getElementById("productStock").value = "";
+    document.getElementById("productImage").value = "";
+    document.getElementById("productDescription").value = "";
+};
+
+// CLOSE PRODUCT FORM
+window.closeProductForm = function () {
+    document.getElementById("productFormBox").style.display = "none";
+};
+
+// SAVE PRODUCT
+window.saveAdminProduct = async function () {
     try {
-        const snapshot = await getDocs(collection(db, "orders"));
-
-        const orders = snapshot.docs.map(orderDoc => ({
-            id: orderDoc.id,
-            ...orderDoc.data()
-        }));
-
-        document.getElementById("totalOrders").textContent = orders.length;
-        document.getElementById("pendingOrders").textContent =
-            orders.filter(o => o.status === "Pending").length;
-        document.getElementById("completedOrders").textContent =
-            orders.filter(o => o.status === "Completed").length;
-
-        if (!orders.length) {
-            container.textContent = "No customer orders found.";
+        if (!auth.currentUser || !window.isAdminUser) {
+            alert("Admin access denied!");
             return;
         }
 
-        container.innerHTML = `
-            <table style="width:100%; border-collapse:collapse; margin-top:15px;">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
-                        <th>Email</th>
-                        <th>Items</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${orders.map(order => `
-                        <tr>
-                            <td>${escapeAdminHTML(order.id.slice(0, 8))}</td>
-                            <td>${escapeAdminHTML(order.customerName || "Customer")}</td>
-                            <td>${escapeAdminHTML(order.customerEmail || "-")}</td>
-                            <td>${(order.items || []).map(item =>
-                                `${escapeAdminHTML(item.productName)} × ${escapeAdminHTML(item.quantity)}`
-                            ).join("<br>")}</td>
-                            <td>₹${escapeAdminHTML(order.totalAmount ?? 0)}</td>
-                            <td>
-                                <select class="admin-order-status"
-                                    data-order-id="${escapeAdminHTML(order.id)}">
-                                    ${["Pending", "Processing", "Completed", "Cancelled"].map(status => `
-                                        <option value="${status}" ${order.status === status ? "selected" : ""}>
-                                            ${status}
-                                        </option>
-                                    `).join("")}
-                                </select>
-                            </td>
-                        </tr>
-                    `).join("")}
-                </tbody>
-            </table>
-        `;
+        const id = document.getElementById("editProductId").value;
 
-        container.querySelectorAll(".admin-order-status").forEach(select => {
-            select.addEventListener("change", async function() {
-                try {
-                    await updateDoc(doc(db, "orders", this.dataset.orderId), {
-                        status: this.value
-                    });
+        const name = document.getElementById("productName").value.trim();
+        const price = Number(document.getElementById("productPrice").value);
+        const category = document.getElementById("productCategory").value;
+        const stock = Number(document.getElementById("productStock").value);
+        const image = document.getElementById("productImage").value.trim();
+        const description = document.getElementById("productDescription").value.trim();
 
-                    alert("Order status updated!");
-                    await window.loadAdminOrders();
+        if (!name || !category || !Number.isFinite(price) || price < 0 ||
+            !Number.isInteger(stock) || stock < 0) {
+            alert("Please enter valid product details.");
+            return;
+        }
 
-                } catch (error) {
-                    console.error("Status update error:", error);
-                    alert("Could not update status: " + error.message);
-                }
-            });
-        });
+        if (image && !/^https?:\/\//i.test(image)) {
+            alert("Please enter a valid image URL.");
+            return;
+        }
+
+        const productData = {
+            name,
+            price,
+            category,
+            stock,
+            image,
+            description,
+            updatedAt: serverTimestamp()
+        };
+
+        if (id) {
+            await updateDoc(doc(db, "products", id), productData);
+            alert("Product updated successfully!");
+        } else {
+            productData.createdAt = serverTimestamp();
+            productData.isPublished = true;
+
+            await addDoc(collection(db, "products"), productData);
+            alert("Product added successfully!");
+        }
+
+        window.closeProductForm();
+        await window.loadAdminProducts();
 
     } catch (error) {
-        console.error("Admin orders error:", error);
-        container.textContent = "Could not load orders: " + error.message;
+        console.error("Product save error:", error);
+        alert("Could not save product: " + error.message);
     }
 };
 
-// ADMIN DOCUMENT TEST — OUTSIDE loadAdminOrders
-window.testAdminDocument = async function() {
+// LOAD PRODUCTS
+window.loadAdminProducts = async function () {
+    const list = document.getElementById("adminProductsList");
+
     try {
-        const user = window.currentFirebaseUser;
+        if (!auth.currentUser || !window.isAdminUser) {
+            list.textContent = "Admin access denied.";
+            return;
+        }
 
-        if (!user) return "No logged-in user";
+        list.textContent = "Loading products...";
 
-        const ref = doc(db, "ADMIN", user.uid);
-        const result = await getDoc(ref);
+        const snapshot = await getDocs(collection(db, "products"));
 
-        console.log("Document exists:", result.exists());
-        console.log("Document data:", result.data());
+        window.adminProductCache = {};
 
-        return result.exists() ? result.data() : "Document not found";
+        if (snapshot.empty) {
+            list.textContent = "No products added yet.";
+            return;
+        }
+
+        list.innerHTML = snapshot.docs.map(productDoc => {
+            const p = productDoc.data();
+            const id = productDoc.id;
+
+            window.adminProductCache[id] = p;
+
+            return `
+                <div class="admin-product-item">
+                    <h3>${escapeProductHTML(p.name)}</h3>
+                    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+                    <p>Category: ${escapeProductHTML(p.category)}</p>
+                    <p>Stock: ${escapeProductHTML(p.stock)}</p>
+                    <p>${escapeProductHTML(p.description)}</p>
+
+                    <button onclick="editAdminProduct('${id}')">
+                        Edit
+                    </button>
+
+                    <button onclick="deleteAdminProduct('${id}')">
+                        Delete
+                    </button>
+                </div>
+            `;
+        }).join("");
 
     } catch (error) {
-        console.error("Admin test error:", error);
-        return error.code + ": " + error.message;
+        console.error("Product loading error:", error);
+        list.textContent = "Error loading products: " + error.message;
     }
 };
 
-console.log("Admin functions loaded successfully.");
+// EDIT PRODUCT
+window.editAdminProduct = function (id) {
+    const p = window.adminProductCache[id];
+
+    if (!p) {
+        alert("Product not found. Refresh the list.");
+        return;
+    }
+
+    document.getElementById("editProductId").value = id;
+    document.getElementById("productName").value = p.name || "";
+    document.getElementById("productPrice").value = p.price ?? "";
+    document.getElementById("productCategory").value = p.category || "";
+    document.getElementById("productStock").value = p.stock ?? "";
+    document.getElementById("productImage").value = p.image || "";
+    document.getElementById("productDescription").value = p.description || "";
+
+    document.getElementById("productFormTitle").textContent = "Edit Product";
+    document.getElementById("productFormBox").style.display = "block";
+};
+
+// DELETE PRODUCT
+window.deleteAdminProduct = async function (id) {
+    try {
+        if (!auth.currentUser || !window.isAdminUser) {
+            alert("Admin access denied!");
+            return;
+        }
+
+        if (!confirm("Are you sure you want to delete this product?")) {
+            return;
+        }
+
+        await deleteDoc(doc(db, "products", id));
+
+        alert("Product deleted successfully!");
+        await window.loadAdminProducts();
+
+    } catch (error) {
+        console.error("Product delete error:", error);
+        alert("Could not delete product: " + error.message);
+    }
+};
 </script>
 </body>
 </html>
