@@ -2202,7 +2202,7 @@ window.checkAdminAccess = async function(user) {
     }
 
     try {
-        const adminRef = doc(db, "ADMINS", user.uid);
+        const adminRef = doc(db, "ADMIN", user.uid);
         const adminSnapshot = await getDoc(adminRef);
 
         window.isAdminUser =
