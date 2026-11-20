@@ -2859,8 +2859,19 @@ window.loadAdminProducts = async function () {
             window.adminProductCache[id] = p;
 
             return `
-                <div class="admin-product-item">
-                    <h3>${escapeProductHTML(p.name)}</h3>
+    <div class="admin-product-item">
+
+        ${p.image ? `
+            <img
+                src="${escapeProductHTML(p.image)}"
+                alt="${escapeProductHTML(p.name)}"
+                style="width:150px;height:120px;object-fit:cover;border-radius:10px;"
+            >
+        ` : `
+            <p>No image uploaded</p>
+        `}
+
+        <h3>${escapeProductHTML(p.name)}</h3>
                     <p>Price: ₹${escapeProductHTML(p.price)}</p>
                     <p>Category: ${escapeProductHTML(p.category)}</p>
                     <p>Stock: ${escapeProductHTML(p.stock)}</p>
