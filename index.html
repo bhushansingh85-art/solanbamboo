@@ -3384,8 +3384,42 @@ window.loadAdminCustomers = async function () {
                 "Total Order Value: ₹" +
                 customer.totalValue.toLocaleString("en-IN");
 
-            card.append(name, email, id, orders, value);
-            container.appendChild(card);
+            
+const historyButton = document.createElement("button");
+historyButton.textContent = "View Order History";
+
+const historyContainer = document.createElement("div");
+historyContainer.style.display = "none";
+
+historyButton.addEventListener("click", async function () {
+    if (historyContainer.style.display === "block") {
+        historyContainer.style.display = "none";
+        return;
+    }
+
+    historyContainer.style.display = "block";
+    historyContainer.textContent = "Loading order history...";
+
+    if (window.loadCustomerOrderHistory) {
+        await window.loadCustomerOrderHistory(
+            customer.userId,
+            historyContainer
+        );
+    }
+});
+
+card.append(
+    name,
+    email,
+    id,
+    orders,
+    value,
+    historyButton,
+    historyContainer
+);
+
+container.appendChild(card);
+
         });
 
     } catch (error) {
@@ -3412,7 +3446,95 @@ window.filterAdminCustomers = function () {
 
         card.style.display = matches ? "" : "none";
     });
-};    
+};
+
+
+window.loadCustomerOrderHistory = async function (userId, container) {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        container.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        container.textContent = "Loading order history...";
+
+        const customerOrdersQuery = query(
+            collection(db, "orders"),
+            where("userId", "==", userId)
+        );
+
+        const snapshot = await getDocs(customerOrdersQuery);
+
+        if (snapshot.empty) {
+            container.textContent = "No order history found.";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+
+            const orderCard = document.createElement("div");
+            orderCard.className = "admin-order-card";
+
+            const heading = document.createElement("h4");
+            heading.textContent = "Order ID: " + orderDoc.id;
+
+            const date = document.createElement("p");
+
+            if (order.createdAt && order.createdAt.toDate) {
+                date.textContent =
+                    "Date: " +
+                    order.createdAt.toDate().toLocaleString("en-IN");
+            } else {
+                date.textContent = "Date: Not available";
+            }
+
+            const productsHeading = document.createElement("p");
+            productsHeading.textContent = "Products:";
+
+            const productsList = document.createElement("ul");
+
+            (Array.isArray(order.items) ? order.items : []).forEach(item => {
+                const li = document.createElement("li");
+
+                li.textContent =
+                    (item.productName || "Product") +
+                    " × " + Number(item.quantity || 1) +
+                    " | Unit Price: ₹" +
+                    Number(item.unitPrice || 0).toLocaleString("en-IN");
+
+                productsList.appendChild(li);
+            });
+
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Total: ₹" +
+                Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+            const status = document.createElement("p");
+            status.textContent =
+                "Status: " + (order.status || "Pending");
+
+            orderCard.append(
+                heading,
+                date,
+                productsHeading,
+                productsList,
+                amount,
+                status
+            );
+
+            container.appendChild(orderCard);
+        });
+
+    } catch (error) {
+        console.error("Customer order history error:", error);
+        container.textContent = "Could not load order history.";
+    }
+};
+    
     
 window.filterAdminOrders = function () {
     const searchInput = document.getElementById("orderSearchInput");
