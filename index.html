@@ -1769,6 +1769,9 @@ document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('
 document.getElementById('fullProductSection').style.display = 'none';
 document.getElementById('cartFullSection').style.display = 'none';
 document.getElementById(sectionId).classList.add('active');
+if (sectionId === "productsSection" && window.loadStoreProducts) {
+    window.loadStoreProducts();
+}    
 previousView = sectionId;
 
 const hamburger = document.getElementById('hamburgerBtn');
@@ -2970,6 +2973,72 @@ window.loadAdminProducts = async function () {
     }
 };
 
+// LOAD STORE PRODUCTS FROM FIRESTORE
+window.loadStoreProducts = async function () {
+    const container = document.getElementById("mainContentArea");
+
+    if (!container) return;
+
+    try {
+        container.innerHTML = "<p>Loading products...</p>";
+
+        const snapshot = await getDocs(collection(db, "products"));
+
+        const products = snapshot.docs
+            .map(productDoc => ({
+                id: productDoc.id,
+                ...productDoc.data()
+            }))
+            .filter(product => product.isPublished !== false);
+
+        if (products.length === 0) {
+            container.innerHTML = "<p>No products available.</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        products.forEach(product => {
+            const card = document.createElement("div");
+            card.className = "item-card";
+            card.setAttribute(
+                "data-price",
+                "₹" + Number(product.price || 0).toLocaleString("en-IN")
+            );
+
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "item-image-container";
+
+            if (product.image) {
+                const img = document.createElement("img");
+                img.src = product.image;
+                img.alt = product.name || "Bamboo Furniture";
+                imageContainer.appendChild(img);
+            }
+
+            const title = document.createElement("h2");
+            title.className = "item-title";
+            title.textContent = product.name || "Unnamed Product";
+
+            const description = document.createElement("p");
+            description.className = "item-description";
+            description.textContent = product.description || "";
+
+            card.append(imageContainer, title, description);
+
+            card.addEventListener("click", function () {
+                openFullProduct(card);
+            });
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Store products loading error:", error);
+        container.innerHTML = "<p>Could not load products. Please try again.</p>";
+    }
+};    
+
 // EDIT PRODUCT
 window.editAdminProduct = function (id) {
     const p = window.adminProductCache[id];
@@ -3004,8 +3073,7 @@ window.deleteAdminProduct = async function (id) {
         }
 
         await deleteDoc(doc(db, "products", id));
-
-        alert("Product deleted successfully!");
+        
         await window.loadAdminProducts();
 
     } catch (error) {
