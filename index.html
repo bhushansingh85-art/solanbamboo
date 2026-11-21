@@ -2742,7 +2742,7 @@ onAuthStateChanged(auth, async (user) => {
         if (user) {
             await window.saveUserProfileToFirestore(user);
             await window.checkAdminAccess(user);
-            await window.migrateOldProductsToFirestore();
+            
             document.getElementById("adminMenuItem").style.display =
             window.isAdminUser ? "block" : "none";
 
