@@ -2975,6 +2975,58 @@ window.loadAdminProducts = async function () {
     }
 };
 
+
+// LOAD ADMIN ORDERS FROM FIRESTORE
+window.loadAdminOrders = async function () {
+    const container = document.getElementById("adminOrdersList");
+
+    if (!container) return;
+
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        container.innerHTML = "<p>Admin access required.</p>";
+        return;
+    }
+
+    try {
+        container.innerHTML = "<p>Loading orders...</p>";
+
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        if (snapshot.empty) {
+            container.innerHTML = "<p>No orders found.</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+
+            const card = document.createElement("div");
+            card.className = "admin-order-card";
+
+            const heading = document.createElement("h3");
+            heading.textContent = "Order ID: " + orderDoc.id;
+
+            const details = document.createElement("p");
+            details.textContent =
+                "Customer: " + (order.name || order.customerName || "N/A") +
+                " | Status: " + (order.status || "Pending");
+
+            const amount = document.createElement("p");
+            amount.textContent = "Total: ₹" + (order.total || order.totalAmount || 0);
+
+            card.append(heading, details, amount);
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Admin orders error:", error);
+        container.innerHTML = "<p>Could not load orders. Check console.</p>";
+    }
+};
+    
+
 // LOAD STORE PRODUCTS FROM FIRESTORE
 window.loadStoreProducts = async function () {
     const container = document.getElementById("mainContentArea");
