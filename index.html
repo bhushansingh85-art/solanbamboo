@@ -1608,17 +1608,43 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 
             <!-- ORDERS PAGE -->
-            <div id="admin-orders-page" class="admin-page" style="display:none;">
-                <h2>Customer Orders</h2>
+            
+<div id="admin-orders-page" class="admin-page" style="display:none;">
+    <h2>Customer Orders</h2>
 
-                <button onclick="loadAdminOrders()">
-                    Refresh Orders
-                </button>
+    <button onclick="loadAdminOrders()">
+        Refresh Orders
+    </button>
 
-                <div id="adminOrdersList">
-                    <p>Orders will appear here.</p>
-                </div>
-            </div>
+    <!-- Search Orders -->
+    <div>
+        <label for="orderSearchInput">Search Orders:</label>
+        <input
+            type="text"
+            id="orderSearchInput"
+            placeholder="Search by Order ID, Customer Name or Email"
+            oninput="filterAdminOrders()"
+        >
+    </div>
+
+    <!-- Filter by Status -->
+    <div>
+        <label for="orderStatusFilter">Filter by Status:</label>
+        <select id="orderStatusFilter" onchange="filterAdminOrders()">
+            <option value="All">All Orders</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
+
+    <div id="adminOrdersList">
+        <p>Orders will appear here.</p>
+    </div>
+</div>
 
             <!-- CUSTOMERS PAGE -->
             <div id="admin-customers-page" class="admin-page" style="display:none;">
@@ -3176,10 +3202,37 @@ window.loadAdminOrders = async function () {
 };
 
 
-// LOAD LOGGED-IN CUSTOMER ORDERS
+window.filterAdminOrders = function () {
+    const searchInput = document.getElementById("orderSearchInput");
+    const statusFilter = document.getElementById("orderStatusFilter");
+    const container = document.getElementById("adminOrdersList");
 
-// LOAD ONLY LOGGED-IN CUSTOMER ORDERS
+    if (!searchInput || !statusFilter || !container) return;
 
+    const searchText = searchInput.value.trim().toLowerCase();
+    const selectedStatus = statusFilter.value;
+
+    const orderCards = container.querySelectorAll(".admin-order-card");
+
+    orderCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+
+        const matchesSearch = cardText.includes(searchText);
+
+        const statusSelect = card.querySelector("select");
+        const currentStatus = statusSelect
+            ? statusSelect.value
+            : "";
+
+        const matchesStatus =
+            selectedStatus === "All" ||
+            currentStatus === selectedStatus;
+
+        card.style.display =
+            matchesSearch && matchesStatus ? "" : "none";
+    });
+};
+    
 // REAL-TIME CUSTOMER ORDER TRACKING
 let unsubscribeMyOrders = null;
 
