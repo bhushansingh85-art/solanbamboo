@@ -2977,6 +2977,8 @@ window.loadAdminProducts = async function () {
 
 
 // LOAD ADMIN ORDERS FROM FIRESTORE
+
+// LOAD ADMIN ORDERS + UPDATE ORDER STATUS
 window.loadAdminOrders = async function () {
     const container = document.getElementById("adminOrdersList");
 
@@ -2999,6 +3001,15 @@ window.loadAdminOrders = async function () {
 
         container.innerHTML = "";
 
+        const statuses = [
+            "Pending",
+            "Confirmed",
+            "Processing",
+            "Shipped",
+            "Delivered",
+            "Cancelled"
+        ];
+
         snapshot.forEach(orderDoc => {
             const order = orderDoc.data();
 
@@ -3008,15 +3019,83 @@ window.loadAdminOrders = async function () {
             const heading = document.createElement("h3");
             heading.textContent = "Order ID: " + orderDoc.id;
 
-            const details = document.createElement("p");
-            details.textContent =
-                "Customer: " + (order.name || order.customerName || "N/A") +
-                " | Status: " + (order.status || "Pending");
+            const customer = document.createElement("p");
+            customer.textContent =
+                "Customer: " + (order.customerName || "N/A");
+
+            const email = document.createElement("p");
+            email.textContent =
+                "Email: " + (order.customerEmail || "N/A");
 
             const amount = document.createElement("p");
-            amount.textContent = "Total: ₹" + (order.total || order.totalAmount || 0);
+            amount.textContent =
+                "Total: ₹" + Number(order.totalAmount || 0).toLocaleString("en-IN");
 
-            card.append(heading, details, amount);
+            const itemsHeading = document.createElement("p");
+            itemsHeading.textContent = "Products:";
+
+            const itemsList = document.createElement("ul");
+
+            (Array.isArray(order.items) ? order.items : []).forEach(item => {
+                const li = document.createElement("li");
+                li.textContent =
+                    (item.productName || "Product") +
+                    " × " + (item.quantity || 1);
+                itemsList.appendChild(li);
+            });
+
+            const statusLabel = document.createElement("label");
+            statusLabel.textContent = "Order Status: ";
+
+            const statusSelect = document.createElement("select");
+
+            statuses.forEach(status => {
+                const option = document.createElement("option");
+                option.value = status;
+                option.textContent = status;
+                statusSelect.appendChild(option);
+            });
+
+            statusSelect.value = statuses.includes(order.status)
+                ? order.status
+                : "Pending";
+
+            statusSelect.addEventListener("change", async function () {
+                const newStatus = statusSelect.value;
+
+                statusSelect.disabled = true;
+
+                try {
+                    await updateDoc(
+                        doc(db, "orders", orderDoc.id),
+                        {
+                            status: newStatus,
+                            updatedAt: serverTimestamp()
+                        }
+                    );
+
+                    alert("Order status updated to " + newStatus);
+                } catch (error) {
+                    console.error("Status update error:", error);
+                    alert("Could not update order status.");
+                    statusSelect.value = order.status || "Pending";
+                } finally {
+                    statusSelect.disabled = false;
+                }
+            });
+
+            statusLabel.appendChild(statusSelect);
+
+            card.append(
+                heading,
+                customer,
+                email,
+                amount,
+                itemsHeading,
+                itemsList,
+                statusLabel
+            );
+
             container.appendChild(card);
         });
 
