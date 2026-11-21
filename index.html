@@ -1706,6 +1706,13 @@ Customer Care</a></li>
 <input type="email" id="editEmail" class="profile-input" readonly>
 </div>
 <button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
+<button type="button" class="save-profile-btn" onclick="loadMyOrders()">My Orders</button>
+<div id="myOrdersSection" style="display:none; margin-top:20px;">
+    <h3>My Orders</h3>
+    <div id="myOrdersList">
+        <p>Your orders will appear here.</p>
+    </div>
+</div>    
 <button type="button" class="logout-btn" onclick="handleLogout()">Sign Out</button>
 </div>
 </div>
@@ -3104,6 +3111,78 @@ window.loadAdminOrders = async function () {
         container.innerHTML = "<p>Could not load orders. Check console.</p>";
     }
 };
+
+
+// LOAD LOGGED-IN CUSTOMER ORDERS
+window.loadMyOrders = async function () {
+    const container = document.getElementById("myOrdersList");
+    const user = window.currentFirebaseUser;
+
+    if (!container) return;
+
+    if (!user) {
+        container.innerHTML = "<p>Please login to view your orders.</p>";
+        return;
+    }
+
+    try {
+        container.innerHTML = "<p>Loading your orders...</p>";
+
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        const myOrders = snapshot.docs.filter(orderDoc => {
+            return orderDoc.data().userId === user.uid;
+        });
+
+        if (myOrders.length === 0) {
+            container.innerHTML = "<p>You have not placed any orders yet.</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        myOrders.forEach(orderDoc => {
+            const order = orderDoc.data();
+
+            const card = document.createElement("div");
+            card.className = "admin-order-card";
+
+            const heading = document.createElement("h3");
+            heading.textContent = "Order ID: " + orderDoc.id;
+
+            const itemsList = document.createElement("ul");
+
+            (Array.isArray(order.items) ? order.items : []).forEach(item => {
+                const li = document.createElement("li");
+                li.textContent =
+                    (item.productName || "Product") +
+                    " × " + (item.quantity || 1);
+                itemsList.appendChild(li);
+            });
+
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Total: ₹" +
+                Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+            const status = document.createElement("p");
+            status.textContent = "Status: " + (order.status || "Pending");
+
+            const timeline = document.createElement("p");
+            timeline.textContent =
+                "Order tracking: " +
+                (order.status || "Pending");
+
+            card.append(heading, itemsList, amount, status, timeline);
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Customer orders error:", error);
+        container.innerHTML = "<p>Could not load your orders.</p>";
+    }
+};
+    
     
 
 // LOAD STORE PRODUCTS FROM FIRESTORE
