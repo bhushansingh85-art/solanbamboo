@@ -1706,7 +1706,9 @@ Customer Care</a></li>
 <input type="email" id="editEmail" class="profile-input" readonly>
 </div>
 <button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
-<button type="button" class="save-profile-btn" onclick="loadMyOrders()">My Orders</button>
+<button type="button" class="save-profile-btn" onclick="toggleMyOrders()">
+    My Orders
+</button>
 <div id="myOrdersSection" style="display:none; margin-top:20px;">
     <h3>My Orders</h3>
     <div id="myOrdersList">
@@ -2260,6 +2262,26 @@ function openProfile() {
 
     history.pushState({profile: true}, "", "/my-profile");
 }
+
+async function toggleMyOrders() {
+    const section = document.getElementById("myOrdersSection");
+
+    if (!section) return;
+
+    if (section.style.display === "block") {
+        section.style.display = "none";
+        return;
+    }
+
+    section.style.display = "block";
+
+    if (window.loadMyOrders) {
+        await window.loadMyOrders();
+    } else {
+        document.getElementById("myOrdersList").textContent =
+            "Orders function is not available. Please refresh the page.";
+    }
+}    
 
 function closeProfile() {
 document.getElementById('profileModal').style.display = 'none';
