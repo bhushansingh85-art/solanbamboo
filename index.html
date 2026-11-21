@@ -1539,6 +1539,16 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
             <h3>Total Order Value</h3>
             <p id="totalOrderValue">₹0</p>
         </div>
+        
+        <div class="admin-card">
+           <h3>Low Stock Products</h3>
+           <p id="lowStockProducts">0</p>
+        </div>
+
+        <div class="admin-card">
+           <h3>Out of Stock Products</h3>
+           <p id="outOfStockProducts">0</p>
+        </div>        
 
     </div>
 
@@ -3061,7 +3071,20 @@ window.loadAdminProducts = async function () {
         <h3>${escapeProductHTML(p.name)}</h3>
                     <p>Price: ₹${escapeProductHTML(p.price)}</p>
                     <p>Category: ${escapeProductHTML(p.category)}</p>
-                    <p>Stock: ${escapeProductHTML(p.stock)}</p>
+                   
+<p>Stock: ${escapeProductHTML(p.stock)}</p>
+
+<p>
+    Stock Status:
+    ${
+        Number(p.stock || 0) <= 0
+            ? "OUT OF STOCK"
+            : Number(p.stock || 0) <= 5
+                ? "LOW STOCK"
+                : "IN STOCK"
+    }
+</p>
+
                     <p>${escapeProductHTML(p.description)}</p>
 
                     <button onclick="editAdminProduct('${id}')">
@@ -3261,6 +3284,33 @@ window.loadAdminDashboardStats = async function () {
         const totalValueElement = document.getElementById("totalOrderValue");
 
         const snapshot = await getDocs(collection(db, "orders"));
+        
+const productSnapshot = await getDocs(collection(db, "products"));
+
+let lowStockCount = 0;
+let outOfStockCount = 0;
+
+productSnapshot.forEach(productDoc => {
+    const product = productDoc.data();
+    const stock = Number(product.stock || 0);
+
+    if (stock <= 0) {
+        outOfStockCount++;
+    } else if (stock <= 5) {
+        lowStockCount++;
+    }
+});
+
+const lowStockElement = document.getElementById("lowStockProducts");
+const outOfStockElement = document.getElementById("outOfStockProducts");
+
+if (lowStockElement) {
+    lowStockElement.textContent = lowStockCount;
+}
+
+if (outOfStockElement) {
+    outOfStockElement.textContent = outOfStockCount;
+}
 
         let totalOrders = 0;
         let pendingOrders = 0;
