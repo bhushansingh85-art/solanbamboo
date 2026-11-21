@@ -2668,13 +2668,35 @@ window.getUserProfileFromFirestore = async function(user) {
         ? userSnapshot.data()
         : null;
 };
+
 // Check whether the logged-in user is an admin
 window.checkAdminAccess = async function(user) {
     if (!user) {
         window.isAdminUser = false;
         return false;
-    }    
-    
+    }
+
+    try {
+        const adminRef = doc(db, "ADMIN", user.uid);
+        const adminSnapshot = await getDoc(adminRef);
+
+        window.isAdminUser =
+            adminSnapshot.exists() &&
+            adminSnapshot.data().role === "admin";
+
+        console.log("Admin access result:", window.isAdminUser);
+
+        return window.isAdminUser;
+
+    } catch (error) {
+        window.isAdminUser = false;
+        console.error("Admin access check error:", error);
+        return false;
+    }
+};
+
+
+// PLACE ORDER
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
 
