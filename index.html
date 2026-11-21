@@ -1663,10 +1663,31 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 
             <!-- CUSTOMERS PAGE -->
-            <div id="admin-customers-page" class="admin-page" style="display:none;">
-                <h2>Customers</h2>
-                <p>Customer management will appear here.</p>
-            </div>
+            
+<div id="admin-customers-page" class="admin-page" style="display:none;">
+
+    <h2>Customer Management</h2>
+
+    <button onclick="loadAdminCustomers()">
+        Refresh Customers
+    </button>
+
+    <div>
+        <label for="customerSearchInput">Search Customers:</label>
+        <input
+            type="text"
+            id="customerSearchInput"
+            placeholder="Search by name, email or customer ID"
+            oninput="filterAdminCustomers()"
+        >
+    </div>
+
+    <div id="adminCustomersList">
+        <p>Customer information will appear here.</p>
+    </div>
+
+</div>
+
 
             <!-- SETTINGS PAGE -->
             <div id="admin-settings-page" class="admin-page" style="display:none;">
@@ -2501,6 +2522,10 @@ function showAdminPage(pageName) {
         selectedPage.style.display = "block";
     }
 
+    if (pageName === "customers" && window.loadAdminCustomers) {
+    window.loadAdminCustomers();
+}
+
     if (pageName === "dashboard" && window.loadAdminDashboardStats) {
     window.loadAdminDashboardStats();
 }
@@ -3282,6 +3307,112 @@ window.loadAdminDashboardStats = async function () {
         alert("Could not load dashboard statistics.");
     }
 };
+
+
+window.loadAdminCustomers = async function () {
+    const container = document.getElementById("adminCustomersList");
+
+    if (!container) return;
+
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        container.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        container.textContent = "Loading customers...";
+
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        if (snapshot.empty) {
+            container.textContent = "No customers found.";
+            return;
+        }
+
+        const customers = new Map();
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+            const userId = order.userId;
+
+            if (!userId) return;
+
+            if (!customers.has(userId)) {
+                customers.set(userId, {
+                    userId: userId,
+                    name: order.customerName || "N/A",
+                    email: order.customerEmail || "N/A",
+                    totalOrders: 0,
+                    totalValue: 0
+                });
+            }
+
+            const customer = customers.get(userId);
+
+            customer.totalOrders++;
+            customer.totalValue += Number(order.totalAmount || 0);
+
+            if (customer.name === "N/A" && order.customerName) {
+                customer.name = order.customerName;
+            }
+
+            if (customer.email === "N/A" && order.customerEmail) {
+                customer.email = order.customerEmail;
+            }
+        });
+
+        container.innerHTML = "";
+
+        customers.forEach(customer => {
+            const card = document.createElement("div");
+            card.className = "admin-customer-card";
+
+            const name = document.createElement("h3");
+            name.textContent = customer.name;
+
+            const email = document.createElement("p");
+            email.textContent = "Email: " + customer.email;
+
+            const id = document.createElement("p");
+            id.textContent = "Customer ID: " + customer.userId;
+
+            const orders = document.createElement("p");
+            orders.textContent = "Total Orders: " + customer.totalOrders;
+
+            const value = document.createElement("p");
+            value.textContent =
+                "Total Order Value: ₹" +
+                customer.totalValue.toLocaleString("en-IN");
+
+            card.append(name, email, id, orders, value);
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Customer loading error:", error);
+        container.textContent = "Could not load customers.";
+    }
+};
+
+
+window.filterAdminCustomers = function () {
+    const input = document.getElementById("customerSearchInput");
+    const container = document.getElementById("adminCustomersList");
+
+    if (!input || !container) return;
+
+    const searchText = input.value.trim().toLowerCase();
+
+    const cards = container.querySelectorAll(".admin-customer-card");
+
+    cards.forEach(card => {
+        const matches = card.textContent
+            .toLowerCase()
+            .includes(searchText);
+
+        card.style.display = matches ? "" : "none";
+    });
+};    
     
 window.filterAdminOrders = function () {
     const searchInput = document.getElementById("orderSearchInput");
