@@ -1803,7 +1803,11 @@ if (footer) footer.style.display = 'block';
 }
 
 if (pushHistory) {
-history.pushState({section: sectionId}, "", urlPath);
+    history.pushState(
+        { section: sectionId },
+        "",
+        window.location.pathname
+    );
 }
 window.scrollTo({ top: 0, behavior: 'smooth' });
 }
