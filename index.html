@@ -2284,6 +2284,9 @@ async function toggleMyOrders() {
 }    
 
 function closeProfile() {
+if (window.stopMyOrdersListener) {
+    window.stopMyOrdersListener();
+}    
 document.getElementById('profileModal').style.display = 'none';
 history.pushState({}, "", window.location.pathname.replace('/my-profile', '') || '/');
 }
@@ -2515,6 +2518,7 @@ import {
     collection,
     addDoc,
     getDocs,
+    onSnapshot,
     updateDoc,
     deleteDoc,
     query,
@@ -3140,6 +3144,17 @@ window.loadAdminOrders = async function () {
 // LOAD LOGGED-IN CUSTOMER ORDERS
 
 // LOAD ONLY LOGGED-IN CUSTOMER ORDERS
+
+// REAL-TIME CUSTOMER ORDER TRACKING
+let unsubscribeMyOrders = null;
+
+window.stopMyOrdersListener = function () {
+    if (unsubscribeMyOrders) {
+        unsubscribeMyOrders();
+        unsubscribeMyOrders = null;
+    }
+};
+
 window.loadMyOrders = async function () {
     const container = document.getElementById("myOrdersList");
     const user = window.currentFirebaseUser;
@@ -3151,58 +3166,64 @@ window.loadMyOrders = async function () {
         return;
     }
 
-    try {
-        container.textContent = "Loading your orders...";
+    // Stop previous listener to prevent duplicates
+    window.stopMyOrdersListener();
 
-        const ordersQuery = query(
-            collection(db, "orders"),
-            where("userId", "==", user.uid)
-        );
+    container.textContent = "Loading your orders...";
 
-        const snapshot = await getDocs(ordersQuery);
+    const ordersQuery = query(
+        collection(db, "orders"),
+        where("userId", "==", user.uid)
+    );
 
-        if (snapshot.empty) {
-            container.textContent = "You have not placed any orders yet.";
-            return;
-        }
+    unsubscribeMyOrders = onSnapshot(
+        ordersQuery,
+        (snapshot) => {
+            if (snapshot.empty) {
+                container.textContent = "You have not placed any orders yet.";
+                return;
+            }
 
-        container.innerHTML = "";
+            container.innerHTML = "";
 
-        snapshot.forEach(orderDoc => {
-            const order = orderDoc.data();
+            snapshot.forEach(orderDoc => {
+                const order = orderDoc.data();
 
-            const card = document.createElement("div");
-            card.className = "admin-order-card";
+                const card = document.createElement("div");
+                card.className = "admin-order-card";
 
-            const heading = document.createElement("h3");
-            heading.textContent = "Order ID: " + orderDoc.id;
+                const heading = document.createElement("h3");
+                heading.textContent = "Order ID: " + orderDoc.id;
 
-            const itemsList = document.createElement("ul");
+                const itemsList = document.createElement("ul");
 
-            (Array.isArray(order.items) ? order.items : []).forEach(item => {
-                const li = document.createElement("li");
-                li.textContent =
-                    (item.productName || "Product") +
-                    " × " + (item.quantity || 1);
-                itemsList.appendChild(li);
+                (Array.isArray(order.items) ? order.items : []).forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent =
+                        (item.productName || "Product") +
+                        " × " + (item.quantity || 1);
+                    itemsList.appendChild(li);
+                });
+
+                const amount = document.createElement("p");
+                amount.textContent = "Total: ₹" +
+                    Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+                const status = document.createElement("p");
+                status.textContent = "Order Status: " +
+                    (order.status || "Pending");
+
+                card.append(heading, itemsList, amount, status);
+                container.appendChild(card);
             });
-
-            const amount = document.createElement("p");
-            amount.textContent = "Total: ₹" +
-                Number(order.totalAmount || 0).toLocaleString("en-IN");
-
-            const status = document.createElement("p");
-            status.textContent = "Status: " + (order.status || "Pending");
-
-            card.append(heading, itemsList, amount, status);
-            container.appendChild(card);
-        });
-
-    } catch (error) {
-        console.error("Customer orders error:", error);
-        container.textContent = "Could not load your orders. Please try again.";
-    }
-};  
+        },
+        (error) => {
+            console.error("Real-time orders error:", error);
+            container.textContent = "Could not load your orders.";
+            window.stopMyOrdersListener();
+        }
+    );
+};
     
 
 // LOAD STORE PRODUCTS FROM FIRESTORE
