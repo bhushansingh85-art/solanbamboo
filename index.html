@@ -1502,31 +1502,47 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
         <div class="admin-main">
 
             <!-- DASHBOARD PAGE -->
-            <div id="admin-dashboard-page" class="admin-page">
+            
+<!-- DASHBOARD PAGE -->
+<div id="admin-dashboard-page" class="admin-page">
 
-                <h2>Admin Dashboard</h2>
-                <p>Manage your store and customer orders.</p>
+    <h2>Admin Dashboard</h2>
+    <p>Manage your store and customer orders.</p>
 
-                <div class="admin-stats">
+    <button onclick="loadAdminDashboardStats()">
+        Refresh Statistics
+    </button>
 
-                    <div class="admin-card">
-                        <h3>Total Orders</h3>
-                        <p id="totalOrders">0</p>
-                    </div>
+    <div class="admin-stats">
 
-                    <div class="admin-card">
-                        <h3>Pending Orders</h3>
-                        <p id="pendingOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Total Orders</h3>
+            <p id="totalOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Completed Orders</h3>
-                        <p id="completedOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Pending Orders</h3>
+            <p id="pendingOrders">0</p>
+        </div>
 
-                </div>
+        <div class="admin-card">
+            <h3>Confirmed Orders</h3>
+            <p id="confirmedOrders">0</p>
+        </div>
 
-            </div>
+        <div class="admin-card">
+            <h3>Delivered Orders</h3>
+            <p id="completedOrders">0</p>
+        </div>
+
+        <div class="admin-card">
+            <h3>Total Order Value</h3>
+            <p id="totalOrderValue">₹0</p>
+        </div>
+
+    </div>
+
+</div>
 
             <!-- PRODUCTS PAGE -->
 <div id="admin-products-page" class="admin-page" style="display:none;">
@@ -2485,6 +2501,10 @@ function showAdminPage(pageName) {
         selectedPage.style.display = "block";
     }
 
+    if (pageName === "dashboard" && window.loadAdminDashboardStats) {
+    window.loadAdminDashboardStats();
+}
+
     document.querySelectorAll(".admin-sidebar button").forEach(button => {
     button.classList.remove("active");
 });
@@ -3202,6 +3222,67 @@ window.loadAdminOrders = async function () {
 };
 
 
+window.loadAdminDashboardStats = async function () {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        alert("Admin access required.");
+        return;
+    }
+
+    try {
+        const totalOrdersElement = document.getElementById("totalOrders");
+        const pendingOrdersElement = document.getElementById("pendingOrders");
+        const confirmedOrdersElement = document.getElementById("confirmedOrders");
+        const completedOrdersElement = document.getElementById("completedOrders");
+        const totalValueElement = document.getElementById("totalOrderValue");
+
+        const snapshot = await getDocs(collection(db, "orders"));
+
+        let totalOrders = 0;
+        let pendingOrders = 0;
+        let confirmedOrders = 0;
+        let deliveredOrders = 0;
+        let totalOrderValue = 0;
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+            const status = order.status || "Pending";
+
+            totalOrders++;
+
+            if (status === "Pending") pendingOrders++;
+            if (status === "Confirmed") confirmedOrders++;
+            if (status === "Delivered") deliveredOrders++;
+
+            totalOrderValue += Number(order.totalAmount || 0);
+        });
+
+        if (totalOrdersElement) {
+            totalOrdersElement.textContent = totalOrders;
+        }
+
+        if (pendingOrdersElement) {
+            pendingOrdersElement.textContent = pendingOrders;
+        }
+
+        if (confirmedOrdersElement) {
+            confirmedOrdersElement.textContent = confirmedOrders;
+        }
+
+        if (completedOrdersElement) {
+            completedOrdersElement.textContent = deliveredOrders;
+        }
+
+        if (totalValueElement) {
+            totalValueElement.textContent =
+                "₹" + totalOrderValue.toLocaleString("en-IN");
+        }
+
+    } catch (error) {
+        console.error("Dashboard statistics error:", error);
+        alert("Could not load dashboard statistics.");
+    }
+};
+    
 window.filterAdminOrders = function () {
     const searchInput = document.getElementById("orderSearchInput");
     const statusFilter = document.getElementById("orderStatusFilter");
