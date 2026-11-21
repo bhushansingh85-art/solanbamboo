@@ -1769,6 +1769,9 @@ document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('
 document.getElementById('fullProductSection').style.display = 'none';
 document.getElementById('cartFullSection').style.display = 'none';
 document.getElementById(sectionId).classList.add('active');
+if (sectionId === "productsSection" && window.loadStoreProducts) {
+    window.loadStoreProducts();
+}    
 previousView = sectionId;
 
 const hamburger = document.getElementById('hamburgerBtn');
@@ -2554,6 +2557,81 @@ window.checkAdminAccess = async function(user) {
         return false;
     }
 
+    
+// ONE-TIME MIGRATION OF OLD STORE PRODUCTS
+window.migrateOldProductsToFirestore = async function () {
+
+    const oldProducts = [
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        },
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        },
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        },
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        },
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        },
+        {
+            name: "CLASSIC ROUND COFFEE TABLE",
+            price: 8500,
+            category: "Tables",
+            stock: 0,
+            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
+            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
+        }
+    ];
+
+    for (let i = 0; i < oldProducts.length; i++) {
+
+        const productId = "old_store_product_" + (i + 1);
+        const productRef = doc(db, "products", productId);
+        const existingProduct = await getDoc(productRef);
+
+        if (!existingProduct.exists()) {
+            await setDoc(productRef, {
+                ...oldProducts[i],
+                isPublished: true,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
+            });
+        }
+    }
+
+    console.log("Old Store Products migration completed.");
+};
+
+
     try {
         const adminRef = doc(db, "ADMIN", user.uid);
         const adminSnapshot = await getDoc(adminRef);
@@ -2621,6 +2699,7 @@ onAuthStateChanged(auth, async (user) => {
         if (user) {
             await window.saveUserProfileToFirestore(user);
             await window.checkAdminAccess(user);
+            await window.migrateOldProductsToFirestore();
             document.getElementById("adminMenuItem").style.display =
             window.isAdminUser ? "block" : "none";
 
@@ -2859,8 +2938,19 @@ window.loadAdminProducts = async function () {
             window.adminProductCache[id] = p;
 
             return `
-                <div class="admin-product-item">
-                    <h3>${escapeProductHTML(p.name)}</h3>
+    <div class="admin-product-item">
+
+        ${p.image ? `
+            <img
+                src="${escapeProductHTML(p.image)}"
+                alt="${escapeProductHTML(p.name)}"
+                style="width:150px;height:120px;object-fit:cover;border-radius:10px;"
+            >
+        ` : `
+            <p>No image uploaded</p>
+        `}
+
+        <h3>${escapeProductHTML(p.name)}</h3>
                     <p>Price: ₹${escapeProductHTML(p.price)}</p>
                     <p>Category: ${escapeProductHTML(p.category)}</p>
                     <p>Stock: ${escapeProductHTML(p.stock)}</p>
@@ -2882,6 +2972,72 @@ window.loadAdminProducts = async function () {
         list.textContent = "Error loading products: " + error.message;
     }
 };
+
+// LOAD STORE PRODUCTS FROM FIRESTORE
+window.loadStoreProducts = async function () {
+    const container = document.getElementById("mainContentArea");
+
+    if (!container) return;
+
+    try {
+        container.innerHTML = "<p>Loading products...</p>";
+
+        const snapshot = await getDocs(collection(db, "products"));
+
+        const products = snapshot.docs
+            .map(productDoc => ({
+                id: productDoc.id,
+                ...productDoc.data()
+            }))
+            .filter(product => product.isPublished !== false);
+
+        if (products.length === 0) {
+            container.innerHTML = "<p>No products available.</p>";
+            return;
+        }
+
+        container.innerHTML = "";
+
+        products.forEach(product => {
+            const card = document.createElement("div");
+            card.className = "item-card";
+            card.setAttribute(
+                "data-price",
+                "₹" + Number(product.price || 0).toLocaleString("en-IN")
+            );
+
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "item-image-container";
+
+            if (product.image) {
+                const img = document.createElement("img");
+                img.src = product.image;
+                img.alt = product.name || "Bamboo Furniture";
+                imageContainer.appendChild(img);
+            }
+
+            const title = document.createElement("h2");
+            title.className = "item-title";
+            title.textContent = product.name || "Unnamed Product";
+
+            const description = document.createElement("p");
+            description.className = "item-description";
+            description.textContent = product.description || "";
+
+            card.append(imageContainer, title, description);
+
+            card.addEventListener("click", function () {
+                openFullProduct(card);
+            });
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Store products loading error:", error);
+        container.innerHTML = "<p>Could not load products. Please try again.</p>";
+    }
+};    
 
 // EDIT PRODUCT
 window.editAdminProduct = function (id) {
@@ -2917,8 +3073,7 @@ window.deleteAdminProduct = async function (id) {
         }
 
         await deleteDoc(doc(db, "products", id));
-
-        alert("Product deleted successfully!");
+        
         await window.loadAdminProducts();
 
     } catch (error) {
