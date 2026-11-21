@@ -3010,27 +3010,25 @@ window.loadAdminProducts = async function () {
     }
 };
 
-
-// LOAD ADMIN ORDERS FROM FIRESTORE
-
 // LOAD ADMIN ORDERS + UPDATE ORDER STATUS
+
 window.loadAdminOrders = async function () {
     const container = document.getElementById("adminOrdersList");
 
     if (!container) return;
 
     if (!window.currentFirebaseUser || !window.isAdminUser) {
-        container.innerHTML = "<p>Admin access required.</p>";
+        container.textContent = "Admin access required.";
         return;
     }
 
     try {
-        container.innerHTML = "<p>Loading orders...</p>";
+        container.textContent = "Loading orders...";
 
         const snapshot = await getDocs(collection(db, "orders"));
 
         if (snapshot.empty) {
-            container.innerHTML = "<p>No orders found.</p>";
+            container.textContent = "No orders found.";
             return;
         }
 
@@ -3051,9 +3049,11 @@ window.loadAdminOrders = async function () {
             const card = document.createElement("div");
             card.className = "admin-order-card";
 
+            // Order ID
             const heading = document.createElement("h3");
             heading.textContent = "Order ID: " + orderDoc.id;
 
+            // Customer details
             const customer = document.createElement("p");
             customer.textContent =
                 "Customer: " + (order.customerName || "N/A");
@@ -3062,23 +3062,49 @@ window.loadAdminOrders = async function () {
             email.textContent =
                 "Email: " + (order.customerEmail || "N/A");
 
-            const amount = document.createElement("p");
-            amount.textContent =
-                "Total: ₹" + Number(order.totalAmount || 0).toLocaleString("en-IN");
+            // Order date
+            const date = document.createElement("p");
 
-            const itemsHeading = document.createElement("p");
-            itemsHeading.textContent = "Products:";
+            if (order.createdAt && order.createdAt.toDate) {
+                date.textContent =
+                    "Order Date: " +
+                    order.createdAt.toDate().toLocaleString("en-IN");
+            } else {
+                date.textContent = "Order Date: Not available";
+            }
+
+            // Products heading
+            const itemsHeading = document.createElement("h4");
+            itemsHeading.textContent = "Order Products:";
 
             const itemsList = document.createElement("ul");
 
             (Array.isArray(order.items) ? order.items : []).forEach(item => {
                 const li = document.createElement("li");
+
+                const productName = item.productName || "Product";
+                const quantity = Number(item.quantity || 1);
+                const unitPrice = Number(item.unitPrice || 0);
+                const itemTotal = quantity * unitPrice;
+
                 li.textContent =
-                    (item.productName || "Product") +
-                    " × " + (item.quantity || 1);
+                    productName +
+                    " | Quantity: " + quantity +
+                    " | Unit Price: ₹" +
+                    unitPrice.toLocaleString("en-IN") +
+                    " | Subtotal: ₹" +
+                    itemTotal.toLocaleString("en-IN");
+
                 itemsList.appendChild(li);
             });
 
+            // Total amount
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Total Amount: ₹" +
+                Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+            // Order status
             const statusLabel = document.createElement("label");
             statusLabel.textContent = "Order Status: ";
 
@@ -3097,6 +3123,7 @@ window.loadAdminOrders = async function () {
 
             statusSelect.addEventListener("change", async function () {
                 const newStatus = statusSelect.value;
+                const previousStatus = order.status || "Pending";
 
                 statusSelect.disabled = true;
 
@@ -3109,11 +3136,16 @@ window.loadAdminOrders = async function () {
                         }
                     );
 
+                    order.status = newStatus;
+
                     alert("Order status updated to " + newStatus);
+
                 } catch (error) {
                     console.error("Status update error:", error);
+
                     alert("Could not update order status.");
-                    statusSelect.value = order.status || "Pending";
+                    statusSelect.value = previousStatus;
+
                 } finally {
                     statusSelect.disabled = false;
                 }
@@ -3121,13 +3153,15 @@ window.loadAdminOrders = async function () {
 
             statusLabel.appendChild(statusSelect);
 
+            // Add everything to order card
             card.append(
                 heading,
                 customer,
                 email,
-                amount,
+                date,
                 itemsHeading,
                 itemsList,
+                amount,
                 statusLabel
             );
 
@@ -3136,7 +3170,8 @@ window.loadAdminOrders = async function () {
 
     } catch (error) {
         console.error("Admin orders error:", error);
-        container.innerHTML = "<p>Could not load orders. Check console.</p>";
+        container.textContent =
+            "Could not load orders. Check console.";
     }
 };
 
