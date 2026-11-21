@@ -1502,31 +1502,57 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
         <div class="admin-main">
 
             <!-- DASHBOARD PAGE -->
-            <div id="admin-dashboard-page" class="admin-page">
+            
+<!-- DASHBOARD PAGE -->
+<div id="admin-dashboard-page" class="admin-page">
 
-                <h2>Admin Dashboard</h2>
-                <p>Manage your store and customer orders.</p>
+    <h2>Admin Dashboard</h2>
+    <p>Manage your store and customer orders.</p>
 
-                <div class="admin-stats">
+    <button onclick="loadAdminDashboardStats()">
+        Refresh Statistics
+    </button>
 
-                    <div class="admin-card">
-                        <h3>Total Orders</h3>
-                        <p id="totalOrders">0</p>
-                    </div>
+    <div class="admin-stats">
 
-                    <div class="admin-card">
-                        <h3>Pending Orders</h3>
-                        <p id="pendingOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Total Orders</h3>
+            <p id="totalOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Completed Orders</h3>
-                        <p id="completedOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Pending Orders</h3>
+            <p id="pendingOrders">0</p>
+        </div>
 
-                </div>
+        <div class="admin-card">
+            <h3>Confirmed Orders</h3>
+            <p id="confirmedOrders">0</p>
+        </div>
 
-            </div>
+        <div class="admin-card">
+            <h3>Delivered Orders</h3>
+            <p id="completedOrders">0</p>
+        </div>
+
+        <div class="admin-card">
+            <h3>Total Order Value</h3>
+            <p id="totalOrderValue">₹0</p>
+        </div>
+        
+        <div class="admin-card">
+           <h3>Low Stock Products</h3>
+           <p id="lowStockProducts">0</p>
+        </div>
+
+        <div class="admin-card">
+           <h3>Out of Stock Products</h3>
+           <p id="outOfStockProducts">0</p>
+        </div>        
+
+    </div>
+
+</div>
 
             <!-- PRODUCTS PAGE -->
 <div id="admin-products-page" class="admin-page" style="display:none;">
@@ -1608,23 +1634,70 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 
             <!-- ORDERS PAGE -->
-            <div id="admin-orders-page" class="admin-page" style="display:none;">
-                <h2>Customer Orders</h2>
+            
+<div id="admin-orders-page" class="admin-page" style="display:none;">
+    <h2>Customer Orders</h2>
 
-                <button onclick="loadAdminOrders()">
-                    Refresh Orders
-                </button>
+    <button onclick="loadAdminOrders()">
+        Refresh Orders
+    </button>
 
-                <div id="adminOrdersList">
-                    <p>Orders will appear here.</p>
-                </div>
-            </div>
+    <!-- Search Orders -->
+    <div>
+        <label for="orderSearchInput">Search Orders:</label>
+        <input
+            type="text"
+            id="orderSearchInput"
+            placeholder="Search by Order ID, Customer Name or Email"
+            oninput="filterAdminOrders()"
+        >
+    </div>
+
+    <!-- Filter by Status -->
+    <div>
+        <label for="orderStatusFilter">Filter by Status:</label>
+        <select id="orderStatusFilter" onchange="filterAdminOrders()">
+            <option value="All">All Orders</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
+
+    <div id="adminOrdersList">
+        <p>Orders will appear here.</p>
+    </div>
+</div>
 
             <!-- CUSTOMERS PAGE -->
-            <div id="admin-customers-page" class="admin-page" style="display:none;">
-                <h2>Customers</h2>
-                <p>Customer management will appear here.</p>
-            </div>
+            
+<div id="admin-customers-page" class="admin-page" style="display:none;">
+
+    <h2>Customer Management</h2>
+
+    <button onclick="loadAdminCustomers()">
+        Refresh Customers
+    </button>
+
+    <div>
+        <label for="customerSearchInput">Search Customers:</label>
+        <input
+            type="text"
+            id="customerSearchInput"
+            placeholder="Search by name, email or customer ID"
+            oninput="filterAdminCustomers()"
+        >
+    </div>
+
+    <div id="adminCustomersList">
+        <p>Customer information will appear here.</p>
+    </div>
+
+</div>
+
 
             <!-- SETTINGS PAGE -->
             <div id="admin-settings-page" class="admin-page" style="display:none;">
@@ -2284,6 +2357,9 @@ async function toggleMyOrders() {
 }    
 
 function closeProfile() {
+if (window.stopMyOrdersListener) {
+    window.stopMyOrdersListener();
+}    
 document.getElementById('profileModal').style.display = 'none';
 history.pushState({}, "", window.location.pathname.replace('/my-profile', '') || '/');
 }
@@ -2456,6 +2532,14 @@ function showAdminPage(pageName) {
         selectedPage.style.display = "block";
     }
 
+    if (pageName === "customers" && window.loadAdminCustomers) {
+    window.loadAdminCustomers();
+}
+
+    if (pageName === "dashboard" && window.loadAdminDashboardStats) {
+    window.loadAdminDashboardStats();
+}
+
     document.querySelectorAll(".admin-sidebar button").forEach(button => {
     button.classList.remove("active");
 });
@@ -2515,8 +2599,11 @@ import {
     collection,
     addDoc,
     getDocs,
+    onSnapshot,
     updateDoc,
-    deleteDoc
+    deleteDoc,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -2586,104 +2673,7 @@ window.checkAdminAccess = async function(user) {
     if (!user) {
         window.isAdminUser = false;
         return false;
-    }
-
-    
-// ONE-TIME MIGRATION OF OLD STORE PRODUCTS
-window.migrateOldProductsToFirestore = async function () {
-
-    const oldProducts = [
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        },
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        },
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        },
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        },
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        },
-        {
-            name: "CLASSIC ROUND COFFEE TABLE",
-            price: 8500,
-            category: "Tables",
-            stock: 0,
-            image: "https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg",
-            description: "Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table."
-        }
-    ];
-
-    for (let i = 0; i < oldProducts.length; i++) {
-
-        const productId = "old_store_product_" + (i + 1);
-        const productRef = doc(db, "products", productId);
-        const existingProduct = await getDoc(productRef);
-
-        if (!existingProduct.exists()) {
-            await setDoc(productRef, {
-                ...oldProducts[i],
-                isPublished: true,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp()
-            });
-        }
-    }
-
-    console.log("Old Store Products migration completed.");
-};
-
-
-    try {
-        const adminRef = doc(db, "ADMIN", user.uid);
-        const adminSnapshot = await getDoc(adminRef);
-
-        window.isAdminUser =
-            adminSnapshot.exists() &&
-            adminSnapshot.data().role === "admin";
-
-        console.log(
-            "Admin access:",
-            window.isAdminUser
-        );
-
-        return window.isAdminUser;
-
-    } catch (error) {
-        console.error("Admin verification error:", error);
-        window.isAdminUser = false;
-        return false;
-    }
-};    
+    }    
     
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
@@ -2984,7 +2974,20 @@ window.loadAdminProducts = async function () {
         <h3>${escapeProductHTML(p.name)}</h3>
                     <p>Price: ₹${escapeProductHTML(p.price)}</p>
                     <p>Category: ${escapeProductHTML(p.category)}</p>
-                    <p>Stock: ${escapeProductHTML(p.stock)}</p>
+                   
+<p>Stock: ${escapeProductHTML(p.stock)}</p>
+
+<p>
+    Stock Status:
+    ${
+        Number(p.stock || 0) <= 0
+            ? "OUT OF STOCK"
+            : Number(p.stock || 0) <= 5
+                ? "LOW STOCK"
+                : "IN STOCK"
+    }
+</p>
+
                     <p>${escapeProductHTML(p.description)}</p>
 
                     <button onclick="editAdminProduct('${id}')">
@@ -3004,27 +3007,25 @@ window.loadAdminProducts = async function () {
     }
 };
 
-
-// LOAD ADMIN ORDERS FROM FIRESTORE
-
 // LOAD ADMIN ORDERS + UPDATE ORDER STATUS
+
 window.loadAdminOrders = async function () {
     const container = document.getElementById("adminOrdersList");
 
     if (!container) return;
 
     if (!window.currentFirebaseUser || !window.isAdminUser) {
-        container.innerHTML = "<p>Admin access required.</p>";
+        container.textContent = "Admin access required.";
         return;
     }
 
     try {
-        container.innerHTML = "<p>Loading orders...</p>";
+        container.textContent = "Loading orders...";
 
         const snapshot = await getDocs(collection(db, "orders"));
 
         if (snapshot.empty) {
-            container.innerHTML = "<p>No orders found.</p>";
+            container.textContent = "No orders found.";
             return;
         }
 
@@ -3045,9 +3046,11 @@ window.loadAdminOrders = async function () {
             const card = document.createElement("div");
             card.className = "admin-order-card";
 
+            // Order ID
             const heading = document.createElement("h3");
             heading.textContent = "Order ID: " + orderDoc.id;
 
+            // Customer details
             const customer = document.createElement("p");
             customer.textContent =
                 "Customer: " + (order.customerName || "N/A");
@@ -3056,23 +3059,49 @@ window.loadAdminOrders = async function () {
             email.textContent =
                 "Email: " + (order.customerEmail || "N/A");
 
-            const amount = document.createElement("p");
-            amount.textContent =
-                "Total: ₹" + Number(order.totalAmount || 0).toLocaleString("en-IN");
+            // Order date
+            const date = document.createElement("p");
 
-            const itemsHeading = document.createElement("p");
-            itemsHeading.textContent = "Products:";
+            if (order.createdAt && order.createdAt.toDate) {
+                date.textContent =
+                    "Order Date: " +
+                    order.createdAt.toDate().toLocaleString("en-IN");
+            } else {
+                date.textContent = "Order Date: Not available";
+            }
+
+            // Products heading
+            const itemsHeading = document.createElement("h4");
+            itemsHeading.textContent = "Order Products:";
 
             const itemsList = document.createElement("ul");
 
             (Array.isArray(order.items) ? order.items : []).forEach(item => {
                 const li = document.createElement("li");
+
+                const productName = item.productName || "Product";
+                const quantity = Number(item.quantity || 1);
+                const unitPrice = Number(item.unitPrice || 0);
+                const itemTotal = quantity * unitPrice;
+
                 li.textContent =
-                    (item.productName || "Product") +
-                    " × " + (item.quantity || 1);
+                    productName +
+                    " | Quantity: " + quantity +
+                    " | Unit Price: ₹" +
+                    unitPrice.toLocaleString("en-IN") +
+                    " | Subtotal: ₹" +
+                    itemTotal.toLocaleString("en-IN");
+
                 itemsList.appendChild(li);
             });
 
+            // Total amount
+            const amount = document.createElement("p");
+            amount.textContent =
+                "Total Amount: ₹" +
+                Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+            // Order status
             const statusLabel = document.createElement("label");
             statusLabel.textContent = "Order Status: ";
 
@@ -3091,6 +3120,7 @@ window.loadAdminOrders = async function () {
 
             statusSelect.addEventListener("change", async function () {
                 const newStatus = statusSelect.value;
+                const previousStatus = order.status || "Pending";
 
                 statusSelect.disabled = true;
 
@@ -3103,11 +3133,16 @@ window.loadAdminOrders = async function () {
                         }
                     );
 
+                    order.status = newStatus;
+
                     alert("Order status updated to " + newStatus);
+
                 } catch (error) {
                     console.error("Status update error:", error);
+
                     alert("Could not update order status.");
-                    statusSelect.value = order.status || "Pending";
+                    statusSelect.value = previousStatus;
+
                 } finally {
                     statusSelect.disabled = false;
                 }
@@ -3115,13 +3150,15 @@ window.loadAdminOrders = async function () {
 
             statusLabel.appendChild(statusSelect);
 
+            // Add everything to order card
             card.append(
                 heading,
                 customer,
                 email,
-                amount,
+                date,
                 itemsHeading,
                 itemsList,
+                amount,
                 statusLabel
             );
 
@@ -3130,56 +3167,298 @@ window.loadAdminOrders = async function () {
 
     } catch (error) {
         console.error("Admin orders error:", error);
-        container.innerHTML = "<p>Could not load orders. Check console.</p>";
+        container.textContent =
+            "Could not load orders. Check console.";
     }
 };
 
 
-// LOAD LOGGED-IN CUSTOMER ORDERS
-window.loadMyOrders = async function () {
-    const container = document.getElementById("myOrdersList");
-    const user = window.currentFirebaseUser;
-
-    if (!container) return;
-
-    if (!user) {
-        container.innerHTML = "<p>Please login to view your orders.</p>";
+window.loadAdminDashboardStats = async function () {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        alert("Admin access required.");
         return;
     }
 
     try {
-        container.innerHTML = "<p>Loading your orders...</p>";
+        const totalOrdersElement = document.getElementById("totalOrders");
+        const pendingOrdersElement = document.getElementById("pendingOrders");
+        const confirmedOrdersElement = document.getElementById("confirmedOrders");
+        const completedOrdersElement = document.getElementById("completedOrders");
+        const totalValueElement = document.getElementById("totalOrderValue");
+
+        const snapshot = await getDocs(collection(db, "orders"));
+        
+const productSnapshot = await getDocs(collection(db, "products"));
+
+let lowStockCount = 0;
+let outOfStockCount = 0;
+
+productSnapshot.forEach(productDoc => {
+    const product = productDoc.data();
+    const stock = Number(product.stock || 0);
+
+    if (stock <= 0) {
+        outOfStockCount++;
+    } else if (stock <= 5) {
+        lowStockCount++;
+    }
+});
+
+const lowStockElement = document.getElementById("lowStockProducts");
+const outOfStockElement = document.getElementById("outOfStockProducts");
+
+if (lowStockElement) {
+    lowStockElement.textContent = lowStockCount;
+}
+
+if (outOfStockElement) {
+    outOfStockElement.textContent = outOfStockCount;
+}
+
+        let totalOrders = 0;
+        let pendingOrders = 0;
+        let confirmedOrders = 0;
+        let deliveredOrders = 0;
+        let totalOrderValue = 0;
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+            const status = order.status || "Pending";
+
+            totalOrders++;
+
+            if (status === "Pending") pendingOrders++;
+            if (status === "Confirmed") confirmedOrders++;
+            if (status === "Delivered") deliveredOrders++;
+
+            totalOrderValue += Number(order.totalAmount || 0);
+        });
+
+        if (totalOrdersElement) {
+            totalOrdersElement.textContent = totalOrders;
+        }
+
+        if (pendingOrdersElement) {
+            pendingOrdersElement.textContent = pendingOrders;
+        }
+
+        if (confirmedOrdersElement) {
+            confirmedOrdersElement.textContent = confirmedOrders;
+        }
+
+        if (completedOrdersElement) {
+            completedOrdersElement.textContent = deliveredOrders;
+        }
+
+        if (totalValueElement) {
+            totalValueElement.textContent =
+                "₹" + totalOrderValue.toLocaleString("en-IN");
+        }
+
+    } catch (error) {
+        console.error("Dashboard statistics error:", error);
+        alert("Could not load dashboard statistics.");
+    }
+};
+
+
+window.loadAdminCustomers = async function () {
+    const container = document.getElementById("adminCustomersList");
+
+    if (!container) return;
+
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        container.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        container.textContent = "Loading customers...";
 
         const snapshot = await getDocs(collection(db, "orders"));
 
-        const myOrders = snapshot.docs.filter(orderDoc => {
-            return orderDoc.data().userId === user.uid;
+        if (snapshot.empty) {
+            container.textContent = "No customers found.";
+            return;
+        }
+
+        const customers = new Map();
+
+        snapshot.forEach(orderDoc => {
+            const order = orderDoc.data();
+            const userId = order.userId;
+
+            if (!userId) return;
+
+            if (!customers.has(userId)) {
+                customers.set(userId, {
+                    userId: userId,
+                    name: order.customerName || "N/A",
+                    email: order.customerEmail || "N/A",
+                    totalOrders: 0,
+                    totalValue: 0
+                });
+            }
+
+            const customer = customers.get(userId);
+
+            customer.totalOrders++;
+            customer.totalValue += Number(order.totalAmount || 0);
+
+            if (customer.name === "N/A" && order.customerName) {
+                customer.name = order.customerName;
+            }
+
+            if (customer.email === "N/A" && order.customerEmail) {
+                customer.email = order.customerEmail;
+            }
         });
 
-        if (myOrders.length === 0) {
-            container.innerHTML = "<p>You have not placed any orders yet.</p>";
+        container.innerHTML = "";
+
+        customers.forEach(customer => {
+            const card = document.createElement("div");
+            card.className = "admin-customer-card";
+
+            const name = document.createElement("h3");
+            name.textContent = customer.name;
+
+            const email = document.createElement("p");
+            email.textContent = "Email: " + customer.email;
+
+            const id = document.createElement("p");
+            id.textContent = "Customer ID: " + customer.userId;
+
+            const orders = document.createElement("p");
+            orders.textContent = "Total Orders: " + customer.totalOrders;
+
+            const value = document.createElement("p");
+            value.textContent =
+                "Total Order Value: ₹" +
+                customer.totalValue.toLocaleString("en-IN");
+
+            
+const historyButton = document.createElement("button");
+historyButton.textContent = "View Order History";
+
+const historyContainer = document.createElement("div");
+historyContainer.style.display = "none";
+
+historyButton.addEventListener("click", async function () {
+    if (historyContainer.style.display === "block") {
+        historyContainer.style.display = "none";
+        return;
+    }
+
+    historyContainer.style.display = "block";
+    historyContainer.textContent = "Loading order history...";
+
+    if (window.loadCustomerOrderHistory) {
+        await window.loadCustomerOrderHistory(
+            customer.userId,
+            historyContainer
+        );
+    }
+});
+
+card.append(
+    name,
+    email,
+    id,
+    orders,
+    value,
+    historyButton,
+    historyContainer
+);
+
+container.appendChild(card);
+
+        });
+
+    } catch (error) {
+        console.error("Customer loading error:", error);
+        container.textContent = "Could not load customers.";
+    }
+};
+
+
+window.filterAdminCustomers = function () {
+    const input = document.getElementById("customerSearchInput");
+    const container = document.getElementById("adminCustomersList");
+
+    if (!input || !container) return;
+
+    const searchText = input.value.trim().toLowerCase();
+
+    const cards = container.querySelectorAll(".admin-customer-card");
+
+    cards.forEach(card => {
+        const matches = card.textContent
+            .toLowerCase()
+            .includes(searchText);
+
+        card.style.display = matches ? "" : "none";
+    });
+};
+
+
+window.loadCustomerOrderHistory = async function (userId, container) {
+    if (!window.currentFirebaseUser || !window.isAdminUser) {
+        container.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        container.textContent = "Loading order history...";
+
+        const customerOrdersQuery = query(
+            collection(db, "orders"),
+            where("userId", "==", userId)
+        );
+
+        const snapshot = await getDocs(customerOrdersQuery);
+
+        if (snapshot.empty) {
+            container.textContent = "No order history found.";
             return;
         }
 
         container.innerHTML = "";
 
-        myOrders.forEach(orderDoc => {
+        snapshot.forEach(orderDoc => {
             const order = orderDoc.data();
 
-            const card = document.createElement("div");
-            card.className = "admin-order-card";
+            const orderCard = document.createElement("div");
+            orderCard.className = "admin-order-card";
 
-            const heading = document.createElement("h3");
+            const heading = document.createElement("h4");
             heading.textContent = "Order ID: " + orderDoc.id;
 
-            const itemsList = document.createElement("ul");
+            const date = document.createElement("p");
+
+            if (order.createdAt && order.createdAt.toDate) {
+                date.textContent =
+                    "Date: " +
+                    order.createdAt.toDate().toLocaleString("en-IN");
+            } else {
+                date.textContent = "Date: Not available";
+            }
+
+            const productsHeading = document.createElement("p");
+            productsHeading.textContent = "Products:";
+
+            const productsList = document.createElement("ul");
 
             (Array.isArray(order.items) ? order.items : []).forEach(item => {
                 const li = document.createElement("li");
+
                 li.textContent =
                     (item.productName || "Product") +
-                    " × " + (item.quantity || 1);
-                itemsList.appendChild(li);
+                    " × " + Number(item.quantity || 1) +
+                    " | Unit Price: ₹" +
+                    Number(item.unitPrice || 0).toLocaleString("en-IN");
+
+                productsList.appendChild(li);
             });
 
             const amount = document.createElement("p");
@@ -3188,23 +3467,138 @@ window.loadMyOrders = async function () {
                 Number(order.totalAmount || 0).toLocaleString("en-IN");
 
             const status = document.createElement("p");
-            status.textContent = "Status: " + (order.status || "Pending");
+            status.textContent =
+                "Status: " + (order.status || "Pending");
 
-            const timeline = document.createElement("p");
-            timeline.textContent =
-                "Order tracking: " +
-                (order.status || "Pending");
+            orderCard.append(
+                heading,
+                date,
+                productsHeading,
+                productsList,
+                amount,
+                status
+            );
 
-            card.append(heading, itemsList, amount, status, timeline);
-            container.appendChild(card);
+            container.appendChild(orderCard);
         });
 
     } catch (error) {
-        console.error("Customer orders error:", error);
-        container.innerHTML = "<p>Could not load your orders.</p>";
+        console.error("Customer order history error:", error);
+        container.textContent = "Could not load order history.";
     }
 };
     
+    
+window.filterAdminOrders = function () {
+    const searchInput = document.getElementById("orderSearchInput");
+    const statusFilter = document.getElementById("orderStatusFilter");
+    const container = document.getElementById("adminOrdersList");
+
+    if (!searchInput || !statusFilter || !container) return;
+
+    const searchText = searchInput.value.trim().toLowerCase();
+    const selectedStatus = statusFilter.value;
+
+    const orderCards = container.querySelectorAll(".admin-order-card");
+
+    orderCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+
+        const matchesSearch = cardText.includes(searchText);
+
+        const statusSelect = card.querySelector("select");
+        const currentStatus = statusSelect
+            ? statusSelect.value
+            : "";
+
+        const matchesStatus =
+            selectedStatus === "All" ||
+            currentStatus === selectedStatus;
+
+        card.style.display =
+            matchesSearch && matchesStatus ? "" : "none";
+    });
+};
+    
+// REAL-TIME CUSTOMER ORDER TRACKING
+let unsubscribeMyOrders = null;
+
+window.stopMyOrdersListener = function () {
+    if (unsubscribeMyOrders) {
+        unsubscribeMyOrders();
+        unsubscribeMyOrders = null;
+    }
+};
+
+window.loadMyOrders = async function () {
+    const container = document.getElementById("myOrdersList");
+    const user = window.currentFirebaseUser;
+
+    if (!container) return;
+
+    if (!user) {
+        container.textContent = "Please login to view your orders.";
+        return;
+    }
+
+    // Stop previous listener to prevent duplicates
+    window.stopMyOrdersListener();
+
+    container.textContent = "Loading your orders...";
+
+    const ordersQuery = query(
+        collection(db, "orders"),
+        where("userId", "==", user.uid)
+    );
+
+    unsubscribeMyOrders = onSnapshot(
+        ordersQuery,
+        (snapshot) => {
+            if (snapshot.empty) {
+                container.textContent = "You have not placed any orders yet.";
+                return;
+            }
+
+            container.innerHTML = "";
+
+            snapshot.forEach(orderDoc => {
+                const order = orderDoc.data();
+
+                const card = document.createElement("div");
+                card.className = "admin-order-card";
+
+                const heading = document.createElement("h3");
+                heading.textContent = "Order ID: " + orderDoc.id;
+
+                const itemsList = document.createElement("ul");
+
+                (Array.isArray(order.items) ? order.items : []).forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent =
+                        (item.productName || "Product") +
+                        " × " + (item.quantity || 1);
+                    itemsList.appendChild(li);
+                });
+
+                const amount = document.createElement("p");
+                amount.textContent = "Total: ₹" +
+                    Number(order.totalAmount || 0).toLocaleString("en-IN");
+
+                const status = document.createElement("p");
+                status.textContent = "Order Status: " +
+                    (order.status || "Pending");
+
+                card.append(heading, itemsList, amount, status);
+                container.appendChild(card);
+            });
+        },
+        (error) => {
+            console.error("Real-time orders error:", error);
+            container.textContent = "Could not load your orders.";
+            window.stopMyOrdersListener();
+        }
+    );
+};
     
 
 // LOAD STORE PRODUCTS FROM FIRESTORE
