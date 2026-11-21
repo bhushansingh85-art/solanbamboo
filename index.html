@@ -410,7 +410,7 @@ transition: box-shadow 0.2s ease;
 
 .explore-btn:hover {
 box-shadow: 0 0 20px rgba(224, 159, 62, 1.0);
-transform: translateX(-50%) scale(1.05);
+transform: translateX(-50%)scale(1.05);
 transition: transform 0.2s ease;
 }
 
@@ -711,45 +711,45 @@ margin-top: 8px;
 
 /* 3D Flip Card Animation Styles */
 .auth-container {
-perspective: 1000px;
-max-width: 450px;
-margin: 40px auto;
-position: relative;
+    perspective: 1000px;
+    max-width: 450px;
+    margin: 40px auto;
+    position: relative;
 }
 
 .unique-login-card {
-width: 100%;
-background: linear-gradient(135deg, #ffffff 0%, #fcf8f2 100%);
-padding: 35px;
-border-radius: 16px;
-border: 2px solid #000000;
-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(224, 159, 62, 0.3);
-text-align: center;
-position: relative;
-backdrop-filter: blur(5px);
-transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.4s ease;
-backface-visibility: hidden;
+    width: 100%;
+    background: linear-gradient(135deg, #ffffff 0%, #fcf8f2 100%);
+    padding: 35px;
+    border-radius: 16px;
+    border: 2px solid #000000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(224, 159, 62, 0.3);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(5px);
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.4s ease;
+    backface-visibility: hidden;
 }
 
 /* Welcome Floating Banner Animation */
 @keyframes slideDownBounce {
-0% { transform: translateY(-50px); opacity: 0; }
-60% { transform: translateY(10px); opacity: 1; }
-100% { transform: translateY(0); opacity: 1; }
+    0% { transform: translateY(-50px); opacity: 0; }
+    60% { transform: translateY(10px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
 .welcome-banner {
-background: linear-gradient(45deg, #2B1B17, #E09F3E);
-color: #FFFACD;
-padding: 15px 25px;
-text-align: center;
-font-size: 18px;
-font-weight: bold;
-font-family: 'Dancing Script', cursive;
-letter-spacing: 1px;
-box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-animation: slideDownBounce 0.8s ease forwards;
-border-bottom: 2px solid #000;
+    background: linear-gradient(45deg, #2B1B17, #E09F3E);
+    color: #FFFACD;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: slideDownBounce 0.8s ease forwards;
+    border-bottom: 2px solid #000;
 }
 
 /* Confirm Button Hover Effect */
@@ -767,419 +767,427 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
 }
 
 #productsSection #mainContentArea {
-display: grid !important;
-grid-template-columns: repeat(4, minmax(0, 1fr));
-gap: 20px;
-width: 100%;
-max-width: 1400px;
-margin: 0 auto;
-padding: 25px 20px;
-align-items: stretch;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 25px 20px;
+    align-items: stretch;
 }
 
 #productsSection #mainContentArea > .item-card {
-width: 100%;
-min-width: 0;
-max-width: none;
-margin: 0;
-flex: none;
-padding: 14px;
-background-color: #FFFFFF;
-border: 1px solid #dcdcdc;
-border-radius: 8px;
-text-align: center;
-position: relative;
-cursor: pointer;
-box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    flex: none;
+    padding: 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 #productsSection #mainContentArea > .item-card:hover {
-transform: translateY(-4px);
-box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 #productsSection .item-image-container {
-width: 100%;
-height: 210px;
-background-color: #F8F9FA;
-border-radius: 6px;
-overflow: hidden;
-display: flex;
-align-items: center;
-justify-content: center;
-margin-bottom: 12px;
-font-size: 0;
+    width: 100%;
+    height: 210px;
+    background-color: #F8F9FA;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 0;
 }
 
 #productsSection .item-image-container img {
-width: 100%;
-height: 100%;
-object-fit: contain;
-border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
 }
 
 #productsSection .item-title {
-font-size: 14px;
-font-weight: bold;
-color: #2B1B17;
-margin: 8px 0 6px 0;
-line-height: 1.3;
+    font-size: 14px;
+    font-weight: bold;
+    color: #2B1B17;
+    margin: 8px 0 6px 0;
+    line-height: 1.3;
 }
 
 #productsSection .item-description {
-font-size: 12px;
-color: #666;
-line-height: 1.4;
-margin: 0;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-overflow: hidden;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
-body {
-padding-top: 110px;
+    body {
+        padding-top: 110px;
+    }
+
+    .header-gradient {
+        height: 110px;
+        padding: 0 10px;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .company-title {
+        font-size: 14px;
+    }
+
+    .company-tagline {
+        font-size: 11px;
+    }
+
+    .header-btn {
+        right: 20px;
+        top: 18px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .border-search-container {
+        bottom: -28px;
+        left: 175px; 
+        padding: 2px 6px;
+    }
+
+    .border-search-input {
+        width: 110px;
+        font-size: 11px;
+    }
+
+    .border-right-actions {
+        bottom: -36px;
+        right: 32px;
+        gap: 8px;
+    }
+
+    .border-cart-btn, .border-profile-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .slideshow-container {
+        height: 420px !important;
+    }
+
+    .slide-caption {
+        top: 50px;
+        width: 90%;
+        padding: 10px;
+    }
+
+    .slide-caption h1 {
+        font-size: 18px;
+    }
+
+    .slide-caption p {
+        font-size: 12px;
+    }
+
+    .explore-btn {
+        bottom: 40px;
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+
+    #productsSection #mainContentArea {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 10px 8px;
+    }
+
+    #productsSection #mainContentArea > .item-card {
+        min-width: 0;
+        padding: 8px;
+    }
+
+    #productsSection .item-image-container {
+        height: 110px;
+        margin-bottom: 8px;
+    }
+
+    #productsSection .item-title {
+        font-size: 10px;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    #productsSection .item-description {
+        font-size: 8px;
+        line-height: 1.35;
+    }
+
+    .product-detail-wrapper {
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
-.header-gradient {
-height: 110px;
-padding: 0 10px;
-}
+    /* ADMIN DASHBOARD */
 
-.logo-icon {
-width: 45px;
-height: 45px;
-}
-
-.company-title {
-font-size: 14px;
-}
-
-.company-tagline {
-font-size: 11px;
-}
-
-.header-btn {
-right: 20px;
-top: 18px;
-padding: 6px 12px;
-font-size: 11px;
-}
-
-.border-search-container {
-bottom: -28px;
-left: 175px; 
-padding: 2px 6px;
-}
-
-.border-search-input {
-width: 110px;
-font-size: 11px;
-}
-
-.border-right-actions {
-bottom: -36px;
-right: 32px;
-gap: 8px;
-}
-
-.border-cart-btn, .border-profile-btn {
-width: 30px;
-height: 30px;
-}
-
-.slideshow-container {
-height: 420px !important;
-}
-
-.slide-caption {
-top: 50px;
-width: 90%;
-padding: 10px;
-}
-
-.slide-caption h1 {
-font-size: 18px;
-}
-
-.slide-caption p {
-font-size: 12px;
-}
-
-.explore-btn {
-bottom: 40px;
-padding: 8px 20px;
-font-size: 13px;
-}
-
-#productsSection #mainContentArea {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 8px;
-padding: 10px 8px;
-}
-
-#productsSection #mainContentArea > .item-card {
-min-width: 0;
-padding: 8px;
-}
-
-#productsSection .item-image-container {
-height: 110px;
-margin-bottom: 8px;
-}
-
-#productsSection .item-title {
-font-size: 10px;
-line-height: 1.3;
-overflow-wrap: anywhere;
-}
-
-#productsSection .item-description {
-font-size: 8px;
-line-height: 1.35;
-}
-
-.product-detail-wrapper {
-flex-direction: column;
-gap: 15px;
-}
-}
-
-/* ADMIN DASHBOARD */
 #adminSection {    
-padding: 35px 5%;
-min-height: 70vh;
+    padding: 35px 5%;
+    min-height: 70vh;
 }
 
 .admin-dashboard {
-max-width: 1200px;
-margin: auto;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .admin-dashboard h2 {
-font-size: 30px;
-margin-bottom: 8px;
+    font-size: 30px;
+    margin-bottom: 8px;
 }
 
 .admin-dashboard > p {
-color: #777;
-margin-bottom: 30px;
+    color: #777;
+    margin-bottom: 30px;
 }
 
 .admin-stats {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 20px;
-margin: 25px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 25px 0;
 }
 
 .admin-card {
-background: #fff;
-padding: 25px;
-border-radius: 12px;
-box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-border-left: 5px solid #9b6338;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #9b6338;
 }
 
 .admin-card h3 {
-font-size: 16px;
-color: #666;
+    font-size: 16px;
+    color: #666;
 }
 
 .admin-card p {
-font-size: 30px;
-font-weight: bold;
-margin-top: 12px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 12px;
 }
 
 .admin-orders {
-background: #fff;
-padding: 25px;
-margin-top: 30px;
-border-radius: 12px;
-box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    background: #fff;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
 }
 
 .admin-orders button {
-background: #754522;
-color: white;
-border: none;
-padding: 11px 20px;
-border-radius: 7px;
-cursor: pointer;
-margin: 15px 0;
+    background: #754522;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 15px 0;
 }
 
 #adminOrdersList {
-overflow-x: auto;
+    overflow-x: auto;
 }
 
 /* Prevent login/profile button flicker */
 body.auth-loading #loginHeaderBtn,
 body.auth-loading #profileBorderBtn {
-visibility: hidden !important;
+    visibility: hidden !important;
 }
 
+
 /* ===== PROFESSIONAL ADMIN PANEL ===== */
+
 #adminSection {
-padding: 25px 3%;
-background: #f3f1ed;
-min-height: 80vh;
+    padding: 25px 3%;
+    background: #f3f1ed;
+    min-height: 80vh;
 }
 
 .admin-layout {
-display: flex;
-max-width: 1450px;
-margin: auto;
-min-height: 650px;
-background: #fff;
-border-radius: 16px;
-overflow: hidden;
-box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    display: flex;
+    max-width: 1450px;
+    margin: auto;
+    min-height: 650px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
 /* SIDEBAR */
+
 .admin-sidebar {
-width: 240px;
-flex-shrink: 0;
-background: #29231e;
-padding: 28px 16px;
-display: flex;
-flex-direction: column;
-gap: 12px;
+    width: 240px;
+    flex-shrink: 0;
+    background: #29231e;
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .admin-sidebar h2 {
-color: #e5ad68;
-font-size: 21px;
-padding: 5px 12px 25px;
-letter-spacing: 1px;
+    color: #e5ad68;
+    font-size: 21px;
+    padding: 5px 12px 25px;
+    letter-spacing: 1px;
 }
 
 .admin-sidebar button {
-width: 100%;
-padding: 14px 16px;
-border: none;
-border-radius: 8px;
-background: transparent;
-color: #e8e3dc;
-text-align: left;
-font-size: 15px;
-cursor: pointer;
-transition: 0.25s;
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #e8e3dc;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.25s;
 }
 
 .admin-sidebar button:hover,
 .admin-sidebar button.active {
-background: #9b6338;
-color: white;
+    background: #9b6338;
+    color: white;
 }
 
 /* MAIN CONTENT */
+
 .admin-main {
-flex: 1;
-min-width: 0;
-padding: 35px;
-background: #f8f7f4;
+    flex: 1;
+    min-width: 0;
+    padding: 35px;
+    background: #f8f7f4;
 }
 
 .admin-page h2 {
-color: #33271f;
-font-size: 28px;
-margin-bottom: 10px;
+    color: #33271f;
+    font-size: 28px;
+    margin-bottom: 10px;
 }
 
 .admin-page > p {
-color: #81776f;
-margin-bottom: 25px;
+    color: #81776f;
+    margin-bottom: 25px;
 }
 
 /* STATISTICS */
+
 .admin-stats {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-gap: 20px;
-margin: 30px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
 }
 
 .admin-card {
-background: white;
-padding: 25px;
-border-radius: 12px;
-border: 1px solid #eee6dc;
-border-left: 5px solid #9b6338;
-box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee6dc;
+    border-left: 5px solid #9b6338;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
 
 .admin-card h3 {
-color: #76695e;
-font-size: 15px;
+    color: #76695e;
+    font-size: 15px;
 }
 
 .admin-card p {
-color: #39291f;
-font-size: 32px;
-font-weight: bold;
-margin-top: 12px;
+    color: #39291f;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 12px;
 }
 
 /* ORDERS */
+
 .admin-orders {
-background: white;
-padding: 25px;
-border-radius: 12px;
-border: 1px solid #eee6dc;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee6dc;
 }
 
 .admin-orders button,
 #admin-orders-page > button {
-background: #754522;
-color: white;
-border: none;
-padding: 12px 20px;
-border-radius: 7px;
-cursor: pointer;
-margin: 15px 0;
+    background: #754522;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 15px 0;
 }
 
 #adminOrdersList {
-overflow-x: auto;
+    overflow-x: auto;
 }
 
 /* MOBILE */
+
 @media (max-width: 700px) {
-#adminSection {
-padding: 10px;
-}
+    #adminSection {
+        padding: 10px;
+    }
 
-.admin-layout {
-flex-direction: column;
-}
+    .admin-layout {
+        flex-direction: column;
+    }
 
-.admin-sidebar {
-width: 100%;
-flex-direction: row;
-flex-wrap: wrap;
-padding: 15px;
-}
+    .admin-sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 15px;
+    }
 
-.admin-sidebar h2 {
-width: 100%;
-padding: 5px;
-}
+    .admin-sidebar h2 {
+        width: 100%;
+        padding: 5px;
+    }
 
-.admin-sidebar button {
-width: auto;
-flex: 1 1 40%;
-text-align: center;
-padding: 12px 8px;
-}
+    .admin-sidebar button {
+        width: auto;
+        flex: 1 1 40%;
+        text-align: center;
+        padding: 12px 8px;
+    }
 
-.admin-main {
-padding: 20px 14px;
-}
+    .admin-main {
+        padding: 20px 14px;
+    }
 }       
 </style>
 </head>
@@ -1215,6 +1223,7 @@ padding: 20px 14px;
 <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF">
 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
 </svg>
+
 </button>
 </div>
 
@@ -1280,13 +1289,13 @@ padding: 20px 14px;
 <div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
   <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
     <div class="home-item-card">       
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="Bamboo Set"></div>      
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>       
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="Bamboo Set"></div>      
+     <div class="home-item-card">
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
     </div>
     <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg" alt="Bamboo Set"></div>     
+      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
     </div>
   </div>
 </div>
@@ -1308,42 +1317,42 @@ Welcome to <strong>Solan Bamboo Furniture</strong>, your ultimate destination fo
 <main class="content-container" id="mainContentArea">
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg" alt="image 353892b2 converted">
+<img src="https://i.ibb.co/FktJnLMH/image-353892b2-converted.jpg" alt="image 353892b2 converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
 </div>
 <div class="item-card" onclick="openFullProduct(this)" data-price="₹8,500">
 <div class="item-image-container">
-<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted">
+<img src="https://i.ibb.co/6RHWnZ4M/sofa-converted.jpg" alt="sofa converted" border="0">
 </div>
 <h2 class="item-title">CLASSIC ROUND COFFEE TABLE</h2>
 <p class="item-description">Enhance your living space with the charming appeal of our Classic Round Bamboo Coffee Table.</p>
@@ -1438,9 +1447,9 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 <h2 id="simpleModalTitle" class="modal-title" style="margin-bottom: 10px; color: #2B1B17;"></h2>
 <div id="productPriceTag" class="product-price">₹15,499</div>
 <p id="simpleModalDesc" style="color: #555; font-size: 15px; margin-bottom: 20px; line-height: 1.6;"></p>
-<div class="button-group" style="display: flex; justify-content: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 25px;">
-<button id="simpleCartBtn" class="item-btn cart-btn" style="padding: 12px 20px; font-size: 14px; cursor: pointer; border-radius: 6px;" onclick="toggleCartFromSimpleView()">Add to Cart</button>
-<button class="item-btn" style="padding: 12px 20px; font-size: 14px; background-color: #5CB85C; color: white; border: none; cursor: pointer; border-radius: 6px;" onclick="buyNowFromSimpleView()">Buy Now</button>
+<div class="button-group" style="justify-content: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 25px;">
+<button id="simpleCartBtn" class="item-btn cart-btn" style="padding: 12px 20px; font-size: 14px;" onclick="toggleCartFromSimpleView()">Add to Cart</button>
+<button class="item-btn" style="padding: 12px 20px; font-size: 14px; background-color: #5CB85C; color: white;" onclick="buyNowFromSimpleView()">Buy Now</button>
 </div>
 </div>
 </div>
@@ -1453,8 +1462,9 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 <h2 style="color: #2B1B17; margin-top: 0; border-bottom: 2px solid #E09F3E; padding-bottom: 10px;">SHOPPING CART</h2>
 <div id="cartFullListContainer" style="margin: 20px 0;"></div>
-<button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border: none; cursor: pointer; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
+<button class="item-btn" style="width: 100%; padding: 14px; background-color: #5CB85C; color: white; font-size: 16px; border-radius: 6px;" onclick="checkoutCart()">PROCEED TO BUY ALL</button>
 </section>
+
 
 <!-- ADMIN PANEL -->
 <section id="adminSection" class="page-section">
@@ -1492,195 +1502,202 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
         <div class="admin-main">
 
             <!-- DASHBOARD PAGE -->
-            <div id="admin-dashboard-page" class="admin-page">
+            
+<!-- DASHBOARD PAGE -->
+<div id="admin-dashboard-page" class="admin-page">
 
-                <h2>Admin Dashboard</h2>
-                <p>Manage your store and customer orders.</p>
+    <h2>Admin Dashboard</h2>
+    <p>Manage your store and customer orders.</p>
 
-                <button onclick="loadAdminDashboardStats()">
-                    Refresh Statistics
-                </button>
+    <button onclick="loadAdminDashboardStats()">
+        Refresh Statistics
+    </button>
 
-                <div class="admin-stats">
+    <div class="admin-stats">
 
-                    <div class="admin-card">
-                        <h3>Total Orders</h3>
-                        <p id="totalOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Total Orders</h3>
+            <p id="totalOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Pending Orders</h3>
-                        <p id="pendingOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Pending Orders</h3>
+            <p id="pendingOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Confirmed Orders</h3>
-                        <p id="confirmedOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Confirmed Orders</h3>
+            <p id="confirmedOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Delivered Orders</h3>
-                        <p id="completedOrders">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Delivered Orders</h3>
+            <p id="completedOrders">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Total Order Value</h3>
-                        <p id="totalOrderValue">₹0</p>
-                    </div>
-                    
-                    <div class="admin-card">
-                        <h3>Low Stock Products</h3>
-                        <p id="lowStockProducts">0</p>
-                    </div>
+        <div class="admin-card">
+            <h3>Total Order Value</h3>
+            <p id="totalOrderValue">₹0</p>
+        </div>
+        
+        <div class="admin-card">
+           <h3>Low Stock Products</h3>
+           <p id="lowStockProducts">0</p>
+        </div>
 
-                    <div class="admin-card">
-                        <h3>Out of Stock Products</h3>
-                        <p id="outOfStockProducts">0</p>
-                    </div>        
+        <div class="admin-card">
+           <h3>Out of Stock Products</h3>
+           <p id="outOfStockProducts">0</p>
+        </div>        
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
             <!-- PRODUCTS PAGE -->
-            <div id="admin-products-page" class="admin-page" style="display:none;">
+<div id="admin-products-page" class="admin-page" style="display:none;">
 
-                <div class="admin-page-header">
-                    <div>
-                        <h2>Product Management</h2>
-                        <p>Manage your Solan Bamboo Furniture store.</p>
-                    </div>
+    <div class="admin-page-header">
+        <div>
+            <h2>Product Management</h2>
+            <p>Manage your Solan Bamboo Furniture store.</p>
+        </div>
 
-                    <button class="admin-add-btn" onclick="openProductForm()">
-                        + Add New Product
-                    </button>
-                </div>
+        <button class="admin-add-btn" onclick="openProductForm()">
+            + Add New Product
+        </button>
+    </div>
 
-                <!-- PRODUCT FORM -->
-                <div id="productFormBox" style="display:none;">
+    <!-- PRODUCT FORM -->
+    <div id="productFormBox" style="display:none;">
 
-                    <h3 id="productFormTitle">Add New Product</h3>
+        <h3 id="productFormTitle">Add New Product</h3>
 
-                    <input type="hidden" id="editProductId">
+        <input type="hidden" id="editProductId">
 
-                    <label>Product Name</label>
-                    <input type="text" id="productName" placeholder="Enter product name">
+        <label>Product Name</label>
+        <input type="text" id="productName" placeholder="Enter product name">
 
-                    <label>Price (₹)</label>
-                    <input type="number" id="productPrice" placeholder="Enter price" min="0">
+        <label>Price (₹)</label>
+        <input type="number" id="productPrice" placeholder="Enter price" min="0">
 
-                    <label>Category</label>
-                    <select id="productCategory">
-                        <option value="">Select Category</option>
-                        <option value="Bamboo Furniture">Bamboo Furniture</option>
-                        <option value="Tables">Tables</option>
-                        <option value="Chairs">Chairs</option>
-                        <option value="Beds">Beds</option>
-                        <option value="Sofas">Sofas</option>
-                        <option value="Other">Other</option>
-                    </select>
+        <label>Category</label>
+        <select id="productCategory">
+            <option value="">Select Category</option>
+            <option value="Bamboo Furniture">Bamboo Furniture</option>
+            <option value="Tables">Tables</option>
+            <option value="Chairs">Chairs</option>
+            <option value="Beds">Beds</option>
+            <option value="Sofas">Sofas</option>
+            <option value="Other">Other</option>
+        </select>
 
-                    <label>Stock Quantity</label>
-                    <input type="number" id="productStock" placeholder="Enter stock" min="0">
+        <label>Stock Quantity</label>
+        <input type="number" id="productStock" placeholder="Enter stock" min="0">
 
-                    <label>Upload Product Image</label>
-                    <input
-                        type="file"
-                        id="productImageFile"
-                        accept="image/jpeg,image/png,image/webp"
-                    >
+        
+<label>Upload Product Image</label>
 
-                    <div id="productImagePreview" style="margin-top:12px;">
-                    </div>
+<input
+    type="file"
+    id="productImageFile"
+    accept="image/jpeg,image/png,image/webp"
+>
 
-                    <input type="hidden" id="productImage">
+<div id="productImagePreview" style="margin-top:12px;">
+</div>
 
-                    <label>Description</label>
-                    <textarea id="productDescription"
-                        placeholder="Enter product description"></textarea>
+<input type="hidden" id="productImage">
 
-                    <div>
-                        <button onclick="saveAdminProduct()">Save Product</button>
-                        <button onclick="closeProductForm()">Cancel</button>
-                    </div>
+        <label>Description</label>
+        <textarea id="productDescription"
+            placeholder="Enter product description"></textarea>
 
-                </div>
+        <div>
+            <button onclick="saveAdminProduct()">Save Product</button>
+            <button onclick="closeProductForm()">Cancel</button>
+        </div>
 
-                <!-- PRODUCT LIST -->
-                <div class="admin-products-container">
+    </div>
 
-                    <h3>All Products</h3>
+    <!-- PRODUCT LIST -->
+    <div class="admin-products-container">
 
-                    <div id="adminProductsList">
-                        <p>Loading products...</p>
-                    </div>
+        <h3>All Products</h3>
 
-                </div>
+        <div id="adminProductsList">
+            <p>Loading products...</p>
+        </div>
 
-            </div>
+    </div>
+
+</div>
 
             <!-- ORDERS PAGE -->
-            <div id="admin-orders-page" class="admin-page" style="display:none;">
-                <h2>Customer Orders</h2>
+            
+<div id="admin-orders-page" class="admin-page" style="display:none;">
+    <h2>Customer Orders</h2>
 
-                <button onclick="loadAdminOrders()">
-                    Refresh Orders
-                </button>
+    <button onclick="loadAdminOrders()">
+        Refresh Orders
+    </button>
 
-                <!-- Search Orders -->
-                <div>
-                    <label for="orderSearchInput">Search Orders:</label>
-                    <input
-                        type="text"
-                        id="orderSearchInput"
-                        placeholder="Search by Order ID, Customer Name or Email"
-                        oninput="filterAdminOrders()"
-                    >
-                </div>
+    <!-- Search Orders -->
+    <div>
+        <label for="orderSearchInput">Search Orders:</label>
+        <input
+            type="text"
+            id="orderSearchInput"
+            placeholder="Search by Order ID, Customer Name or Email"
+            oninput="filterAdminOrders()"
+        >
+    </div>
 
-                <!-- Filter by Status -->
-                <div>
-                    <label for="orderStatusFilter">Filter by Status:</label>
-                    <select id="orderStatusFilter" onchange="filterAdminOrders()">
-                        <option value="All">All Orders</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Processing">Processing</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
-                </div>
+    <!-- Filter by Status -->
+    <div>
+        <label for="orderStatusFilter">Filter by Status:</label>
+        <select id="orderStatusFilter" onchange="filterAdminOrders()">
+            <option value="All">All Orders</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
 
-                <div id="adminOrdersList">
-                    <p>Orders will appear here.</p>
-                </div>
-            </div>
+    <div id="adminOrdersList">
+        <p>Orders will appear here.</p>
+    </div>
+</div>
 
             <!-- CUSTOMERS PAGE -->
-            <div id="admin-customers-page" class="admin-page" style="display:none;">
+            
+<div id="admin-customers-page" class="admin-page" style="display:none;">
 
-                <h2>Customer Management</h2>
+    <h2>Customer Management</h2>
 
-                <button onclick="loadAdminCustomers()">
-                    Refresh Customers
-                </button>
+    <button onclick="loadAdminCustomers()">
+        Refresh Customers
+    </button>
 
-                <div>
-                    <label for="customerSearchInput">Search Customers:</label>
-                    <input
-                        type="text"
-                        id="customerSearchInput"
-                        placeholder="Search by name, email or customer ID"
-                        oninput="filterAdminCustomers()"
-                    >
-                </div>
+    <div>
+        <label for="customerSearchInput">Search Customers:</label>
+        <input
+            type="text"
+            id="customerSearchInput"
+            placeholder="Search by name, email or customer ID"
+            oninput="filterAdminCustomers()"
+        >
+    </div>
 
-                <div id="adminCustomersList">
-                    <p>Customer information will appear here.</p>
-                </div>
+    <div id="adminCustomersList">
+        <p>Customer information will appear here.</p>
+    </div>
 
-            </div>
+</div>
+
 
             <!-- SETTINGS PAGE -->
             <div id="admin-settings-page" class="admin-page" style="display:none;">
@@ -1736,7 +1753,7 @@ Customer Care</a></li>
 <li id="adminMenuItem" style="display:none;">
     <a href="javascript:void(0)"
        onclick="toggleMenu(); openAdminPanel();">
-        <span style="color:#000000; font-size:14px;">⚙</span>
+        <span style="color:#000000; size:7px;">⚙</span>
         Admin Panel
     </a>
 </li>    
@@ -1961,6 +1978,8 @@ window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
 }
 }
 
+
+
 function getCartPrice(item) {
     const value = String(item.price || "")
         .replace(/,/g, "")
@@ -2032,35 +2051,6 @@ function toggleCartFromSimpleView() {
     }
 
     toggleCart(currentActiveProductData);
-}
-
-function buyNowFromSimpleView() {
-    if (!window.currentFirebaseUser) {
-        alert("Please login first!");
-        showSection("loginSection", "/login");
-        return;
-    }
-
-    if (!currentActiveProductData) {
-        alert("Please select a product first!");
-        return;
-    }
-
-    const exists = cartItems.some(
-        item => item.title === currentActiveProductData.title
-    );
-
-    if (!exists) {
-        cartItems.push({
-            ...currentActiveProductData,
-            quantity: 1
-        });
-        saveCart();
-        updateCartUI();
-        updateSimpleCartButton();
-    }
-
-    openCartFullView();
 }
 
 function changeCartQuantity(index, amount) {
@@ -2194,6 +2184,7 @@ document.getElementById('cartFullSection').style.display = 'none';
 showSection('homeSection', '/');
 }
 
+
 async function checkoutCart() {
     if (!window.currentFirebaseUser) {
         showSection('loginSection', '/login');
@@ -2209,11 +2200,11 @@ async function checkoutCart() {
         const orderId = await window.placeOrderToFirestore();
 
         cartItems = [];
-        saveCart();
+saveCart();
 
-        updateCartUI();
-        updateSimpleCartButton();
-        closeCartFullView();
+updateCartUI();
+updateSimpleCartButton();
+closeCartFullView();
 
         alert("Order placed successfully! Order ID: " + orderId);
 
@@ -2222,6 +2213,7 @@ async function checkoutCart() {
         alert("Order could not be placed: " + error.message);
     }
 }
+
 
 async function loadProfileData(user = window.currentFirebaseUser) {
     const nameField = document.getElementById('editName');
@@ -2438,21 +2430,23 @@ async function handleManualRegister() {
     );
 
     await window.updateProfile(result.user, {
-      displayName: nameInput
-    });
+  displayName: nameInput
+});
 
-    await window.saveUserProfileToFirestore(result.user, {
-      displayName: nameInput
-    });      
+await window.saveUserProfileToFirestore(result.user, {
+  displayName: nameInput
+});      
 
-    await window.signOut(window.firebaseAuth);
+// Registration के बाद automatic login बंद करें
+await window.signOut(window.firebaseAuth);
 
-    document.getElementById('loginEmailInput').value = emailInput;
-    document.getElementById('loginPasswordInput').value = '';
+// Login page पर वापस भेजें
+document.getElementById('loginEmailInput').value = emailInput;
+document.getElementById('loginPasswordInput').value = '';
 
-    alert("Account created successfully! Please login.");
+alert("Account created successfully! Please login.");
 
-    showSection('loginSection', '/login');
+showSection('loginSection', '/login');
 
   } catch (error) {
     errorMsgElem.textContent =
@@ -2522,7 +2516,6 @@ function openAdminPanel() {
     }
 
     showSection("adminSection", "/admin");
-    showAdminPage("dashboard");
 }
 
 function showAdminPage(pageName) {
@@ -2540,29 +2533,29 @@ function showAdminPage(pageName) {
     }
 
     if (pageName === "customers" && window.loadAdminCustomers) {
-        window.loadAdminCustomers();
-    }
+    window.loadAdminCustomers();
+}
 
     if (pageName === "dashboard" && window.loadAdminDashboardStats) {
-        window.loadAdminDashboardStats();
-    }
+    window.loadAdminDashboardStats();
+}
 
     document.querySelectorAll(".admin-sidebar button").forEach(button => {
-        button.classList.remove("active");
-    });
+    button.classList.remove("active");
+});
 
-    const activeButton = [...document.querySelectorAll(".admin-sidebar button")]
-        .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
+const activeButton = [...document.querySelectorAll(".admin-sidebar button")]
+    .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
 
-    if (activeButton) activeButton.classList.add("active");
+if (activeButton) activeButton.classList.add("active");
 
     if (pageName === "orders" && window.loadAdminOrders) {
         window.loadAdminOrders();
     }
 
     if (pageName === "products" && window.loadAdminProducts) {
-        window.loadAdminProducts();
-    }
+    window.loadAdminProducts();
+}
 } 
 
 window.syncCartForAuth = function(user) {
@@ -2599,19 +2592,20 @@ import {
 
 import {
   getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  serverTimestamp,
-  collection,
-  addDoc,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-  deleteDoc,
-  query,
-  where
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp,
+    collection,
+    addDoc,
+    getDocs,
+    onSnapshot,
+    updateDoc,
+    deleteDoc,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA7cDgjAVpjiRG3TlWvFf4PYNYlFuF4-rw",
@@ -2653,6 +2647,7 @@ window.saveUserProfileToFirestore = async function(user, extraData = {}) {
     updatedAt: serverTimestamp()
   };
 
+  // Only create this timestamp for a new profile
   if (!userSnapshot.exists()) {
     profileData.createdAt = serverTimestamp();
   }
@@ -2673,37 +2668,13 @@ window.getUserProfileFromFirestore = async function(user) {
         ? userSnapshot.data()
         : null;
 };
-
 // Check whether the logged-in user is an admin
 window.checkAdminAccess = async function(user) {
     if (!user) {
         window.isAdminUser = false;
         return false;
-    }
-
-    try {
-        const adminDoc = await getDoc(doc(db, "admins", user.uid));
-        if (adminDoc.exists() && adminDoc.data()?.isAdmin === true) {
-            window.isAdminUser = true;
-            return true;
-        }
-
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const isAdmin = Boolean(userDoc.exists() && userDoc.data()?.role === "admin");
-        window.isAdminUser = isAdmin;
-        return isAdmin;
-    } catch (error) {
-        console.warn("Admin access check fallback:", error);
-        window.isAdminUser = false;
-        return false;
-    }
-};
-
-// Safe no-op migration hook if legacy migration isn't needed
-window.migrateOldProductsToFirestore = async function() {
-    return;
-};
-
+    }    
+    
 window.placeOrderToFirestore = async function() {
     const user = window.currentFirebaseUser;
 
@@ -2735,6 +2706,7 @@ window.placeOrderToFirestore = async function() {
     const orderRef = await addDoc(collection(db, "orders"), orderData);
     return orderRef.id;
 };
+    
 
 // Watch Firebase login state
 onAuthStateChanged(auth, async (user) => {
@@ -2750,7 +2722,7 @@ onAuthStateChanged(auth, async (user) => {
             await window.checkAdminAccess(user);
             await window.migrateOldProductsToFirestore();
             document.getElementById("adminMenuItem").style.display =
-                window.isAdminUser ? "block" : "none";
+            window.isAdminUser ? "block" : "none";
 
             onSuccessfulLogin();
             updateHeaderProfilePic(user);
@@ -2773,11 +2745,25 @@ onAuthStateChanged(auth, async (user) => {
     } finally {
         document.body.classList.remove("auth-loading");
     }
-});
+});    
+
+// LOAD CUSTOMER ORDERS IN ADMIN DASHBOARD
+
+function escapeAdminHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
 
 // ===============================
 // ADMIN PRODUCT MANAGEMENT
 // ===============================
+
 window.adminProductCache = {};
 
 function escapeProductHTML(value) {
@@ -2801,8 +2787,6 @@ window.openProductForm = function () {
     document.getElementById("productCategory").value = "";
     document.getElementById("productStock").value = "";
     document.getElementById("productImage").value = "";
-    document.getElementById("productImageFile").value = "";
-    document.getElementById("productImagePreview").innerHTML = "";
     document.getElementById("productDescription").value = "";
 };
 
@@ -2810,6 +2794,7 @@ window.openProductForm = function () {
 window.closeProductForm = function () {
     document.getElementById("productFormBox").style.display = "none";
 };
+
 
 const CLOUDINARY_CLOUD_NAME = "fausgmn6";
 const CLOUDINARY_UPLOAD_PRESET = "solan_bamboo_upload";
@@ -2853,6 +2838,7 @@ window.uploadProductImage = async function () {
     return result.secure_url;
 };
 
+
 // PRODUCT IMAGE PREVIEW
 document.getElementById("productImageFile").addEventListener("change", function () {
     const file = this.files[0];
@@ -2884,6 +2870,8 @@ document.getElementById("productImageFile").addEventListener("change", function 
         >
     `;
 });
+    
+    
 
 // SAVE PRODUCT
 window.saveAdminProduct = async function () {
@@ -2984,31 +2972,32 @@ window.loadAdminProducts = async function () {
         `}
 
         <h3>${escapeProductHTML(p.name)}</h3>
-        <p>Price: ₹${escapeProductHTML(p.price)}</p>
-        <p>Category: ${escapeProductHTML(p.category)}</p>
-        <p>Stock: ${escapeProductHTML(p.stock)}</p>
+                    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+                    <p>Category: ${escapeProductHTML(p.category)}</p>
+                   
+<p>Stock: ${escapeProductHTML(p.stock)}</p>
 
-        <p>
-            Stock Status:
-            ${
-                Number(p.stock || 0) <= 0
-                    ? "OUT OF STOCK"
-                    : Number(p.stock || 0) <= 5
-                        ? "LOW STOCK"
-                        : "IN STOCK"
-            }
-        </p>
+<p>
+    Stock Status:
+    ${
+        Number(p.stock || 0) <= 0
+            ? "OUT OF STOCK"
+            : Number(p.stock || 0) <= 5
+                ? "LOW STOCK"
+                : "IN STOCK"
+    }
+</p>
 
-        <p>${escapeProductHTML(p.description)}</p>
+                    <p>${escapeProductHTML(p.description)}</p>
 
-        <button onclick="editAdminProduct('${id}')">
-            Edit
-        </button>
+                    <button onclick="editAdminProduct('${id}')">
+                        Edit
+                    </button>
 
-        <button onclick="deleteAdminProduct('${id}')">
-            Delete
-        </button>
-    </div>
+                    <button onclick="deleteAdminProduct('${id}')">
+                        Delete
+                    </button>
+                </div>
             `;
         }).join("");
 
@@ -3019,6 +3008,7 @@ window.loadAdminProducts = async function () {
 };
 
 // LOAD ADMIN ORDERS + UPDATE ORDER STATUS
+
 window.loadAdminOrders = async function () {
     const container = document.getElementById("adminOrdersList");
 
@@ -3056,9 +3046,11 @@ window.loadAdminOrders = async function () {
             const card = document.createElement("div");
             card.className = "admin-order-card";
 
+            // Order ID
             const heading = document.createElement("h3");
             heading.textContent = "Order ID: " + orderDoc.id;
 
+            // Customer details
             const customer = document.createElement("p");
             customer.textContent =
                 "Customer: " + (order.customerName || "N/A");
@@ -3067,6 +3059,7 @@ window.loadAdminOrders = async function () {
             email.textContent =
                 "Email: " + (order.customerEmail || "N/A");
 
+            // Order date
             const date = document.createElement("p");
 
             if (order.createdAt && order.createdAt.toDate) {
@@ -3077,6 +3070,7 @@ window.loadAdminOrders = async function () {
                 date.textContent = "Order Date: Not available";
             }
 
+            // Products heading
             const itemsHeading = document.createElement("h4");
             itemsHeading.textContent = "Order Products:";
 
@@ -3101,11 +3095,13 @@ window.loadAdminOrders = async function () {
                 itemsList.appendChild(li);
             });
 
+            // Total amount
             const amount = document.createElement("p");
             amount.textContent =
                 "Total Amount: ₹" +
                 Number(order.totalAmount || 0).toLocaleString("en-IN");
 
+            // Order status
             const statusLabel = document.createElement("label");
             statusLabel.textContent = "Order Status: ";
 
@@ -3154,6 +3150,7 @@ window.loadAdminOrders = async function () {
 
             statusLabel.appendChild(statusSelect);
 
+            // Add everything to order card
             card.append(
                 heading,
                 customer,
@@ -3175,6 +3172,7 @@ window.loadAdminOrders = async function () {
     }
 };
 
+
 window.loadAdminDashboardStats = async function () {
     if (!window.currentFirebaseUser || !window.isAdminUser) {
         alert("Admin access required.");
@@ -3189,32 +3187,33 @@ window.loadAdminDashboardStats = async function () {
         const totalValueElement = document.getElementById("totalOrderValue");
 
         const snapshot = await getDocs(collection(db, "orders"));
-        const productSnapshot = await getDocs(collection(db, "products"));
+        
+const productSnapshot = await getDocs(collection(db, "products"));
 
-        let lowStockCount = 0;
-        let outOfStockCount = 0;
+let lowStockCount = 0;
+let outOfStockCount = 0;
 
-        productSnapshot.forEach(productDoc => {
-            const product = productDoc.data();
-            const stock = Number(product.stock || 0);
+productSnapshot.forEach(productDoc => {
+    const product = productDoc.data();
+    const stock = Number(product.stock || 0);
 
-            if (stock <= 0) {
-                outOfStockCount++;
-            } else if (stock <= 5) {
-                lowStockCount++;
-            }
-        });
+    if (stock <= 0) {
+        outOfStockCount++;
+    } else if (stock <= 5) {
+        lowStockCount++;
+    }
+});
 
-        const lowStockElement = document.getElementById("lowStockProducts");
-        const outOfStockElement = document.getElementById("outOfStockProducts");
+const lowStockElement = document.getElementById("lowStockProducts");
+const outOfStockElement = document.getElementById("outOfStockProducts");
 
-        if (lowStockElement) {
-            lowStockElement.textContent = lowStockCount;
-        }
+if (lowStockElement) {
+    lowStockElement.textContent = lowStockCount;
+}
 
-        if (outOfStockElement) {
-            outOfStockElement.textContent = outOfStockCount;
-        }
+if (outOfStockElement) {
+    outOfStockElement.textContent = outOfStockCount;
+}
 
         let totalOrders = 0;
         let pendingOrders = 0;
@@ -3261,6 +3260,7 @@ window.loadAdminDashboardStats = async function () {
         alert("Could not load dashboard statistics.");
     }
 };
+
 
 window.loadAdminCustomers = async function () {
     const container = document.getElementById("adminCustomersList");
@@ -3337,40 +3337,42 @@ window.loadAdminCustomers = async function () {
                 "Total Order Value: ₹" +
                 customer.totalValue.toLocaleString("en-IN");
 
-            const historyButton = document.createElement("button");
-            historyButton.textContent = "View Order History";
+            
+const historyButton = document.createElement("button");
+historyButton.textContent = "View Order History";
 
-            const historyContainer = document.createElement("div");
-            historyContainer.style.display = "none";
+const historyContainer = document.createElement("div");
+historyContainer.style.display = "none";
 
-            historyButton.addEventListener("click", async function () {
-                if (historyContainer.style.display === "block") {
-                    historyContainer.style.display = "none";
-                    return;
-                }
+historyButton.addEventListener("click", async function () {
+    if (historyContainer.style.display === "block") {
+        historyContainer.style.display = "none";
+        return;
+    }
 
-                historyContainer.style.display = "block";
-                historyContainer.textContent = "Loading order history...";
+    historyContainer.style.display = "block";
+    historyContainer.textContent = "Loading order history...";
 
-                if (window.loadCustomerOrderHistory) {
-                    await window.loadCustomerOrderHistory(
-                        customer.userId,
-                        historyContainer
-                    );
-                }
-            });
+    if (window.loadCustomerOrderHistory) {
+        await window.loadCustomerOrderHistory(
+            customer.userId,
+            historyContainer
+        );
+    }
+});
 
-            card.append(
-                name,
-                email,
-                id,
-                orders,
-                value,
-                historyButton,
-                historyContainer
-            );
+card.append(
+    name,
+    email,
+    id,
+    orders,
+    value,
+    historyButton,
+    historyContainer
+);
 
-            container.appendChild(card);
+container.appendChild(card);
+
         });
 
     } catch (error) {
@@ -3378,6 +3380,7 @@ window.loadAdminCustomers = async function () {
         container.textContent = "Could not load customers.";
     }
 };
+
 
 window.filterAdminCustomers = function () {
     const input = document.getElementById("customerSearchInput");
@@ -3397,6 +3400,7 @@ window.filterAdminCustomers = function () {
         card.style.display = matches ? "" : "none";
     });
 };
+
 
 window.loadCustomerOrderHistory = async function (userId, container) {
     if (!window.currentFirebaseUser || !window.isAdminUser) {
@@ -3483,7 +3487,8 @@ window.loadCustomerOrderHistory = async function (userId, container) {
         container.textContent = "Could not load order history.";
     }
 };
-
+    
+    
 window.filterAdminOrders = function () {
     const searchInput = document.getElementById("orderSearchInput");
     const statusFilter = document.getElementById("orderStatusFilter");
@@ -3514,7 +3519,7 @@ window.filterAdminOrders = function () {
             matchesSearch && matchesStatus ? "" : "none";
     });
 };
-
+    
 // REAL-TIME CUSTOMER ORDER TRACKING
 let unsubscribeMyOrders = null;
 
@@ -3536,6 +3541,7 @@ window.loadMyOrders = async function () {
         return;
     }
 
+    // Stop previous listener to prevent duplicates
     window.stopMyOrdersListener();
 
     container.textContent = "Loading your orders...";
@@ -3593,6 +3599,7 @@ window.loadMyOrders = async function () {
         }
     );
 };
+    
 
 // LOAD STORE PRODUCTS FROM FIRESTORE
 window.loadStoreProducts = async function () {
@@ -3675,13 +3682,7 @@ window.editAdminProduct = function (id) {
     document.getElementById("productCategory").value = p.category || "";
     document.getElementById("productStock").value = p.stock ?? "";
     document.getElementById("productImage").value = p.image || "";
-    document.getElementById("productImageFile").value = "";
     document.getElementById("productDescription").value = p.description || "";
-
-    const preview = document.getElementById("productImagePreview");
-    preview.innerHTML = p.image
-        ? `<img src="${escapeProductHTML(p.image)}" alt="Product Preview" style="width:180px;height:150px;object-fit:cover;border-radius:10px;">`
-        : "";
 
     document.getElementById("productFormTitle").textContent = "Edit Product";
     document.getElementById("productFormBox").style.display = "block";
