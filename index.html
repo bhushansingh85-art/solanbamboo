@@ -2516,7 +2516,9 @@ import {
     addDoc,
     getDocs,
     updateDoc,
-    deleteDoc
+    deleteDoc,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -3136,6 +3138,8 @@ window.loadAdminOrders = async function () {
 
 
 // LOAD LOGGED-IN CUSTOMER ORDERS
+
+// LOAD ONLY LOGGED-IN CUSTOMER ORDERS
 window.loadMyOrders = async function () {
     const container = document.getElementById("myOrdersList");
     const user = window.currentFirebaseUser;
@@ -3143,27 +3147,28 @@ window.loadMyOrders = async function () {
     if (!container) return;
 
     if (!user) {
-        container.innerHTML = "<p>Please login to view your orders.</p>";
+        container.textContent = "Please login to view your orders.";
         return;
     }
 
     try {
-        container.innerHTML = "<p>Loading your orders...</p>";
+        container.textContent = "Loading your orders...";
 
-        const snapshot = await getDocs(collection(db, "orders"));
+        const ordersQuery = query(
+            collection(db, "orders"),
+            where("userId", "==", user.uid)
+        );
 
-        const myOrders = snapshot.docs.filter(orderDoc => {
-            return orderDoc.data().userId === user.uid;
-        });
+        const snapshot = await getDocs(ordersQuery);
 
-        if (myOrders.length === 0) {
-            container.innerHTML = "<p>You have not placed any orders yet.</p>";
+        if (snapshot.empty) {
+            container.textContent = "You have not placed any orders yet.";
             return;
         }
 
         container.innerHTML = "";
 
-        myOrders.forEach(orderDoc => {
+        snapshot.forEach(orderDoc => {
             const order = orderDoc.data();
 
             const card = document.createElement("div");
@@ -3183,28 +3188,21 @@ window.loadMyOrders = async function () {
             });
 
             const amount = document.createElement("p");
-            amount.textContent =
-                "Total: ₹" +
+            amount.textContent = "Total: ₹" +
                 Number(order.totalAmount || 0).toLocaleString("en-IN");
 
             const status = document.createElement("p");
             status.textContent = "Status: " + (order.status || "Pending");
 
-            const timeline = document.createElement("p");
-            timeline.textContent =
-                "Order tracking: " +
-                (order.status || "Pending");
-
-            card.append(heading, itemsList, amount, status, timeline);
+            card.append(heading, itemsList, amount, status);
             container.appendChild(card);
         });
 
     } catch (error) {
         console.error("Customer orders error:", error);
-        container.innerHTML = "<p>Could not load your orders.</p>";
+        container.textContent = "Could not load your orders. Please try again.";
     }
-};
-    
+};  
     
 
 // LOAD STORE PRODUCTS FROM FIRESTORE
