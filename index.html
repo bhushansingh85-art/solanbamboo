@@ -2054,14 +2054,30 @@ const desc = cardElement.querySelector('.item-description').textContent;
 const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
 const price = cardElement.getAttribute('data-price') || "₹15,499";
 
+const originalPrice = Number(
+    cardElement.getAttribute("data-original-price") || 0
+);
+
+const saleEnabled =
+    cardElement.getAttribute("data-sale-enabled") === "true";
+
+const discount = Number(
+    cardElement.getAttribute("data-discount") || 0
+);
+    
+
 currentActiveProduct = title;
 const productImage = cardElement.querySelector('.item-image-container img');
+
 
 currentActiveProductData = {
     title: title,
     description: desc,
     imageURL: productImage ? productImage.src : "",
     price: price,
+    originalPrice: originalPrice,
+    saleEnabled: saleEnabled,
+    discountPercent: discount,
     quantity: 1
 };
 
@@ -2070,7 +2086,17 @@ updateSimpleCartButton();
 document.getElementById('simpleModalTitle').textContent = title;
 document.getElementById('simpleModalDesc').textContent = desc;
 document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
-document.getElementById('productPriceTag').textContent = price;
+const priceTag = document.getElementById("productPriceTag");
+
+if (saleEnabled) {
+    priceTag.textContent =
+        price + " | Original: ₹" +
+        originalPrice.toLocaleString("en-IN") +
+        " | " + discount + "% OFF";
+} else {
+    priceTag.textContent = price;
+}
+
 
 document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 document.getElementById('cartFullSection').style.display = 'none';
@@ -2248,9 +2274,25 @@ function updateCartUI() {
                         ${title}
                     </h3>
 
-                    <p style="margin:5px 0;">
-                        Price: ${formatCartPrice(price)}
-                    </p>
+                    
+${item.saleEnabled ? `
+    <p style="margin:5px 0;text-decoration:line-through;color:#888;">
+        Original Price: ${formatCartPrice(Number(item.originalPrice || 0))}
+    </p>
+
+    <p style="margin:5px 0;font-weight:bold;color:#16803c;">
+        Sale Price: ${formatCartPrice(price)}
+    </p>
+
+    <p style="margin:5px 0;color:#16803c;">
+        ${Number(item.discountPercent || 0)}% OFF
+    </p>
+` : `
+    <p style="margin:5px 0;">
+        Price: ${formatCartPrice(price)}
+    </p>
+`}
+
 
                     <p style="margin:5px 0;font-weight:bold;">
                         Subtotal: ${formatCartPrice(subtotal)}
@@ -2827,12 +2869,20 @@ window.placeOrderToFirestore = async function() {
     const orderData = {
         userId: user.uid,
         customerName: user.displayName || "",
-        customerEmail: user.email || "",
-        items: cartItems.map(item => ({
-            productName: item.title,
-            quantity: item.quantity,
-            unitPrice: getCartPrice(item)
-        })),
+        customerEmail: user.email || "",          
+items: cartItems.map(item => ({
+    productName: item.title,
+    quantity: item.quantity,
+
+    unitPrice: getCartPrice(item),
+
+    originalUnitPrice: Number(item.originalPrice || getCartPrice(item)),
+
+    saleEnabled: item.saleEnabled === true,
+
+    discountPercent: Number(item.discountPercent || 0)
+})),
+
         totalAmount: cartItems.reduce(
             (sum, item) => sum + getCartPrice(item) * item.quantity,
             0
@@ -3805,12 +3855,31 @@ window.loadStoreProducts = async function () {
         container.innerHTML = "";
 
         products.forEach(product => {
-            const card = document.createElement("div");
-            card.className = "item-card";
-            card.setAttribute(
-                "data-price",
-                "₹" + Number(product.price || 0).toLocaleString("en-IN")
-            );
+            
+const card = document.createElement("div");
+card.className = "item-card";
+
+const originalPrice = Number(product.price || 0);
+const isSale = product.saleEnabled === true &&
+    Number(product.salePrice) > 0 &&
+    Number(product.salePrice) < originalPrice;
+
+const effectivePrice = isSale
+    ? Number(product.salePrice)
+    : originalPrice;
+
+card.setAttribute(
+    "data-price",
+    "₹" + effectivePrice.toLocaleString("en-IN")
+);
+
+card.setAttribute("data-original-price", String(originalPrice));
+card.setAttribute("data-sale-enabled", String(isSale));
+card.setAttribute(
+    "data-discount",
+    isSale ? String(product.discountPercent || 0) : "0"
+);
+            
 
             const imageContainer = document.createElement("div");
             imageContainer.className = "item-image-container";
@@ -3830,7 +3899,37 @@ window.loadStoreProducts = async function () {
             description.className = "item-description";
             description.textContent = product.description || "";
 
-            card.append(imageContainer, title, description);
+            
+const priceBox = document.createElement("div");
+
+if (isSale) {
+    const badge = document.createElement("span");
+    badge.textContent = product.saleBadge || "SALE";
+
+    const oldPrice = document.createElement("span");
+    oldPrice.textContent =
+        "₹" + originalPrice.toLocaleString("en-IN");
+    oldPrice.style.textDecoration = "line-through";
+
+    const newPrice = document.createElement("strong");
+    newPrice.textContent =
+        "₹" + effectivePrice.toLocaleString("en-IN");
+
+    const discount = document.createElement("span");
+    discount.textContent =
+        (product.discountPercent || 0) + "% OFF";
+
+    priceBox.append(badge, oldPrice, newPrice, discount);
+} else {
+    const normalPrice = document.createElement("strong");
+    normalPrice.textContent =
+        "₹" + originalPrice.toLocaleString("en-IN");
+
+    priceBox.appendChild(normalPrice);
+}
+
+card.append(imageContainer, title, description, priceBox);
+
 
             card.addEventListener("click", function () {
                 openFullProduct(card);
