@@ -313,6 +313,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex: 1;
+}
+
+.side-nav-links li.nav-bottom-settings {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  padding-top: 6px;
+  margin-bottom: 14px;
 }
 
 .side-nav-links li a {
@@ -325,6 +333,14 @@ body {
   font-size: 15px;
   font-weight: 600;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.side-nav-links li.nav-bottom-settings a {
+  color: #FFFDF7;
+}
+
+.side-nav-links li.nav-bottom-settings a svg {
+  fill: #E09F3E;
 }
 
 .side-nav-links li a svg {
@@ -784,6 +800,112 @@ body {
   background-color: var(--bg-dark);
   color: var(--accent-gold);
   border: 1px solid var(--accent-gold);
+}
+
+/* ===== FULL-PAGE MY PROFILE VIEW ===== */
+#profileSection {
+  padding: 24px 3% 48px;
+  min-height: 78vh;
+}
+
+.profile-full-layout {
+  display: flex;
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: 640px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+.profile-sidebar {
+  width: 265px;
+  flex-shrink: 0;
+  background: #231915;
+  padding: 26px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-sidebar-brand {
+  padding: 0 10px 18px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.profile-sidebar-brand h2 {
+  color: var(--accent-gold);
+  font-family: 'Oswald', sans-serif;
+  font-size: 21px;
+  letter-spacing: 0.8px;
+  margin: 0 0 4px;
+}
+
+.profile-sidebar-brand p {
+  color: #D7C7B8;
+  font-size: 12px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.profile-nav-btn {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #EDE5DC;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-nav-btn:hover,
+.profile-nav-btn.active {
+  background: var(--accent-bark);
+  color: #FFFDF7;
+}
+
+.profile-nav-bottom {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-main-panel {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+  background: #FAF7F2;
+}
+
+.profile-subpage h2 {
+  color: var(--bg-dark);
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  margin: 0 0 6px;
+}
+
+.profile-subpage > p {
+  color: var(--text-muted);
+  margin: 0 0 22px;
+}
+
+.profile-card-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  max-width: 720px;
 }
 
 /* ===== AUTH CARDS ===== */
@@ -1356,6 +1478,42 @@ body.auth-loading #profileBorderBtn {
     gap: 18px;
   }
 
+  #profileSection {
+    padding: 12px;
+  }
+
+  .profile-full-layout {
+    flex-direction: column;
+  }
+
+  .profile-sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 14px;
+  }
+
+  .profile-sidebar-brand {
+    width: 100%;
+  }
+
+  .profile-nav-btn {
+    width: auto;
+    flex: 1 1 42%;
+    text-align: center;
+    padding: 10px 8px;
+  }
+
+  .profile-nav-bottom {
+    width: 100%;
+    margin-top: 8px;
+    flex-direction: row;
+  }
+
+  .profile-main-panel {
+    padding: 18px 14px;
+  }
+
   #adminSection {
     padding: 12px;
   }
@@ -1447,7 +1605,7 @@ body.auth-loading #profileBorderBtn {
 <div id="storePromoBanner" class="store-promo-banner">
   <img id="promoBannerImg" src="" alt="Promo" style="display:none;">
   <span id="promoBannerText"></span>
-  <a id="promoBannerLink" href="#products" style="display:none;">Shop Now &rarr;</a>
+  <a id="promoBannerLink" href="/products" onclick="event.preventDefault(); showSection('productsSection', '/products');" style="display:none;">Shop Now &rarr;</a>
 </div>
 
 <!-- 1. HOME PAGE SECTION -->
@@ -1491,7 +1649,7 @@ body.auth-loading #profileBorderBtn {
 <!-- ABOUT SECTION -->
 <section id="aboutSection" class="page-section">
   <div style="max-width: 820px; margin: 40px auto; background: white; padding: 48px 36px 36px; border-radius: 14px; border: 1px solid var(--border-light); border-top: 4px solid var(--accent-gold); box-shadow: var(--shadow-md); position: relative;">
-    <a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
+    <a class="back-link" onclick="goBack()">&larr; BACK</a>
     <h2 style="color: var(--bg-dark); font-family: 'Oswald', sans-serif; margin-top: 8px; font-size: 28px;">About Solan Bamboo Furniture</h2>
     <p style="color: #444; line-height: 1.8; font-size: 15px;">
       Welcome to <strong>Solan Bamboo Furniture</strong>, your destination for sustainable, handcrafted, and durable bamboo living solutions. Located in the hills of Himachal Pradesh (Village Dharja, P.O. Oachghat, Dist. Solan), we blend traditional artisan craftsmanship with modern, eco-friendly designs for homes, cafes, and patios.
@@ -1574,11 +1732,112 @@ body.auth-loading #profileBorderBtn {
 <!-- 3. CUSTOMER CARE SECTION -->
 <section id="customerCareSection" class="page-section">
   <div style="max-width: 820px; margin: 40px auto; background: white; padding: 48px 36px 36px; border-radius: 14px; border: 1px solid var(--border-light); border-top: 4px solid var(--accent-gold); box-shadow: var(--shadow-md); position: relative;">
-    <a class="back-link" onclick="showSection('homeSection', '/')">&larr; BACK TO HOME</a>
+    <a class="back-link" onclick="goBack()">&larr; BACK</a>
     <h2 style="color: var(--bg-dark); font-family: 'Oswald', sans-serif; margin-top: 8px; font-size: 26px;">Customer Care &amp; Support</h2>
     <p style="color: #555; line-height: 1.7; font-size: 15px;">
       Have questions about custom bamboo dimensions, bulk orders, delivery timelines in Himachal Pradesh or across India, or care instructions? Reach out to our team at <strong>contact@solanbamboofurniture.com</strong> or visit us at Village Dharja, P.O. Oachghat, Dist. Solan (H.P).
     </p>
+  </div>
+</section>
+
+<!-- FULL-PAGE MY PROFILE SECTION -->
+<section id="profileSection" class="page-section">
+  <div class="profile-full-layout">
+    <aside class="profile-sidebar">
+      <div class="profile-sidebar-brand">
+        <h2>MY ACCOUNT</h2>
+        <p id="profileSidebarEmail">Signed in account</p>
+      </div>
+
+      <button type="button" class="profile-nav-btn active" data-profile-tab="details" onclick="switchProfileTab('details', '/my-profile')">My Profile</button>
+      <button type="button" class="profile-nav-btn" data-profile-tab="orders" onclick="switchProfileTab('orders', '/my-profile/my-orders')">My Orders</button>
+      <button type="button" class="profile-nav-btn" data-profile-tab="addresses" onclick="switchProfileTab('addresses', '/my-profile/addresses')">Saved Addresses</button>
+      <button type="button" class="profile-nav-btn" data-profile-tab="wishlist" onclick="switchProfileTab('wishlist', '/my-profile/wishlist')">Wishlist</button>
+
+      <div class="profile-nav-bottom">
+        <button type="button" class="profile-nav-btn" data-profile-tab="settings" onclick="switchProfileTab('settings', '/my-profile/settings')">&#9881; Settings</button>
+        <button type="button" class="logout-btn" style="margin-top:0;" onclick="handleLogout()">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="profile-main-panel">
+      <!-- Subpage 1: Profile Details -->
+      <div id="profile-tab-details" class="profile-subpage">
+        <h2>My Profile</h2>
+        <p>Manage your personal details and profile photo.</p>
+        <div class="profile-card-box" style="text-align:center;">
+          <div class="profile-avatar-container" title="Click to upload profile photo">
+            <img id="profileAvatarImg" src="" alt="Profile Picture" style="display:none;">
+            <input type="file" id="avatarUploadInput" accept="image/*" onchange="previewAvatar(event)">
+          </div>
+          <div class="profile-form-group">
+            <label for="editName">Full Name</label>
+            <input type="text" id="editName" class="profile-input">
+          </div>
+          <div class="profile-form-group">
+            <label for="editEmail">Email ID</label>
+            <input type="email" id="editEmail" class="profile-input" readonly>
+          </div>
+          <button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Subpage 2: My Orders -->
+      <div id="profile-tab-orders" class="profile-subpage" style="display:none;">
+        <h2>My Orders</h2>
+        <p>Track your bamboo furniture orders and live delivery status.</p>
+        <div class="profile-card-box" style="max-width:none;">
+          <div id="myOrdersList">
+            <p>Your orders will appear here.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subpage 3: Saved Addresses -->
+      <div id="profile-tab-addresses" class="profile-subpage" style="display:none;">
+        <h2>Saved Addresses</h2>
+        <p>Store your default delivery address for faster checkout.</p>
+        <div class="profile-card-box">
+          <div class="profile-form-group">
+            <label for="savedDeliveryAddress">Default Delivery Address</label>
+            <input type="text" id="savedDeliveryAddress" class="profile-input" placeholder="House/Street, City, State, PIN">
+          </div>
+          <div class="profile-form-group">
+            <label for="savedDeliveryPhone">Contact Phone Number</label>
+            <input type="text" id="savedDeliveryPhone" class="profile-input" placeholder="10-digit mobile number">
+          </div>
+          <button type="button" class="save-profile-btn" onclick="saveAccountPreferences()">Save Address</button>
+        </div>
+      </div>
+
+      <!-- Subpage 4: Wishlist -->
+      <div id="profile-tab-wishlist" class="profile-subpage" style="display:none;">
+        <h2>Wishlist</h2>
+        <p>Quickly revisit furniture items you want to buy later.</p>
+        <div class="profile-card-box" style="max-width:none;">
+          <p style="margin:0 0 14px; color:var(--text-muted);">Browse our catalog to add or review items in your cart.</p>
+          <button type="button" class="admin-add-btn" onclick="showSection('productsSection', '/products')">Browse Products</button>
+        </div>
+      </div>
+
+      <!-- Subpage 5: Account Settings -->
+      <div id="profile-tab-settings" class="profile-subpage" style="display:none;">
+        <h2>Account Settings</h2>
+        <p>Customize order alerts and account preferences.</p>
+        <div class="profile-card-box">
+          <label style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:14px;">
+            <input type="checkbox" id="prefOrderUpdates" checked>
+            Receive order status &amp; dispatch updates
+          </label>
+          <label style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:16px;">
+            <input type="checkbox" id="prefPromoOffers">
+            Receive seasonal bamboo sale &amp; offer alerts
+          </label>
+          <button type="button" class="save-profile-btn" onclick="saveAccountPreferences()">Save Settings</button>
+          <p id="accountPrefsMsg" style="margin:10px 0 0; font-size:13px; font-weight:600; color:var(--success);"></p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1682,11 +1941,11 @@ body.auth-loading #profileBorderBtn {
     <!-- SIDEBAR -->
     <aside class="admin-sidebar">
       <h2>ADMIN PANEL</h2>
-      <button class="active" onclick="showAdminPage('dashboard')">Dashboard</button>
-      <button onclick="showAdminPage('products')">Products</button>
-      <button onclick="showAdminPage('orders')">Orders</button>
-      <button onclick="showAdminPage('customers')">Customers</button>
-      <button onclick="showAdminPage('settings')">Settings</button>
+      <button class="active" onclick="showAdminPage('dashboard', '/admin-panel/dashboard')">Dashboard</button>
+      <button onclick="showAdminPage('products', '/admin-panel/products')">Products</button>
+      <button onclick="showAdminPage('orders', '/admin-panel/orders')">Orders</button>
+      <button onclick="showAdminPage('customers', '/admin-panel/customers')">Customers</button>
+      <button onclick="showAdminPage('settings', '/admin-panel/settings')">Settings</button>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -1960,7 +2219,7 @@ body.auth-loading #profileBorderBtn {
       <svg viewBox="0 0 24 24" width="20" height="20"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
       About Us
     </a></li>
-    <li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile();">
+    <li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile('details', '/my-profile');">
       <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
       My Profile
     </a></li>
@@ -1969,43 +2228,18 @@ body.auth-loading #profileBorderBtn {
       Customer Care
     </a></li>
     <li id="adminMenuItem" style="display:none;">
-      <a href="javascript:void(0)" onclick="toggleMenu(); openAdminPanel();">
+      <a href="javascript:void(0)" onclick="toggleMenu(); openAdminPanel('dashboard', '/admin-panel/dashboard');">
         <span>&#9881;</span>
         Admin Panel
       </a>
     </li>
+    <li class="nav-bottom-settings"><a href="javascript:void(0)" onclick="toggleMenu(); openSettingsView();">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      Settings
+    </a></li>
   </ul>
 </div>
 <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
-
-<!-- User Profile Modal -->
-<div id="profileModal" class="modal-overlay">
-  <div class="modal-card">
-    <span class="close-btn" onclick="closeProfile()">&times;</span>
-    <h2 class="modal-title">User Profile</h2>
-    <div class="profile-avatar-container" title="Click to upload profile photo">
-      <img id="profileAvatarImg" src="" alt="Profile Picture" style="display:none;">
-      <input type="file" id="avatarUploadInput" accept="image/*" onchange="previewAvatar(event)">
-    </div>
-    <div class="profile-form-group">
-      <label for="editName">Full Name</label>
-      <input type="text" id="editName" class="profile-input">
-    </div>
-    <div class="profile-form-group">
-      <label for="editEmail">Email ID</label>
-      <input type="email" id="editEmail" class="profile-input" readonly>
-    </div>
-    <button type="button" class="save-profile-btn" onclick="saveProfileDetails()">Save Changes</button>
-    <button type="button" class="secondary-modal-btn" onclick="toggleMyOrders()">My Orders</button>
-    <div id="myOrdersSection" style="display:none; width:100%; margin-top:16px; text-align:left;">
-      <h3 style="margin:0 0 10px; font-size:15px;">My Orders</h3>
-      <div id="myOrdersList">
-        <p>Your orders will appear here.</p>
-      </div>
-    </div>
-    <button type="button" class="logout-btn" onclick="handleLogout()">Sign Out</button>
-  </div>
-</div>
 
 <!-- Checkout Modal -->
 <div id="checkoutModal" class="modal-overlay">
@@ -2032,7 +2266,8 @@ document.body.classList.add("auth-loading");
 let cartItems = [];
 let currentActiveProduct = "";
 let currentActiveProductData = null;
-let previousView = "productsSection";
+let previousView = "homeSection";
+let previousUrl = "/";
 let lastScrollPosition = 0;
 let slideIndex = 0;
 let slideTimer = null;
@@ -2066,26 +2301,48 @@ window.onpopstate = function() {
 };
 
 function handleInitialRoute() {
-  const path = window.location.pathname;
-  if (path.includes('/products')) {
-    showSection('productsSection', '/products', false);
-  } else if (path.includes('/about')) {
-    showSection('aboutSection', '/about', false);
-  } else if (path.includes('/my-profile')) {
-    showSection('homeSection', '/', false);
-    openProfile();
-  } else if (path.includes('/customer-care')) {
-    showSection('customerCareSection', '/customer-care', false);
-  } else if (path.includes('/login')) {
-    showSection('loginSection', '/login', false);
-  } else if (path.includes('/register')) {
-    flipAuthCard('registerSection', '/register', false);
-  } else if (path.includes('/cart')) {
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+
+  if (path === "/products") {
+    showSection("productsSection", "/products", false);
+  } else if (path === "/about") {
+    showSection("aboutSection", "/about", false);
+  } else if (path === "/my-profile" || path.startsWith("/my-profile/")) {
+    let tab = "details";
+    if (path.endsWith("/my-orders")) tab = "orders";
+    else if (path.endsWith("/addresses")) tab = "addresses";
+    else if (path.endsWith("/wishlist")) tab = "wishlist";
+    else if (path.endsWith("/settings")) tab = "settings";
+    openProfile(tab, path, false);
+  } else if (path === "/my-orders") {
+    openProfile("orders", "/my-orders", false);
+  } else if (path === "/customer-care") {
+    showSection("customerCareSection", "/customer-care", false);
+  } else if (path === "/login") {
+    showSection("loginSection", "/login", false);
+  } else if (path === "/register") {
+    flipAuthCard("registerSection", "/register", false);
+  } else if (path === "/cart") {
     openCartFullView(false);
-  } else if (path.includes('/admin')) {
-    showSection('adminSection', '/admin', false);
+  } else if (path === "/product-detail") {
+    const fullProductEl = document.getElementById("fullProductSection");
+    if (currentActiveProductData && fullProductEl) {
+      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById("cartFullSection").style.display = "none";
+      fullProductEl.style.display = "block";
+    } else {
+      showSection("productsSection", "/products", false);
+    }
+  } else if (path === "/admin-panel" || path.startsWith("/admin-panel/") || path === "/admin") {
+    let adminTab = "dashboard";
+    if (path.endsWith("/products")) adminTab = "products";
+    else if (path.endsWith("/orders")) adminTab = "orders";
+    else if (path.endsWith("/customers")) adminTab = "customers";
+    else if (path.endsWith("/settings")) adminTab = "settings";
+    showSection("adminSection", path === "/admin" ? "/admin-panel" : path, false);
+    showAdminPage(adminTab, path === "/admin" ? "/admin-panel" : path, false);
   } else {
-    showSection('homeSection', '/', false);
+    showSection("homeSection", "/", false);
   }
 }
 
@@ -2103,43 +2360,51 @@ function startSlideshow() {
 }
 
 function showSection(sectionId, urlPath = "/", pushHistory = true) {
-  document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById('fullProductSection').style.display = 'none';
-  document.getElementById('cartFullSection').style.display = 'none';
+  const currentActiveSection = Array.from(document.querySelectorAll(".page-section")).find(sec => sec.classList.contains("active"));
+  if (currentActiveSection && currentActiveSection.id !== sectionId) {
+    previousView = currentActiveSection.id;
+    previousUrl = window.location.pathname || "/";
+  }
+
+  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById("fullProductSection").style.display = "none";
+  document.getElementById("cartFullSection").style.display = "none";
+
+  if (sectionId !== "profileSection" && window.stopMyOrdersListener) {
+    window.stopMyOrdersListener();
+  }
 
   const target = document.getElementById(sectionId);
-  if (target) target.classList.add('active');
+  if (target) target.classList.add("active");
 
   if (sectionId === "productsSection" && window.loadStoreProducts) {
     window.loadStoreProducts();
   }
 
-  previousView = sectionId;
+  const hamburger = document.getElementById("hamburgerBtn");
+  const searchBar = document.getElementById("searchContainerBar");
+  const rightActions = document.getElementById("rightActionsBar");
+  const loginBtn = document.getElementById("loginHeaderBtn");
+  const footer = document.getElementById("mainFooter");
+  const profileBtn = document.getElementById("profileBorderBtn");
 
-  const hamburger = document.getElementById('hamburgerBtn');
-  const searchBar = document.getElementById('searchContainerBar');
-  const rightActions = document.getElementById('rightActionsBar');
-  const loginBtn = document.getElementById('loginHeaderBtn');
-  const footer = document.getElementById('mainFooter');
-  const profileBtn = document.getElementById('profileBorderBtn');
-
-  if (sectionId === 'loginSection' || sectionId === 'registerSection') {
-    if (hamburger) hamburger.style.display = 'none';
-    if (searchBar) searchBar.style.display = 'none';
-    if (rightActions) rightActions.style.display = 'none';
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (footer) footer.style.display = 'none';
+  if (sectionId === "loginSection" || sectionId === "registerSection") {
+    if (hamburger) hamburger.style.display = "none";
+    if (searchBar) searchBar.style.display = "none";
+    if (rightActions) rightActions.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "none";
+    if (footer) footer.style.display = "none";
   } else {
-    if (hamburger) hamburger.style.display = 'flex';
-    if (searchBar) searchBar.style.display = 'flex';
-    if (rightActions) rightActions.style.display = 'flex';
+    if (hamburger) hamburger.style.display = "flex";
+    if (searchBar) searchBar.style.display = "flex";
+    if (rightActions) rightActions.style.display = "flex";
     if (loginBtn) {
-      loginBtn.style.display = window.currentFirebaseUser ? 'none' : 'block';
+      loginBtn.style.display = window.currentFirebaseUser ? "none" : "block";
     }
     if (profileBtn) {
-      profileBtn.style.display = window.currentFirebaseUser ? 'flex' : 'none';
+      profileBtn.style.display = window.currentFirebaseUser ? "flex" : "none";
     }
-    if (footer) footer.style.display = 'block';
+    if (footer) footer.style.display = "block";
   }
 
   if (pushHistory && urlPath) {
@@ -2149,40 +2414,48 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
       // Ignore history pushState errors on file:// origins
     }
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    showSection(previousView || "productsSection", previousUrl || "/products");
+  }
 }
 
 function flipAuthCard(targetSectionId, urlPath = "/login", pushHistory = true) {
-  const loginCard = document.getElementById('loginSection');
-  const registerCard = document.getElementById('registerSection');
-  const hamburger = document.getElementById('hamburgerBtn');
-  const searchBar = document.getElementById('searchContainerBar');
-  const rightActions = document.getElementById('rightActionsBar');
-  const loginBtn = document.getElementById('loginHeaderBtn');
-  const footer = document.getElementById('mainFooter');
+  const loginCard = document.getElementById("loginSection");
+  const registerCard = document.getElementById("registerSection");
+  const hamburger = document.getElementById("hamburgerBtn");
+  const searchBar = document.getElementById("searchContainerBar");
+  const rightActions = document.getElementById("rightActionsBar");
+  const loginBtn = document.getElementById("loginHeaderBtn");
+  const footer = document.getElementById("mainFooter");
 
-  if (hamburger) hamburger.style.display = 'none';
-  if (searchBar) searchBar.style.display = 'none';
-  if (rightActions) rightActions.style.display = 'none';
-  if (loginBtn) loginBtn.style.display = 'none';
-  if (footer) footer.style.display = 'none';
+  if (hamburger) hamburger.style.display = "none";
+  if (searchBar) searchBar.style.display = "none";
+  if (rightActions) rightActions.style.display = "none";
+  if (loginBtn) loginBtn.style.display = "none";
+  if (footer) footer.style.display = "none";
 
-  document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById('fullProductSection').style.display = 'none';
-  document.getElementById('cartFullSection').style.display = 'none';
+  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById("fullProductSection").style.display = "none";
+  document.getElementById("cartFullSection").style.display = "none";
 
-  if (targetSectionId === 'registerSection') {
-    loginCard.style.transform = 'rotateY(180deg)';
-    loginCard.style.opacity = '0';
-    registerCard.style.transform = 'rotateY(0deg)';
-    registerCard.style.opacity = '1';
-    registerCard.classList.add('active');
+  if (targetSectionId === "registerSection") {
+    loginCard.style.transform = "rotateY(180deg)";
+    loginCard.style.opacity = "0";
+    registerCard.style.transform = "rotateY(0deg)";
+    registerCard.style.opacity = "1";
+    registerCard.classList.add("active");
   } else {
-    registerCard.style.transform = 'rotateY(180deg)';
-    registerCard.style.opacity = '0';
-    loginCard.style.transform = 'rotateY(0deg)';
-    loginCard.style.opacity = '1';
-    loginCard.classList.add('active');
+    registerCard.style.transform = "rotateY(180deg)";
+    registerCard.style.opacity = "0";
+    loginCard.style.transform = "rotateY(0deg)";
+    loginCard.style.opacity = "1";
+    loginCard.classList.add("active");
   }
 
   if (pushHistory && urlPath) {
@@ -2190,21 +2463,21 @@ function flipAuthCard(targetSectionId, urlPath = "/login", pushHistory = true) {
       history.pushState({ section: targetSectionId }, "", urlPath);
     } catch (_) {}
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function openFullProduct(cardElement) {
   lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  const title = cardElement.querySelector('.item-title').textContent;
-  const desc = cardElement.querySelector('.item-description').textContent;
-  const category = cardElement.getAttribute('data-category') || "Bamboo Furniture";
-  const stock = Number(cardElement.getAttribute('data-stock') ?? 10);
-  const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
-  const price = cardElement.getAttribute('data-price') || "₹15,499";
+  const title = cardElement.querySelector(".item-title").textContent;
+  const desc = cardElement.querySelector(".item-description").textContent;
+  const category = cardElement.getAttribute("data-category") || "Bamboo Furniture";
+  const stock = Number(cardElement.getAttribute("data-stock") ?? 10);
+  const imgHTML = cardElement.querySelector(".item-image-container").innerHTML;
+  const price = cardElement.getAttribute("data-price") || "₹15,499";
   const originalPrice = Number(cardElement.getAttribute("data-original-price") || 0);
   const saleEnabled = cardElement.getAttribute("data-sale-enabled") === "true";
   const discount = Number(cardElement.getAttribute("data-discount") || 0);
-  const productImage = cardElement.querySelector('.item-image-container img');
+  const productImage = cardElement.querySelector(".item-image-container img");
 
   currentActiveProduct = title;
   currentActiveProductData = {
@@ -2220,12 +2493,12 @@ function openFullProduct(cardElement) {
 
   updateSimpleCartButton();
 
-  document.getElementById('detailCategoryBadge').textContent = category;
-  document.getElementById('simpleModalTitle').textContent = title;
-  document.getElementById('simpleModalDesc').textContent = desc;
-  document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
+  document.getElementById("detailCategoryBadge").textContent = category;
+  document.getElementById("simpleModalTitle").textContent = title;
+  document.getElementById("simpleModalDesc").textContent = desc;
+  document.getElementById("simpleModalImageContainer").innerHTML = imgHTML;
 
-  const stockNote = document.getElementById('productStockNote');
+  const stockNote = document.getElementById("productStockNote");
   if (stock <= 0) {
     stockNote.textContent = "Out of Stock";
     stockNote.style.color = "var(--danger)";
@@ -2244,18 +2517,19 @@ function openFullProduct(cardElement) {
     priceTag.textContent = price;
   }
 
-  document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById('cartFullSection').style.display = 'none';
-  document.getElementById('fullProductSection').style.display = 'block';
+  previousView = "productsSection";
+  previousUrl = "/products";
+
+  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById("cartFullSection").style.display = "none";
+  document.getElementById("fullProductSection").style.display = "block";
 
   try {
     history.pushState({ product: title }, "", "/product-detail");
   } catch (_) {}
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-window.history.back();
-  }
-}
+
 function getCartPrice(item) {
   const value = String(item.price || "")
     .replace(/,/g, "")
@@ -2435,36 +2709,44 @@ function updateCartUI() {
 
 function openCartFullView(pushHistory = true) {
   if (!window.currentFirebaseUser) {
-    showSection('loginSection', '/login');
+    showSection("loginSection", "/login");
     return;
   }
-  document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById('fullProductSection').style.display = 'none';
-  document.getElementById('cartFullSection').style.display = 'block';
-  previousView = "cartFullSection";
+  document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById("fullProductSection").style.display = "none";
+  document.getElementById("cartFullSection").style.display = "block";
+  previousView = "productsSection";
+  previousUrl = "/products";
 
   if (pushHistory) {
     try {
       history.pushState({ cart: true }, "", "/cart");
     } catch (_) {}
   }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function closeCartFullView() {
-  document.getElementById('cartFullSection').style.display = 'none';
-  showSection('productsSection', '/products');
+  document.getElementById("cartFullSection").style.display = "none";
+  showSection("productsSection", "/products");
 }
 
 function openCheckoutModal() {
   if (!window.currentFirebaseUser) {
-    showSection('loginSection', '/login');
+    showSection("loginSection", "/login");
     return;
   }
   if (!cartItems.length) {
     alert("Your cart is empty.");
     return;
   }
+
+  const savedAddr = localStorage.getItem("savedAddress_" + window.currentFirebaseUser.uid) || "";
+  const savedPhone = localStorage.getItem("savedPhone_" + window.currentFirebaseUser.uid) || "";
+  const addrInput = document.getElementById("checkoutAddress");
+  const phoneInput = document.getElementById("checkoutPhone");
+  if (addrInput && !addrInput.value && savedAddr) addrInput.value = savedAddr;
+  if (phoneInput && !phoneInput.value && savedPhone) phoneInput.value = savedPhone;
 
   const total = cartItems.reduce((sum, item) => sum + getCartPrice(item) * item.quantity, 0);
   const summaryBox = document.getElementById("checkoutSummaryBox");
@@ -2529,16 +2811,24 @@ async function confirmCheckoutOrder() {
 }
 
 async function loadProfileData(user = window.currentFirebaseUser) {
-  const nameField = document.getElementById('editName');
-  const emailField = document.getElementById('editEmail');
-  const avatar = document.getElementById('profileAvatarImg');
+  const nameField = document.getElementById("editName");
+  const emailField = document.getElementById("editEmail");
+  const sidebarEmail = document.getElementById("profileSidebarEmail");
+  const avatar = document.getElementById("profileAvatarImg");
+  const savedAddrInput = document.getElementById("savedDeliveryAddress");
+  const savedPhoneInput = document.getElementById("savedDeliveryPhone");
 
   if (!user) {
     if (nameField) nameField.value = "";
     if (emailField) emailField.value = "";
+    if (sidebarEmail) sidebarEmail.textContent = "Signed in account";
     if (avatar) avatar.style.display = "none";
     return;
   }
+
+  if (sidebarEmail) sidebarEmail.textContent = user.email || "Signed in account";
+  if (savedAddrInput) savedAddrInput.value = localStorage.getItem("savedAddress_" + user.uid) || "";
+  if (savedPhoneInput) savedPhoneInput.value = localStorage.getItem("savedPhone_" + user.uid) || "";
 
   try {
     const profile = window.getUserProfileFromFirestore
@@ -2564,9 +2854,26 @@ async function loadProfileData(user = window.currentFirebaseUser) {
   }
 }
 
+function saveAccountPreferences() {
+  const user = window.currentFirebaseUser;
+  const uid = user ? user.uid : "guest";
+  const addr = document.getElementById("savedDeliveryAddress")?.value.trim() || "";
+  const phone = document.getElementById("savedDeliveryPhone")?.value.trim() || "";
+  const orderUpdates = document.getElementById("prefOrderUpdates")?.checked ?? true;
+  const promoOffers = document.getElementById("prefPromoOffers")?.checked ?? false;
+
+  localStorage.setItem("savedAddress_" + uid, addr);
+  localStorage.setItem("savedPhone_" + uid, phone);
+  localStorage.setItem("prefs_" + uid, JSON.stringify({ orderUpdates, promoOffers }));
+
+  const msg = document.getElementById("accountPrefsMsg");
+  if (msg) msg.textContent = "Preferences saved!";
+  alert("Saved successfully!");
+}
+
 function updateHeaderProfilePic(user = window.currentFirebaseUser) {
-  const img = document.getElementById('headerProfileImg');
-  const svg = document.getElementById('headerProfileSvg');
+  const img = document.getElementById("headerProfileImg");
+  const svg = document.getElementById("headerProfileSvg");
   if (!img || !svg) return;
 
   const localPhoto = user ? localStorage.getItem("userAvatar_" + user.uid) : null;
@@ -2574,12 +2881,12 @@ function updateHeaderProfilePic(user = window.currentFirebaseUser) {
 
   if (user && photo) {
     img.src = photo;
-    img.style.display = 'block';
-    svg.style.display = 'none';
+    img.style.display = "block";
+    svg.style.display = "none";
   } else {
-    img.removeAttribute('src');
-    img.style.display = 'none';
-    svg.style.display = 'block';
+    img.removeAttribute("src");
+    img.style.display = "none";
+    svg.style.display = "block";
   }
 }
 
@@ -2589,9 +2896,9 @@ function previewAvatar(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     const uid = window.currentFirebaseUser?.uid || "guest";
-    localStorage.setItem('userAvatar_' + uid, e.target.result);
-    document.getElementById('profileAvatarImg').src = e.target.result;
-    document.getElementById('profileAvatarImg').style.display = 'block';
+    localStorage.setItem("userAvatar_" + uid, e.target.result);
+    document.getElementById("profileAvatarImg").src = e.target.result;
+    document.getElementById("profileAvatarImg").style.display = "block";
     updateHeaderProfilePic();
   };
   reader.readAsDataURL(file);
@@ -2599,7 +2906,7 @@ function previewAvatar(event) {
 
 async function saveProfileDetails() {
   const user = window.currentFirebaseUser;
-  const name = document.getElementById('editName').value.trim();
+  const name = document.getElementById("editName").value.trim();
 
   if (!user) {
     alert("Please login first.");
@@ -2614,7 +2921,6 @@ async function saveProfileDetails() {
     await window.updateProfile(user, { displayName: name });
     await window.saveUserProfileToFirestore(user, { displayName: name });
     alert("Profile saved successfully!");
-    closeProfile();
   } catch (error) {
     console.error("Profile save error:", error);
     alert("Profile could not be saved: " + error.message);
@@ -2623,10 +2929,10 @@ async function saveProfileDetails() {
 
 function selectCategoryFilter(category, btnEl) {
   activeCategoryFilter = category;
-  document.querySelectorAll('#categoryFilterBar .category-pill').forEach(btn => {
-    btn.classList.remove('active');
+  document.querySelectorAll("#categoryFilterBar .category-pill").forEach(btn => {
+    btn.classList.remove("active");
   });
-  if (btnEl) btnEl.classList.add('active');
+  if (btnEl) btnEl.classList.add("active");
   applyProductFiltersAndSort();
 }
 
@@ -2635,30 +2941,30 @@ function filterCards() {
 }
 
 function applyProductFiltersAndSort() {
-  const container = document.getElementById('mainContentArea');
+  const container = document.getElementById("mainContentArea");
   if (!container) return;
 
-  const query = (document.getElementById('searchInput')?.value || "").trim().toLowerCase();
-  const sortMode = document.getElementById('productSortSelect')?.value || "featured";
-  const cards = Array.from(container.querySelectorAll('.item-card'));
+  const query = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
+  const sortMode = document.getElementById("productSortSelect")?.value || "featured";
+  const cards = Array.from(container.querySelectorAll(".item-card"));
 
   cards.forEach(card => {
-    const title = (card.querySelector('.item-title')?.textContent || "").toLowerCase();
-    const desc = (card.querySelector('.item-description')?.textContent || "").toLowerCase();
-    const category = card.getAttribute('data-category') || "Bamboo Furniture";
+    const title = (card.querySelector(".item-title")?.textContent || "").toLowerCase();
+    const desc = (card.querySelector(".item-description")?.textContent || "").toLowerCase();
+    const category = card.getAttribute("data-category") || "Bamboo Furniture";
 
     const matchesCategory = activeCategoryFilter === "All" || category === activeCategoryFilter;
     const matchesQuery = !query || title.includes(query) || desc.includes(query) || category.toLowerCase().includes(query);
 
-    card.style.display = (matchesCategory && matchesQuery) ? 'flex' : 'none';
+    card.style.display = (matchesCategory && matchesQuery) ? "flex" : "none";
   });
 
   if (sortMode !== "featured") {
     cards.sort((a, b) => {
-      const priceA = getCartPrice({ price: a.getAttribute('data-price') });
-      const priceB = getCartPrice({ price: b.getAttribute('data-price') });
-      const nameA = (a.querySelector('.item-title')?.textContent || "").toLowerCase();
-      const nameB = (b.querySelector('.item-title')?.textContent || "").toLowerCase();
+      const priceA = getCartPrice({ price: a.getAttribute("data-price") });
+      const priceB = getCartPrice({ price: b.getAttribute("data-price") });
+      const nameA = (a.querySelector(".item-title")?.textContent || "").toLowerCase();
+      const nameB = (b.querySelector(".item-title")?.textContent || "").toLowerCase();
 
       if (sortMode === "price-asc") return priceA - priceB;
       if (sortMode === "price-desc") return priceB - priceA;
@@ -2669,99 +2975,102 @@ function applyProductFiltersAndSort() {
   }
 }
 
-function openProfile() {
+function switchProfileTab(tabName, urlPath = "/my-profile", pushHistory = true) {
+  document.querySelectorAll(".profile-subpage").forEach(sub => {
+    sub.style.display = "none";
+  });
+
+  const activeSubpage = document.getElementById("profile-tab-" + tabName);
+  if (activeSubpage) activeSubpage.style.display = "block";
+
+  document.querySelectorAll(".profile-nav-btn[data-profile-tab]").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-profile-tab") === tabName);
+  });
+
+  if (tabName === "orders" && window.loadMyOrders) {
+    window.loadMyOrders();
+  }
+
+  if (pushHistory && urlPath) {
+    try {
+      history.pushState({ section: "profileSection", tab: tabName }, "", urlPath);
+    } catch (_) {}
+  }
+}
+
+function openProfile(tabName = "details", urlPath = "/my-profile", pushHistory = true) {
   if (!window.currentFirebaseUser) {
-    showSection('loginSection', '/login');
+    showSection("loginSection", "/login");
     return;
   }
   loadProfileData();
-  document.getElementById('profileModal').style.display = 'flex';
-  try {
-    history.pushState({ profile: true }, "", "/my-profile");
-  } catch (_) {}
+  showSection("profileSection", urlPath, pushHistory);
+  switchProfileTab(tabName, urlPath, false);
 }
 
-async function toggleMyOrders() {
-  const section = document.getElementById("myOrdersSection");
-  if (!section) return;
-
-  if (section.style.display === "block") {
-    section.style.display = "none";
-    return;
-  }
-
-  section.style.display = "block";
-  if (window.loadMyOrders) {
-    await window.loadMyOrders();
+function openSettingsView() {
+  if (window.currentFirebaseUser && window.isAdminUser) {
+    openAdminPanel("settings", "/admin-panel/settings");
+  } else if (window.currentFirebaseUser) {
+    openProfile("settings", "/my-profile/settings");
   } else {
-    document.getElementById("myOrdersList").textContent =
-      "Orders function is not available. Please refresh the page.";
+    showSection("loginSection", "/login");
   }
-}
-
-function closeProfile() {
-  if (window.stopMyOrdersListener) {
-    window.stopMyOrdersListener();
-  }
-  document.getElementById('profileModal').style.display = 'none';
-  try {
-    history.pushState({}, "", window.location.pathname.replace('/my-profile', '') || '/');
-  } catch (_) {}
 }
 
 function onSuccessfulLogin() {
-  const loginBtn = document.getElementById('loginHeaderBtn');
-  const profileBtn = document.getElementById('profileBorderBtn');
-  if (loginBtn) loginBtn.style.display = 'none';
-  if (profileBtn) profileBtn.style.display = 'flex';
+  const loginBtn = document.getElementById("loginHeaderBtn");
+  const profileBtn = document.getElementById("profileBorderBtn");
+  if (loginBtn) loginBtn.style.display = "none";
+  if (profileBtn) profileBtn.style.display = "flex";
 
   updateHeaderProfilePic();
-  showSection('homeSection', '/');
+  showSection("homeSection", "/");
 }
 
 async function handleManualLogin() {
-  const emailInput = document.getElementById('loginEmailInput').value.trim();
-  const passwordInput = document.getElementById('loginPasswordInput').value;
-  const errorMsgElem = document.getElementById('loginErrorMsg');
+  const emailInput = document.getElementById("loginEmailInput").value.trim();
+  const passwordInput = document.getElementById("loginPasswordInput").value;
+  const errorMsgElem = document.getElementById("loginErrorMsg");
 
   if (!emailInput || !passwordInput) {
     errorMsgElem.textContent = "Please enter both email and password!";
-    errorMsgElem.style.display = 'block';
+    errorMsgElem.style.display = "block";
     return;
   }
 
   try {
-    errorMsgElem.style.display = 'none';
+    errorMsgElem.style.display = "none";
     await window.signInWithEmailAndPassword(window.firebaseAuth, emailInput, passwordInput);
   } catch (error) {
     errorMsgElem.textContent =
       error.code === "auth/invalid-credential"
         ? "Incorrect email or password."
         : "Login failed: " + error.message;
-    errorMsgElem.style.display = 'block';
+    errorMsgElem.style.display = "block";
   }
 }
 
 async function handleManualRegister() {
-  const nameInput = document.getElementById('regNameInput').value.trim();
-  const emailInput = document.getElementById('regEmailInput').value.trim();
-  const passwordInput = document.getElementById('regPasswordInput').value;
-  const errorMsgElem = document.getElementById('regErrorMsg');
+  const nameInput = document.getElementById("regNameInput").value.trim();
+  const emailInput = document.getElementById("regEmailInput").value.trim();
+  const passwordInput = document.getElementById("regPasswordInput").value;
+  const errorMsgElem = document.getElementById("regErrorMsg");
 
   if (!nameInput || !emailInput || !passwordInput) {
     errorMsgElem.textContent = "Please fill in all fields!";
-    errorMsgElem.style.display = 'block';
+    errorMsgElem.style.display = "block";
     return;
   }
 
   if (passwordInput.length < 6) {
     errorMsgElem.textContent = "Password must be at least 6 characters!";
-    errorMsgElem.style.display = 'block';
+    errorMsgElem.style.display = "block";
     return;
   }
 
   try {
-    errorMsgElem.style.display = 'none';
+    errorMsgElem.style.display = "none";
     const result = await window.createUserWithEmailAndPassword(
       window.firebaseAuth,
       emailInput,
@@ -2772,11 +3081,11 @@ async function handleManualRegister() {
     await window.saveUserProfileToFirestore(result.user, { displayName: nameInput });
     await window.signOut(window.firebaseAuth);
 
-    document.getElementById('loginEmailInput').value = emailInput;
-    document.getElementById('loginPasswordInput').value = '';
+    document.getElementById("loginEmailInput").value = emailInput;
+    document.getElementById("loginPasswordInput").value = "";
 
     alert("Account created successfully! Please login.");
-    flipAuthCard('loginSection', '/login');
+    flipAuthCard("loginSection", "/login");
   } catch (error) {
     errorMsgElem.textContent =
       error.code === "auth/email-already-in-use"
@@ -2784,7 +3093,7 @@ async function handleManualRegister() {
         : error.code === "auth/weak-password"
         ? "Password is too weak."
         : "Registration failed: " + error.message;
-    errorMsgElem.style.display = 'block';
+    errorMsgElem.style.display = "block";
   }
 }
 
@@ -2805,10 +3114,10 @@ async function handleGoogleCredentialResponse(response) {
 async function handleLogout() {
   try {
     await window.signOut(window.firebaseAuth);
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userEmail');
-    location.href = '/';
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
+    location.href = "/";
   } catch (error) {
     console.error("Logout error:", error);
     alert("Sign out failed. Please try again.");
@@ -2816,20 +3125,20 @@ async function handleLogout() {
 }
 
 function toggleMenu() {
-  document.getElementById('sideNav').classList.toggle('open');
-  document.getElementById('navOverlay').classList.toggle('active');
+  document.getElementById("sideNav").classList.toggle("open");
+  document.getElementById("navOverlay").classList.toggle("active");
 }
 
-function openAdminPanel() {
+function openAdminPanel(pageName = "dashboard", urlPath = "/admin-panel/dashboard") {
   if (!window.currentFirebaseUser || !window.isAdminUser) {
     alert("Admin access denied!");
     return;
   }
-  showSection("adminSection", "/admin");
-  showAdminPage("dashboard");
+  showSection("adminSection", urlPath);
+  showAdminPage(pageName, urlPath, false);
 }
 
-function showAdminPage(pageName) {
+function showAdminPage(pageName, urlPath = "/admin-panel/" + pageName, pushHistory = true) {
   document.querySelectorAll(".admin-page").forEach(page => {
     page.style.display = "none";
   });
@@ -2846,6 +3155,12 @@ function showAdminPage(pageName) {
   const activeButton = [...document.querySelectorAll(".admin-sidebar button")]
     .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
   if (activeButton) activeButton.classList.add("active");
+
+  if (pushHistory && urlPath) {
+    try {
+      history.pushState({ section: "adminSection", adminPage: pageName }, "", urlPath);
+    } catch (_) {}
+  }
 
   if (pageName === "dashboard" && window.loadAdminDashboardStats) {
     window.loadAdminDashboardStats();
