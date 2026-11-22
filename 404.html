@@ -783,10 +783,10 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
     max-width: none;
     margin: 0;
     flex: none;
-    padding: 14px;
+    padding: 0px;
     background-color: #FFFFFF;
     border: 1px solid #dcdcdc;
-    border-radius: 8px;
+    border-radius: 0px;
     text-align: center;
     position: relative;
     cursor: pointer;
@@ -909,7 +909,7 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
     }
 
     .explore-btn {
-        bottom: 40px;
+        bottom: 120px;
         padding: 8px 20px;
         font-size: 13px;
     }
@@ -1285,20 +1285,6 @@ body.auth-loading #profileBorderBtn {
 <button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 </div>
-
-<div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
-  <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
-    <div class="home-item-card">       
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>       
-     <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
-    </div>
-  </div>
-</div>
 </section>
 
 <!-- ABOUT SECTION -->
@@ -1580,6 +1566,33 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 
         <label>Price (₹)</label>
         <input type="number" id="productPrice" placeholder="Enter price" min="0">
+        
+<!-- PRODUCT SALE SETTINGS -->
+
+<h3>Product Sale & Discount</h3>
+
+<label>
+    <input type="checkbox" id="productSaleEnabled">
+    Enable Discount for this Product
+</label>
+
+<label>Sale Price (₹)</label>
+<input
+    type="number"
+    id="productSalePrice"
+    placeholder="Enter discounted price"
+    min="0"
+>
+
+<label>Sale Badge Text</label>
+<input
+    type="text"
+    id="productSaleBadge"
+    placeholder="Example: SALE or SPECIAL OFFER"
+>
+
+<p id="productDiscountPreview"></p>
+
 
         <label>Category</label>
         <select id="productCategory">
@@ -1699,11 +1712,113 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 
 
-            <!-- SETTINGS PAGE -->
-            <div id="admin-settings-page" class="admin-page" style="display:none;">
-                <h2>Store Settings</h2>
-                <p>Store settings will appear here.</p>
-            </div>
+            
+<!-- SETTINGS PAGE -->
+
+<!-- ADMIN STORE SETTINGS -->
+<div id="admin-settings-page" class="admin-page" style="display:none;">
+
+    <h2>Store Settings</h2>
+
+    <!-- PAYMENT SETTINGS -->
+    <h3>1. Payment Settings</h3>
+
+    <label>
+        <input type="checkbox" id="upiEnabled">
+        Enable UPI Payment
+    </label>
+
+    <label for="upiId">UPI ID</label>
+    <input
+        type="text"
+        id="upiId"
+        placeholder="example@upi"
+    >
+
+    <label for="upiName">UPI Payee Name</label>
+    <input
+        type="text"
+        id="upiName"
+        placeholder="Enter Payee Name"
+    >
+
+    <label for="upiQrUrl">UPI QR Image URL</label>
+    <input
+        type="url"
+        id="upiQrUrl"
+        placeholder="Enter QR Image URL"
+    >
+
+    <hr>
+
+    <!-- SALE SETTINGS -->
+    <h3>2. Sale & Discount Settings</h3>
+
+    <label>
+        <input type="checkbox" id="saleEnabled">
+        Enable Sale
+    </label>
+
+    <label for="saleBadgeText">Sale Badge Text</label>
+    <input
+        type="text"
+        id="saleBadgeText"
+        placeholder="Example: SALE"
+    >
+
+    <label for="defaultDiscount">Default Discount (%)</label>
+    <input
+        type="number"
+        id="defaultDiscount"
+        min="0"
+        max="99"
+        placeholder="Example: 55"
+    >
+
+    <hr>
+
+    <!-- FESTIVAL BANNER SETTINGS -->
+    <h3>3. Festival & Website Banner</h3>
+
+    <label>
+        <input type="checkbox" id="bannerEnabled">
+        Enable Banner
+    </label>
+
+    <label for="bannerTitle">Banner Title</label>
+    <input
+        type="text"
+        id="bannerTitle"
+        placeholder="Example: Diwali Mega Sale"
+    >
+
+    <label for="bannerImage">Banner Image URL</label>
+    <input
+        type="url"
+        id="bannerImage"
+        placeholder="Enter Banner Image URL"
+    >
+
+    <label for="bannerLink">Banner Click Link</label>
+    <input
+        type="url"
+        id="bannerLink"
+        placeholder="Enter Link"
+    >
+
+    <hr>
+
+    <button type="button" onclick="saveStoreSettings()">
+        Save All Settings
+    </button>
+
+    <button type="button" onclick="loadStoreSettings()">
+        Reload Settings
+    </button>
+
+    <p id="settingsMessage"></p>
+
+</div>
 
         </div>
 
@@ -1741,9 +1856,6 @@ Home</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('productsSection', '/products');">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/></svg>
 Products</a></li>
-<li><a href="javascript:void(0)" onclick="toggleMenu(); showSection('loginSection', '/login');">
-<svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
-Login</a></li>
 <li><a href="javascript:void(0)" onclick="toggleMenu(); openProfile();">
 <svg viewBox="0 0 24 24" width="20" height="20" fill="#E09F3E"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22 z"/></svg>
 My Profile</a></li>
@@ -1942,14 +2054,30 @@ const desc = cardElement.querySelector('.item-description').textContent;
 const imgHTML = cardElement.querySelector('.item-image-container').innerHTML;
 const price = cardElement.getAttribute('data-price') || "₹15,499";
 
+const originalPrice = Number(
+    cardElement.getAttribute("data-original-price") || 0
+);
+
+const saleEnabled =
+    cardElement.getAttribute("data-sale-enabled") === "true";
+
+const discount = Number(
+    cardElement.getAttribute("data-discount") || 0
+);
+    
+
 currentActiveProduct = title;
 const productImage = cardElement.querySelector('.item-image-container img');
+
 
 currentActiveProductData = {
     title: title,
     description: desc,
     imageURL: productImage ? productImage.src : "",
     price: price,
+    originalPrice: originalPrice,
+    saleEnabled: saleEnabled,
+    discountPercent: discount,
     quantity: 1
 };
 
@@ -1958,7 +2086,17 @@ updateSimpleCartButton();
 document.getElementById('simpleModalTitle').textContent = title;
 document.getElementById('simpleModalDesc').textContent = desc;
 document.getElementById('simpleModalImageContainer').innerHTML = imgHTML;
-document.getElementById('productPriceTag').textContent = price;
+const priceTag = document.getElementById("productPriceTag");
+
+if (saleEnabled) {
+    priceTag.textContent =
+        price + " | Original: ₹" +
+        originalPrice.toLocaleString("en-IN") +
+        " | " + discount + "% OFF";
+} else {
+    priceTag.textContent = price;
+}
+
 
 document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
 document.getElementById('cartFullSection').style.display = 'none';
@@ -2136,9 +2274,25 @@ function updateCartUI() {
                         ${title}
                     </h3>
 
-                    <p style="margin:5px 0;">
-                        Price: ${formatCartPrice(price)}
-                    </p>
+                    
+${item.saleEnabled ? `
+    <p style="margin:5px 0;text-decoration:line-through;color:#888;">
+        Original Price: ${formatCartPrice(Number(item.originalPrice || 0))}
+    </p>
+
+    <p style="margin:5px 0;font-weight:bold;color:#16803c;">
+        Sale Price: ${formatCartPrice(price)}
+    </p>
+
+    <p style="margin:5px 0;color:#16803c;">
+        ${Number(item.discountPercent || 0)}% OFF
+    </p>
+` : `
+    <p style="margin:5px 0;">
+        Price: ${formatCartPrice(price)}
+    </p>
+`}
+
 
                     <p style="margin:5px 0;font-weight:bold;">
                         Subtotal: ${formatCartPrice(subtotal)}
@@ -2556,6 +2710,10 @@ if (activeButton) activeButton.classList.add("active");
     if (pageName === "products" && window.loadAdminProducts) {
     window.loadAdminProducts();
 }
+
+   if (pageName === "settings" && window.loadStoreSettings) {
+    window.loadStoreSettings();
+} 
 } 
 
 window.syncCartForAuth = function(user) {
@@ -2711,12 +2869,20 @@ window.placeOrderToFirestore = async function() {
     const orderData = {
         userId: user.uid,
         customerName: user.displayName || "",
-        customerEmail: user.email || "",
-        items: cartItems.map(item => ({
-            productName: item.title,
-            quantity: item.quantity,
-            unitPrice: getCartPrice(item)
-        })),
+        customerEmail: user.email || "",          
+items: cartItems.map(item => ({
+    productName: item.title,
+    quantity: item.quantity,
+
+    unitPrice: getCartPrice(item),
+
+    originalUnitPrice: Number(item.originalPrice || getCartPrice(item)),
+
+    saleEnabled: item.saleEnabled === true,
+
+    discountPercent: Number(item.discountPercent || 0)
+})),
+
         totalAmount: cartItems.reduce(
             (sum, item) => sum + getCartPrice(item) * item.quantity,
             0
@@ -2810,6 +2976,10 @@ window.openProductForm = function () {
     document.getElementById("productStock").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productDescription").value = "";
+    document.getElementById("productSaleEnabled").checked = false; 
+    document.getElementById("productSalePrice").value = "";
+    document.getElementById("productSaleBadge").value = "";
+    document.getElementById("productDiscountPreview").textContent = "";
 };
 
 // CLOSE PRODUCT FORM
@@ -2895,7 +3065,8 @@ document.getElementById("productImageFile").addEventListener("change", function 
     
     
 
-// SAVE PRODUCT
+
+// SAVE PRODUCT WITH DISCOUNT
 window.saveAdminProduct = async function () {
     try {
         if (!auth.currentUser || !window.isAdminUser) {
@@ -2912,9 +3083,23 @@ window.saveAdminProduct = async function () {
         const image = await window.uploadProductImage();
         const description = document.getElementById("productDescription").value.trim();
 
-        if (!name || !category || !Number.isFinite(price) || price < 0 ||
+        const saleEnabled = document.getElementById("productSaleEnabled").checked;
+        const salePriceInput = document.getElementById("productSalePrice").value;
+        const salePrice = salePriceInput === "" ? NaN : Number(salePriceInput);
+        const saleBadge = document.getElementById("productSaleBadge").value.trim();
+
+        if (!name || !category || !Number.isFinite(price) || price <= 0 ||
             !Number.isInteger(stock) || stock < 0) {
             alert("Please enter valid product details.");
+            return;
+        }
+
+        if (saleEnabled && (
+            !Number.isFinite(salePrice) ||
+            salePrice <= 0 ||
+            salePrice >= price
+        )) {
+            alert("Sale Price must be greater than 0 and less than Original Price.");
             return;
         }
 
@@ -2923,6 +3108,10 @@ window.saveAdminProduct = async function () {
             return;
         }
 
+        const discountPercent = saleEnabled
+            ? Math.round(((price - salePrice) / price) * 100)
+            : 0;
+
         const productData = {
             name,
             price,
@@ -2930,6 +3119,12 @@ window.saveAdminProduct = async function () {
             stock,
             image,
             description,
+
+            saleEnabled,
+            salePrice: saleEnabled ? salePrice : null,
+            saleBadge: saleEnabled ? saleBadge : "",
+            discountPercent,
+
             updatedAt: serverTimestamp()
         };
 
@@ -2952,6 +3147,7 @@ window.saveAdminProduct = async function () {
         alert("Could not save product: " + error.message);
     }
 };
+
 
 // LOAD PRODUCTS
 window.loadAdminProducts = async function () {
@@ -2994,7 +3190,17 @@ window.loadAdminProducts = async function () {
         `}
 
         <h3>${escapeProductHTML(p.name)}</h3>
-                    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+                    
+${p.saleEnabled ? `
+    <p>Original Price: ₹${escapeProductHTML(p.price)}</p>
+    <p>Sale Price: ₹${escapeProductHTML(p.salePrice)}</p>
+    <p>Discount: ${escapeProductHTML(p.discountPercent)}% OFF</p>
+    <p>Sale Badge: ${escapeProductHTML(p.saleBadge || "SALE")}</p>
+` : `
+    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+    <p>No Discount</p>
+`}
+
                     <p>Category: ${escapeProductHTML(p.category)}</p>
                    
 <p>Stock: ${escapeProductHTML(p.stock)}</p>
@@ -3649,12 +3855,31 @@ window.loadStoreProducts = async function () {
         container.innerHTML = "";
 
         products.forEach(product => {
-            const card = document.createElement("div");
-            card.className = "item-card";
-            card.setAttribute(
-                "data-price",
-                "₹" + Number(product.price || 0).toLocaleString("en-IN")
-            );
+            
+const card = document.createElement("div");
+card.className = "item-card";
+
+const originalPrice = Number(product.price || 0);
+const isSale = product.saleEnabled === true &&
+    Number(product.salePrice) > 0 &&
+    Number(product.salePrice) < originalPrice;
+
+const effectivePrice = isSale
+    ? Number(product.salePrice)
+    : originalPrice;
+
+card.setAttribute(
+    "data-price",
+    "₹" + effectivePrice.toLocaleString("en-IN")
+);
+
+card.setAttribute("data-original-price", String(originalPrice));
+card.setAttribute("data-sale-enabled", String(isSale));
+card.setAttribute(
+    "data-discount",
+    isSale ? String(product.discountPercent || 0) : "0"
+);
+            
 
             const imageContainer = document.createElement("div");
             imageContainer.className = "item-image-container";
@@ -3674,7 +3899,37 @@ window.loadStoreProducts = async function () {
             description.className = "item-description";
             description.textContent = product.description || "";
 
-            card.append(imageContainer, title, description);
+            
+const priceBox = document.createElement("div");
+
+if (isSale) {
+    const badge = document.createElement("span");
+    badge.textContent = product.saleBadge || "SALE";
+
+    const oldPrice = document.createElement("span");
+    oldPrice.textContent =
+        "₹" + originalPrice.toLocaleString("en-IN");
+    oldPrice.style.textDecoration = "line-through";
+
+    const newPrice = document.createElement("strong");
+    newPrice.textContent =
+        "₹" + effectivePrice.toLocaleString("en-IN");
+
+    const discount = document.createElement("span");
+    discount.textContent =
+        (product.discountPercent || 0) + "% OFF";
+
+    priceBox.append(badge, oldPrice, newPrice, discount);
+} else {
+    const normalPrice = document.createElement("strong");
+    normalPrice.textContent =
+        "₹" + originalPrice.toLocaleString("en-IN");
+
+    priceBox.appendChild(normalPrice);
+}
+
+card.append(imageContainer, title, description, priceBox);
+
 
             card.addEventListener("click", function () {
                 openFullProduct(card);
@@ -3689,6 +3944,7 @@ window.loadStoreProducts = async function () {
     }
 };    
 
+
 // EDIT PRODUCT
 window.editAdminProduct = function (id) {
     const p = window.adminProductCache[id];
@@ -3699,12 +3955,33 @@ window.editAdminProduct = function (id) {
     }
 
     document.getElementById("editProductId").value = id;
+
+    // Basic Product Details
     document.getElementById("productName").value = p.name || "";
     document.getElementById("productPrice").value = p.price ?? "";
     document.getElementById("productCategory").value = p.category || "";
     document.getElementById("productStock").value = p.stock ?? "";
     document.getElementById("productImage").value = p.image || "";
     document.getElementById("productDescription").value = p.description || "";
+
+    // Sale & Discount Details
+    document.getElementById("productSaleEnabled").checked =
+        p.saleEnabled === true;
+
+    document.getElementById("productSalePrice").value =
+        p.salePrice ?? "";
+
+    document.getElementById("productSaleBadge").value =
+        p.saleBadge || "";
+
+    // Discount Preview
+    const preview = document.getElementById("productDiscountPreview");
+
+    if (preview) {
+        preview.textContent = p.saleEnabled
+            ? "Discount: " + (p.discountPercent || 0) + "% OFF"
+            : "No discount enabled.";
+    }
 
     document.getElementById("productFormTitle").textContent = "Edit Product";
     document.getElementById("productFormBox").style.display = "block";
@@ -3729,6 +4006,126 @@ window.deleteAdminProduct = async function (id) {
     } catch (error) {
         console.error("Product delete error:", error);
         alert("Could not delete product: " + error.message);
+    }
+};
+
+
+
+/* =====================================
+   ADMIN STORE SETTINGS
+===================================== */
+
+window.loadStoreSettings = async function () {
+    const message = document.getElementById("settingsMessage");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        if (message) message.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        if (message) message.textContent = "Loading settings...";
+
+        const settingsRef = doc(db, "SETTINGS", "STORE");
+        const snapshot = await getDoc(settingsRef);
+
+        if (!snapshot.exists()) {
+            if (message) message.textContent = "No settings saved yet.";
+            return;
+        }
+
+        const s = snapshot.data();
+
+        document.getElementById("upiEnabled").checked = s.upiEnabled ?? false;
+        document.getElementById("upiId").value = s.upiId || "";
+        document.getElementById("upiName").value = s.upiName || "";
+        document.getElementById("upiQrUrl").value = s.upiQrUrl || "";
+
+        document.getElementById("saleEnabled").checked = s.saleEnabled ?? false;
+        document.getElementById("saleBadgeText").value = s.saleBadgeText || "";
+        document.getElementById("defaultDiscount").value = s.defaultDiscount ?? "";
+
+        document.getElementById("bannerEnabled").checked = s.bannerEnabled ?? false;
+        document.getElementById("bannerTitle").value = s.bannerTitle || "";
+        document.getElementById("bannerImage").value = s.bannerImage || "";
+        document.getElementById("bannerLink").value = s.bannerLink || "";
+
+        if (message) message.textContent = "Settings loaded successfully!";
+
+    } catch (error) {
+        console.error("Settings load error:", error);
+        if (message) message.textContent = "Load failed: " + error.message;
+    }
+};
+
+
+window.saveStoreSettings = async function () {
+    const message = document.getElementById("settingsMessage");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        alert("Admin access denied!");
+        return;
+    }
+
+    try {
+        const settingsData = {
+            upiEnabled: document.getElementById("upiEnabled").checked,
+            upiId: document.getElementById("upiId").value.trim(),
+            upiName: document.getElementById("upiName").value.trim(),
+            upiQrUrl: document.getElementById("upiQrUrl").value.trim(),
+
+            saleEnabled: document.getElementById("saleEnabled").checked,
+            saleBadgeText: document.getElementById("saleBadgeText").value.trim(),
+            defaultDiscount: Number(document.getElementById("defaultDiscount").value) || 0,
+
+            bannerEnabled: document.getElementById("bannerEnabled").checked,
+            bannerTitle: document.getElementById("bannerTitle").value.trim(),
+            bannerImage: document.getElementById("bannerImage").value.trim(),
+            bannerLink: document.getElementById("bannerLink").value.trim(),
+
+            updatedAt: serverTimestamp()
+        };
+
+        if (settingsData.upiEnabled && !settingsData.upiId) {
+            alert("Please enter your UPI ID.");
+            return;
+        }
+
+        if (
+            settingsData.defaultDiscount < 0 ||
+            settingsData.defaultDiscount > 99
+        ) {
+            alert("Discount must be between 0 and 99.");
+            return;
+        }
+
+        const validUrl = url => !url || /^https?:\/\//i.test(url);
+
+        if (
+            !validUrl(settingsData.upiQrUrl) ||
+            !validUrl(settingsData.bannerImage) ||
+            !validUrl(settingsData.bannerLink)
+        ) {
+            alert("Please enter valid URLs starting with http:// or https://");
+            return;
+        }
+
+        if (message) message.textContent = "Saving settings...";
+
+        const settingsRef = doc(db, "SETTINGS", "STORE");
+
+        await setDoc(settingsRef, settingsData, { merge: true });
+
+        if (message) message.textContent = "All settings saved successfully!";
+
+        alert("Store settings saved successfully!");
+
+    } catch (error) {
+        console.error("Settings save error:", error);
+
+        if (message) message.textContent = "Save failed: " + error.message;
+
+        alert("Settings save failed: " + error.message);
     }
 };
 </script>
