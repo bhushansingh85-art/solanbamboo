@@ -783,10 +783,10 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
     max-width: none;
     margin: 0;
     flex: none;
-    padding: 14px;
+    padding: 0px;
     background-color: #FFFFFF;
     border: 1px solid #dcdcdc;
-    border-radius: 8px;
+    border-radius: 0px;
     text-align: center;
     position: relative;
     cursor: pointer;
@@ -909,7 +909,7 @@ box-shadow: 0 4px 12px rgba(224, 159, 62, 0.6);
     }
 
     .explore-btn {
-        bottom: 40px;
+        bottom: 120px;
         padding: 8px 20px;
         font-size: 13px;
     }
@@ -1285,20 +1285,6 @@ body.auth-loading #profileBorderBtn {
 <button class="explore-btn" onclick="showSection('productsSection', '/products')">Explore Products</button>
 </div>
 </div>
-
-<div class="content-container" style="background-color: #fcf8f2; padding: 0;">  
-  <div style="display: flex; flex-wrap: wrap; gap: 0; justify-content: center; width: 100%; margin: 0 auto;">
-    <div class="home-item-card">       
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>       
-     <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>      
-    </div>
-    <div class="home-item-card">
-      <div class="home-image-container"><img src="https://i.ibb.co/B2v3fD9z/3-SET-converted.jpg"></div>     
-    </div>
-  </div>
-</div>
 </section>
 
 <!-- ABOUT SECTION -->
@@ -1580,6 +1566,33 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 
         <label>Price (₹)</label>
         <input type="number" id="productPrice" placeholder="Enter price" min="0">
+        
+<!-- PRODUCT SALE SETTINGS -->
+
+<h3>Product Sale & Discount</h3>
+
+<label>
+    <input type="checkbox" id="productSaleEnabled">
+    Enable Discount for this Product
+</label>
+
+<label>Sale Price (₹)</label>
+<input
+    type="number"
+    id="productSalePrice"
+    placeholder="Enter discounted price"
+    min="0"
+>
+
+<label>Sale Badge Text</label>
+<input
+    type="text"
+    id="productSaleBadge"
+    placeholder="Example: SALE or SPECIAL OFFER"
+>
+
+<p id="productDiscountPreview"></p>
+
 
         <label>Category</label>
         <select id="productCategory">
@@ -2913,6 +2926,10 @@ window.openProductForm = function () {
     document.getElementById("productStock").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productDescription").value = "";
+    document.getElementById("productSaleEnabled").checked = false; 
+    document.getElementById("productSalePrice").value = "";
+    document.getElementById("productSaleBadge").value = "";
+    document.getElementById("productDiscountPreview").textContent = "";
 };
 
 // CLOSE PRODUCT FORM
@@ -2998,7 +3015,8 @@ document.getElementById("productImageFile").addEventListener("change", function 
     
     
 
-// SAVE PRODUCT
+
+// SAVE PRODUCT WITH DISCOUNT
 window.saveAdminProduct = async function () {
     try {
         if (!auth.currentUser || !window.isAdminUser) {
@@ -3015,9 +3033,23 @@ window.saveAdminProduct = async function () {
         const image = await window.uploadProductImage();
         const description = document.getElementById("productDescription").value.trim();
 
-        if (!name || !category || !Number.isFinite(price) || price < 0 ||
+        const saleEnabled = document.getElementById("productSaleEnabled").checked;
+        const salePriceInput = document.getElementById("productSalePrice").value;
+        const salePrice = salePriceInput === "" ? NaN : Number(salePriceInput);
+        const saleBadge = document.getElementById("productSaleBadge").value.trim();
+
+        if (!name || !category || !Number.isFinite(price) || price <= 0 ||
             !Number.isInteger(stock) || stock < 0) {
             alert("Please enter valid product details.");
+            return;
+        }
+
+        if (saleEnabled && (
+            !Number.isFinite(salePrice) ||
+            salePrice <= 0 ||
+            salePrice >= price
+        )) {
+            alert("Sale Price must be greater than 0 and less than Original Price.");
             return;
         }
 
@@ -3026,6 +3058,10 @@ window.saveAdminProduct = async function () {
             return;
         }
 
+        const discountPercent = saleEnabled
+            ? Math.round(((price - salePrice) / price) * 100)
+            : 0;
+
         const productData = {
             name,
             price,
@@ -3033,6 +3069,12 @@ window.saveAdminProduct = async function () {
             stock,
             image,
             description,
+
+            saleEnabled,
+            salePrice: saleEnabled ? salePrice : null,
+            saleBadge: saleEnabled ? saleBadge : "",
+            discountPercent,
+
             updatedAt: serverTimestamp()
         };
 
@@ -3055,6 +3097,7 @@ window.saveAdminProduct = async function () {
         alert("Could not save product: " + error.message);
     }
 };
+
 
 // LOAD PRODUCTS
 window.loadAdminProducts = async function () {
@@ -3097,7 +3140,17 @@ window.loadAdminProducts = async function () {
         `}
 
         <h3>${escapeProductHTML(p.name)}</h3>
-                    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+                    
+${p.saleEnabled ? `
+    <p>Original Price: ₹${escapeProductHTML(p.price)}</p>
+    <p>Sale Price: ₹${escapeProductHTML(p.salePrice)}</p>
+    <p>Discount: ${escapeProductHTML(p.discountPercent)}% OFF</p>
+    <p>Sale Badge: ${escapeProductHTML(p.saleBadge || "SALE")}</p>
+` : `
+    <p>Price: ₹${escapeProductHTML(p.price)}</p>
+    <p>No Discount</p>
+`}
+
                     <p>Category: ${escapeProductHTML(p.category)}</p>
                    
 <p>Stock: ${escapeProductHTML(p.stock)}</p>
@@ -3792,6 +3845,7 @@ window.loadStoreProducts = async function () {
     }
 };    
 
+
 // EDIT PRODUCT
 window.editAdminProduct = function (id) {
     const p = window.adminProductCache[id];
@@ -3802,12 +3856,33 @@ window.editAdminProduct = function (id) {
     }
 
     document.getElementById("editProductId").value = id;
+
+    // Basic Product Details
     document.getElementById("productName").value = p.name || "";
     document.getElementById("productPrice").value = p.price ?? "";
     document.getElementById("productCategory").value = p.category || "";
     document.getElementById("productStock").value = p.stock ?? "";
     document.getElementById("productImage").value = p.image || "";
     document.getElementById("productDescription").value = p.description || "";
+
+    // Sale & Discount Details
+    document.getElementById("productSaleEnabled").checked =
+        p.saleEnabled === true;
+
+    document.getElementById("productSalePrice").value =
+        p.salePrice ?? "";
+
+    document.getElementById("productSaleBadge").value =
+        p.saleBadge || "";
+
+    // Discount Preview
+    const preview = document.getElementById("productDiscountPreview");
+
+    if (preview) {
+        preview.textContent = p.saleEnabled
+            ? "Discount: " + (p.discountPercent || 0) + "% OFF"
+            : "No discount enabled.";
+    }
 
     document.getElementById("productFormTitle").textContent = "Edit Product";
     document.getElementById("productFormBox").style.display = "block";
