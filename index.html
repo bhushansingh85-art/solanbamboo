@@ -1701,50 +1701,107 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 
             
 <!-- SETTINGS PAGE -->
+
+<!-- ADMIN STORE SETTINGS -->
 <div id="admin-settings-page" class="admin-page" style="display:none;">
 
     <h2>Store Settings</h2>
 
-    <h3>General Settings</h3>
+    <!-- PAYMENT SETTINGS -->
+    <h3>1. Payment Settings</h3>
 
-    <form id="storeSettingsForm">
+    <label>
+        <input type="checkbox" id="upiEnabled">
+        Enable UPI Payment
+    </label>
 
-        <label for="storeName">Store Name</label>
-        <input
-            type="text"
-            id="storeName"
-            placeholder="Enter Store Name"
-        >
+    <label for="upiId">UPI ID</label>
+    <input
+        type="text"
+        id="upiId"
+        placeholder="example@upi"
+    >
 
-        <label for="storeTagline">Store Tagline</label>
-        <input
-            type="text"
-            id="storeTagline"
-            placeholder="Enter Store Tagline"
-        >
+    <label for="upiName">UPI Payee Name</label>
+    <input
+        type="text"
+        id="upiName"
+        placeholder="Enter Payee Name"
+    >
 
-        <label for="storeDescription">Store Description</label>
-        <textarea
-            id="storeDescription"
-            placeholder="Enter Store Description"
-        ></textarea>
+    <label for="upiQrUrl">UPI QR Image URL</label>
+    <input
+        type="url"
+        id="upiQrUrl"
+        placeholder="Enter QR Image URL"
+    >
 
-        <label for="storeLogo">Store Logo URL</label>
-        <input
-            type="url"
-            id="storeLogo"
-            placeholder="Enter Logo URL"
-        >
+    <hr>
 
-        <button type="button" onclick="saveStoreSettings()">
-            Save General Settings
-        </button>
+    <!-- SALE SETTINGS -->
+    <h3>2. Sale & Discount Settings</h3>
 
-        <button type="button" onclick="loadStoreSettings()">
-            Reload Saved Settings
-        </button>
+    <label>
+        <input type="checkbox" id="saleEnabled">
+        Enable Sale
+    </label>
 
-    </form>
+    <label for="saleBadgeText">Sale Badge Text</label>
+    <input
+        type="text"
+        id="saleBadgeText"
+        placeholder="Example: SALE"
+    >
+
+    <label for="defaultDiscount">Default Discount (%)</label>
+    <input
+        type="number"
+        id="defaultDiscount"
+        min="0"
+        max="99"
+        placeholder="Example: 55"
+    >
+
+    <hr>
+
+    <!-- FESTIVAL BANNER SETTINGS -->
+    <h3>3. Festival & Website Banner</h3>
+
+    <label>
+        <input type="checkbox" id="bannerEnabled">
+        Enable Banner
+    </label>
+
+    <label for="bannerTitle">Banner Title</label>
+    <input
+        type="text"
+        id="bannerTitle"
+        placeholder="Example: Diwali Mega Sale"
+    >
+
+    <label for="bannerImage">Banner Image URL</label>
+    <input
+        type="url"
+        id="bannerImage"
+        placeholder="Enter Banner Image URL"
+    >
+
+    <label for="bannerLink">Banner Click Link</label>
+    <input
+        type="url"
+        id="bannerLink"
+        placeholder="Enter Link"
+    >
+
+    <hr>
+
+    <button type="button" onclick="saveStoreSettings()">
+        Save All Settings
+    </button>
+
+    <button type="button" onclick="loadStoreSettings()">
+        Reload Settings
+    </button>
 
     <p id="settingsMessage"></p>
 
@@ -2598,6 +2655,10 @@ if (activeButton) activeButton.classList.add("active");
     if (pageName === "products" && window.loadAdminProducts) {
     window.loadAdminProducts();
 }
+
+   if (pageName === "settings" && window.loadStoreSettings) {
+    window.loadStoreSettings();
+} 
 } 
 
 window.syncCartForAuth = function(user) {
@@ -3775,6 +3836,11 @@ window.deleteAdminProduct = async function (id) {
 };
 
 
+
+/* =====================================
+   ADMIN STORE SETTINGS
+===================================== */
+
 window.loadStoreSettings = async function () {
     const message = document.getElementById("settingsMessage");
 
@@ -3790,22 +3856,31 @@ window.loadStoreSettings = async function () {
         const snapshot = await getDoc(settingsRef);
 
         if (!snapshot.exists()) {
-            if (message) message.textContent = "No saved settings found yet.";
+            if (message) message.textContent = "No settings saved yet.";
             return;
         }
 
-        const settings = snapshot.data();
+        const s = snapshot.data();
 
-        document.getElementById("storeName").value = settings.storeName || "";
-        document.getElementById("storeTagline").value = settings.storeTagline || "";
-        document.getElementById("storeDescription").value = settings.storeDescription || "";
-        document.getElementById("storeLogo").value = settings.storeLogo || "";
+        document.getElementById("upiEnabled").checked = s.upiEnabled ?? false;
+        document.getElementById("upiId").value = s.upiId || "";
+        document.getElementById("upiName").value = s.upiName || "";
+        document.getElementById("upiQrUrl").value = s.upiQrUrl || "";
 
-        if (message) message.textContent = "Settings loaded successfully.";
+        document.getElementById("saleEnabled").checked = s.saleEnabled ?? false;
+        document.getElementById("saleBadgeText").value = s.saleBadgeText || "";
+        document.getElementById("defaultDiscount").value = s.defaultDiscount ?? "";
+
+        document.getElementById("bannerEnabled").checked = s.bannerEnabled ?? false;
+        document.getElementById("bannerTitle").value = s.bannerTitle || "";
+        document.getElementById("bannerImage").value = s.bannerImage || "";
+        document.getElementById("bannerLink").value = s.bannerLink || "";
+
+        if (message) message.textContent = "Settings loaded successfully!";
 
     } catch (error) {
-        console.error("Settings loading error:", error);
-        if (message) message.textContent = "Could not load settings: " + error.message;
+        console.error("Settings load error:", error);
+        if (message) message.textContent = "Load failed: " + error.message;
     }
 };
 
@@ -3820,37 +3895,65 @@ window.saveStoreSettings = async function () {
 
     try {
         const settingsData = {
-            storeName: document.getElementById("storeName").value.trim(),
-            storeTagline: document.getElementById("storeTagline").value.trim(),
-            storeDescription: document.getElementById("storeDescription").value.trim(),
-            storeLogo: document.getElementById("storeLogo").value.trim(),
+            upiEnabled: document.getElementById("upiEnabled").checked,
+            upiId: document.getElementById("upiId").value.trim(),
+            upiName: document.getElementById("upiName").value.trim(),
+            upiQrUrl: document.getElementById("upiQrUrl").value.trim(),
+
+            saleEnabled: document.getElementById("saleEnabled").checked,
+            saleBadgeText: document.getElementById("saleBadgeText").value.trim(),
+            defaultDiscount: Number(document.getElementById("defaultDiscount").value) || 0,
+
+            bannerEnabled: document.getElementById("bannerEnabled").checked,
+            bannerTitle: document.getElementById("bannerTitle").value.trim(),
+            bannerImage: document.getElementById("bannerImage").value.trim(),
+            bannerLink: document.getElementById("bannerLink").value.trim(),
+
             updatedAt: serverTimestamp()
         };
 
-        if (!settingsData.storeName) {
-            alert("Please enter your store name.");
+        if (settingsData.upiEnabled && !settingsData.upiId) {
+            alert("Please enter your UPI ID.");
             return;
         }
 
-        if (settingsData.storeLogo && !/^https?:\/\//i.test(settingsData.storeLogo)) {
-            alert("Please enter a valid logo URL.");
+        if (
+            settingsData.defaultDiscount < 0 ||
+            settingsData.defaultDiscount > 99
+        ) {
+            alert("Discount must be between 0 and 99.");
+            return;
+        }
+
+        const validUrl = url => !url || /^https?:\/\//i.test(url);
+
+        if (
+            !validUrl(settingsData.upiQrUrl) ||
+            !validUrl(settingsData.bannerImage) ||
+            !validUrl(settingsData.bannerLink)
+        ) {
+            alert("Please enter valid URLs starting with http:// or https://");
             return;
         }
 
         if (message) message.textContent = "Saving settings...";
 
         const settingsRef = doc(db, "SETTINGS", "STORE");
+
         await setDoc(settingsRef, settingsData, { merge: true });
 
-        if (message) message.textContent = "Settings saved successfully!";
+        if (message) message.textContent = "All settings saved successfully!";
+
         alert("Store settings saved successfully!");
 
     } catch (error) {
-        console.error("Settings saving error:", error);
-        if (message) message.textContent = "Could not save settings: " + error.message;
+        console.error("Settings save error:", error);
+
+        if (message) message.textContent = "Save failed: " + error.message;
+
         alert("Settings save failed: " + error.message);
     }
-};    
+};
 </script>
 </body>
 </html>
