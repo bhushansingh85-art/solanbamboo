@@ -1699,11 +1699,56 @@ Already have an account? <a href="javascript:void(0);" style="color: #E09F3E; fo
 </div>
 
 
-            <!-- SETTINGS PAGE -->
-            <div id="admin-settings-page" class="admin-page" style="display:none;">
-                <h2>Store Settings</h2>
-                <p>Store settings will appear here.</p>
-            </div>
+            
+<!-- SETTINGS PAGE -->
+<div id="admin-settings-page" class="admin-page" style="display:none;">
+
+    <h2>Store Settings</h2>
+
+    <h3>General Settings</h3>
+
+    <form id="storeSettingsForm">
+
+        <label for="storeName">Store Name</label>
+        <input
+            type="text"
+            id="storeName"
+            placeholder="Enter Store Name"
+        >
+
+        <label for="storeTagline">Store Tagline</label>
+        <input
+            type="text"
+            id="storeTagline"
+            placeholder="Enter Store Tagline"
+        >
+
+        <label for="storeDescription">Store Description</label>
+        <textarea
+            id="storeDescription"
+            placeholder="Enter Store Description"
+        ></textarea>
+
+        <label for="storeLogo">Store Logo URL</label>
+        <input
+            type="url"
+            id="storeLogo"
+            placeholder="Enter Logo URL"
+        >
+
+        <button type="button" onclick="saveStoreSettings()">
+            Save General Settings
+        </button>
+
+        <button type="button" onclick="loadStoreSettings()">
+            Reload Saved Settings
+        </button>
+
+    </form>
+
+    <p id="settingsMessage"></p>
+
+</div>
 
         </div>
 
@@ -3728,6 +3773,84 @@ window.deleteAdminProduct = async function (id) {
         alert("Could not delete product: " + error.message);
     }
 };
+
+
+window.loadStoreSettings = async function () {
+    const message = document.getElementById("settingsMessage");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        if (message) message.textContent = "Admin access required.";
+        return;
+    }
+
+    try {
+        if (message) message.textContent = "Loading settings...";
+
+        const settingsRef = doc(db, "SETTINGS", "STORE");
+        const snapshot = await getDoc(settingsRef);
+
+        if (!snapshot.exists()) {
+            if (message) message.textContent = "No saved settings found yet.";
+            return;
+        }
+
+        const settings = snapshot.data();
+
+        document.getElementById("storeName").value = settings.storeName || "";
+        document.getElementById("storeTagline").value = settings.storeTagline || "";
+        document.getElementById("storeDescription").value = settings.storeDescription || "";
+        document.getElementById("storeLogo").value = settings.storeLogo || "";
+
+        if (message) message.textContent = "Settings loaded successfully.";
+
+    } catch (error) {
+        console.error("Settings loading error:", error);
+        if (message) message.textContent = "Could not load settings: " + error.message;
+    }
+};
+
+
+window.saveStoreSettings = async function () {
+    const message = document.getElementById("settingsMessage");
+
+    if (!auth.currentUser || !window.isAdminUser) {
+        alert("Admin access denied!");
+        return;
+    }
+
+    try {
+        const settingsData = {
+            storeName: document.getElementById("storeName").value.trim(),
+            storeTagline: document.getElementById("storeTagline").value.trim(),
+            storeDescription: document.getElementById("storeDescription").value.trim(),
+            storeLogo: document.getElementById("storeLogo").value.trim(),
+            updatedAt: serverTimestamp()
+        };
+
+        if (!settingsData.storeName) {
+            alert("Please enter your store name.");
+            return;
+        }
+
+        if (settingsData.storeLogo && !/^https?:\/\//i.test(settingsData.storeLogo)) {
+            alert("Please enter a valid logo URL.");
+            return;
+        }
+
+        if (message) message.textContent = "Saving settings...";
+
+        const settingsRef = doc(db, "SETTINGS", "STORE");
+        await setDoc(settingsRef, settingsData, { merge: true });
+
+        if (message) message.textContent = "Settings saved successfully!";
+        alert("Store settings saved successfully!");
+
+    } catch (error) {
+        console.error("Settings saving error:", error);
+        if (message) message.textContent = "Could not save settings: " + error.message;
+        alert("Settings save failed: " + error.message);
+    }
+};    
 </script>
 </body>
 </html>
