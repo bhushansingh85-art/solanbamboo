@@ -2253,17 +2253,9 @@ function openFullProduct(cardElement) {
   } catch (_) {}
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-function goBack() {
-  document.getElementById('fullProductSection').style.display = 'none';
-  if (previousView === 'cartFullSection') {
-    openCartFullView(false);
-  } else {
-    showSection(previousView, previousView === 'productsSection' ? '/products' : '/', false);
-    window.scrollTo({ top: lastScrollPosition, behavior: 'smooth' });
+window.history.back();
   }
 }
-
 function getCartPrice(item) {
   const value = String(item.price || "")
     .replace(/,/g, "")
