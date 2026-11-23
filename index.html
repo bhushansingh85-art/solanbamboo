@@ -529,9 +529,12 @@ body {
   border-radius: 12px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
+  min-width: 0;
 }
 
 .category-pills {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   flex-wrap: nowrap;
   gap: 8px;
@@ -593,7 +596,7 @@ body {
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: 12px;
-  padding: 14px;
+  padding: 12px;
   text-align: left;
   position: relative;
   cursor: pointer;
@@ -612,14 +615,14 @@ body {
 
 .item-image-container {
   width: 100%;
-  height: 215px;
+  height: 185px;
   background-color: #FAF7F2;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   position: relative;
 }
 
@@ -634,6 +637,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 2;
   background: #C62828;
   color: #FFFFFF;
   font-size: 11px;
@@ -665,7 +669,7 @@ body {
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.45;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -704,7 +708,7 @@ body {
 }
 
 /* ===== PRODUCT DETAIL & CART ===== */
-#fullProductSection, #cartFullSection {
+#fullProductSection, #cartFullSection, #customerSettingsSection {
   display: none;
   max-width: 960px;
   margin: 36px auto;
@@ -716,6 +720,10 @@ body {
   box-shadow: var(--shadow-md);
   text-align: left;
   position: relative;
+}
+
+#customerSettingsSection.active {
+  display: block;
 }
 
 .back-link {
@@ -1187,6 +1195,47 @@ body {
   font-size: 13px;
 }
 
+/* ===== MULTI-STEP CHECKOUT STEPS ===== */
+.checkout-steps-bar {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.checkout-step-pill {
+  flex: 1;
+  text-align: center;
+  padding: 7px 6px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #F3ECE2;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+.checkout-step-pill.active {
+  background: var(--bg-dark);
+  color: var(--accent-gold);
+  border-color: var(--bg-dark);
+}
+
+.checkout-step-pill.done {
+  background: #E8F5E9;
+  color: var(--success);
+  border-color: #A5D6A7;
+}
+
+.checkout-step-panel {
+  width: 100%;
+  display: none;
+}
+
+.checkout-step-panel.active {
+  display: block;
+}
+
 /* ===== MODALS ===== */
 .modal-overlay {
   display: none;
@@ -1208,7 +1257,7 @@ body {
   padding: 28px;
   border-radius: 14px;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -1467,20 +1516,17 @@ body.auth-loading #profileBorderBtn {
   #productsSection #mainContentArea {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    padding: 14px 0px 0px;
+    padding: 14px 12px 0px;
   }
 
   .item-card {
-  width: 100%;
-  height: 100px;  
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 14px;  
-}
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px;
+  }
 
   .item-image-container {
-    height: 145px;
+    height: 135px;
   }
 
   .product-detail-wrapper {
@@ -1558,7 +1604,6 @@ body.auth-loading #profileBorderBtn {
 </style>
 </head>
 <body>
-<!-- बाकी का HTML और JavaScript कोड पहले जैसा ही है -->
 <header class="header-gradient">
   <div class="brand-container" onclick="showSection('homeSection', '/')">
     <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -1750,6 +1795,47 @@ body.auth-loading #profileBorderBtn {
   </div>
 </section>
 
+<!-- CUSTOMER & STORE PREFERENCES SETTINGS SECTION (Hamburger -> Settings) -->
+<section id="customerSettingsSection" class="page-section">
+  <a class="back-link" onclick="goBack()">&larr; BACK</a>
+  <h2 style="color: var(--bg-dark); font-family: 'Oswald', sans-serif; margin-top: 8px; font-size: 28px;">Customer Settings &amp; Preferences</h2>
+  <p style="color: var(--text-muted); margin: 0 0 20px;">Manage your default delivery details, order alerts, and shopping preferences.</p>
+
+  <div class="profile-card-box" style="max-width: none;">
+    <h3 style="margin: 0 0 10px; color: var(--bg-dark);">1. Default Delivery Information</h3>
+    <div class="profile-form-group">
+      <label for="custSettingAddress">Default Delivery Address</label>
+      <input type="text" id="custSettingAddress" class="profile-input" placeholder="House/Street, City, State, PIN">
+    </div>
+    <div class="profile-form-group">
+      <label for="custSettingPhone">Default Contact Number</label>
+      <input type="text" id="custSettingPhone" class="profile-input" placeholder="10-digit mobile number">
+    </div>
+
+    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--border-light);">
+
+    <h3 style="margin: 0 0 10px; color: var(--bg-dark);">2. Notifications &amp; Display</h3>
+    <label style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:12px;">
+      <input type="checkbox" id="custPrefOrderUpdates" checked>
+      Order status &amp; delivery updates
+    </label>
+    <label style="display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:12px;">
+      <input type="checkbox" id="custPrefPromoOffers">
+      Seasonal bamboo offers &amp; new arrivals
+    </label>
+    <div class="profile-form-group" style="margin-top: 10px;">
+      <label for="custPrefPaymentMode">Preferred Checkout Payment Method</label>
+      <select id="custPrefPaymentMode" class="profile-input">
+        <option value="UPI">UPI</option>
+        <option value="COD">Cash on Delivery</option>
+      </select>
+    </div>
+
+    <button type="button" class="save-profile-btn" onclick="saveCustomerSettingsView()">Save Customer Settings</button>
+    <p id="custSettingsStatusMsg" style="margin:10px 0 0; font-size:13px; font-weight:700; color:var(--success);"></p>
+  </div>
+</section>
+
 <!-- FULL-PAGE MY PROFILE SECTION -->
 <section id="profileSection" class="page-section">
   <div class="profile-full-layout">
@@ -1765,7 +1851,7 @@ body.auth-loading #profileBorderBtn {
       <button type="button" class="profile-nav-btn" data-profile-tab="wishlist" onclick="switchProfileTab('wishlist', '/my-profile/wishlist')">Wishlist</button>
 
       <div class="profile-nav-bottom">
-        <button type="button" class="profile-nav-btn" data-profile-tab="settings" onclick="switchProfileTab('settings', '/my-profile/settings')">&#9881; Settings</button>
+        <button type="button" class="profile-nav-btn" data-profile-tab="settings" onclick="switchProfileTab('settings', '/my-profile/settings')">&#9881; Account Settings</button>
         <button type="button" class="logout-btn" style="margin-top:0;" onclick="handleLogout()">Sign Out</button>
       </div>
     </aside>
@@ -1942,7 +2028,7 @@ body.auth-loading #profileBorderBtn {
   <a class="back-link" onclick="closeCartFullView()">&larr; BACK</a>
   <h2 style="color: var(--bg-dark); font-family: 'Oswald', sans-serif; margin-top: 8px; border-bottom: 2px solid var(--accent-gold); padding-bottom: 10px;">SHOPPING CART</h2>
   <div id="cartFullListContainer" style="margin: 20px 0;"></div>
-  <button class="item-btn" style="width: 100%; padding: 14px; background-color: var(--success); color: white; font-size: 15px; border-radius: 8px;" onclick="openCheckoutModal()">PROCEED TO CHECKOUT</button>
+  <button class="item-btn" style="width: 100%; padding: 14px; background-color: var(--success); color: white; font-size: 15px; border-radius: 8px;" onclick="openCheckoutModal()">PROCEED TO BUY</button>
 </section>
 
 <!-- ADMIN PANEL -->
@@ -1955,7 +2041,7 @@ body.auth-loading #profileBorderBtn {
       <button onclick="showAdminPage('products', '/admin-panel/products')">Products</button>
       <button onclick="showAdminPage('orders', '/admin-panel/orders')">Orders</button>
       <button onclick="showAdminPage('customers', '/admin-panel/customers')">Customers</button>
-      <button onclick="showAdminPage('settings', '/admin-panel/settings')">Settings</button>
+      <button onclick="showAdminPage('settings', '/admin-panel/settings')">Store Settings</button>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -2251,22 +2337,59 @@ body.auth-loading #profileBorderBtn {
 </div>
 <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
 
-<!-- Checkout Modal -->
+<!-- 3-Step Delivery & Checkout Modal -->
 <div id="checkoutModal" class="modal-overlay">
   <div class="modal-card" style="text-align:left;">
     <span class="close-btn" onclick="closeCheckoutModal()">&times;</span>
-    <h2 class="modal-title" style="width:100%; text-align:center;">Order Checkout</h2>
-    <div id="checkoutSummaryBox" style="width:100%; background:#FAF7F2; padding:14px; border-radius:8px; border:1px solid var(--border-light); margin-bottom:14px; font-size:14px;"></div>
-    <div id="checkoutUpiBox" style="display:none; width:100%; background:#FFF9EC; padding:14px; border-radius:8px; border:1px solid var(--accent-gold); margin-bottom:14px; font-size:13px;"></div>
-    <div class="profile-form-group">
-      <label for="checkoutAddress">Delivery Address</label>
-      <input type="text" id="checkoutAddress" class="profile-input" placeholder="House/Street, City, State, PIN">
+    <h2 class="modal-title" style="width:100%; text-align:center;">Delivery &amp; Checkout</h2>
+
+    <div class="checkout-steps-bar">
+      <div id="stepPill1" class="checkout-step-pill active">1. Address</div>
+      <div id="stepPill2" class="checkout-step-pill">2. Delivery &amp; Pay</div>
+      <div id="stepPill3" class="checkout-step-pill">3. Confirm</div>
     </div>
-    <div class="profile-form-group">
-      <label for="checkoutPhone">Phone Number</label>
-      <input type="text" id="checkoutPhone" class="profile-input" placeholder="10-digit mobile number">
+
+    <!-- Step 1: Delivery Address & Phone -->
+    <div id="checkoutStep1" class="checkout-step-panel active">
+      <div class="profile-form-group">
+        <label for="checkoutAddress">Delivery Address</label>
+        <input type="text" id="checkoutAddress" class="profile-input" placeholder="House/Street, City, State, PIN">
+      </div>
+      <div class="profile-form-group">
+        <label for="checkoutPhone">Phone Number</label>
+        <input type="text" id="checkoutPhone" class="profile-input" placeholder="10-digit mobile number">
+      </div>
+      <button type="button" class="save-profile-btn" onclick="goToCheckoutStep(2)">Next: Delivery &amp; Payment &rarr;</button>
     </div>
-    <button type="button" id="confirmOrderBtn" class="save-profile-btn" onclick="confirmCheckoutOrder()">Place Order</button>
+
+    <!-- Step 2: Delivery Instructions & Payment Method -->
+    <div id="checkoutStep2" class="checkout-step-panel">
+      <div class="profile-form-group">
+        <label for="checkoutDeliveryNote">Delivery Instructions (Optional)</label>
+        <input type="text" id="checkoutDeliveryNote" class="profile-input" placeholder="Landmark, floor, or preferred delivery time">
+      </div>
+      <div class="profile-form-group">
+        <label for="checkoutPaymentMethod">Payment Mode</label>
+        <select id="checkoutPaymentMethod" class="profile-input" onchange="updateCheckoutUpiVisibility()">
+          <option value="UPI">UPI</option>
+          <option value="COD">Cash on Delivery</option>
+        </select>
+      </div>
+      <div id="checkoutUpiBox" style="display:none; width:100%; background:#FFF9EC; padding:14px; border-radius:8px; border:1px solid var(--accent-gold); margin-bottom:14px; font-size:13px;"></div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="admin-action-btn" style="flex:1; background:#6B5E56;" onclick="goToCheckoutStep(1)">&larr; Back</button>
+        <button type="button" class="save-profile-btn" style="flex:2; margin-top:0;" onclick="goToCheckoutStep(3)">Next: Review Order &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Order Summary & Confirm -->
+    <div id="checkoutStep3" class="checkout-step-panel">
+      <div id="checkoutSummaryBox" style="width:100%; background:#FAF7F2; padding:14px; border-radius:8px; border:1px solid var(--border-light); margin-bottom:14px; font-size:14px; line-height:1.6;"></div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="admin-action-btn" style="flex:1; background:#6B5E56;" onclick="goToCheckoutStep(2)">&larr; Back</button>
+        <button type="button" id="confirmOrderBtn" class="save-profile-btn" style="flex:2; margin-top:0;" onclick="confirmCheckoutOrder()">Place Order</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2282,6 +2405,7 @@ let lastScrollPosition = 0;
 let slideIndex = 0;
 let slideTimer = null;
 let activeCategoryFilter = "All";
+let currentCheckoutStep = 1;
 let storeConfig = {
   upiEnabled: false,
   upiId: "",
@@ -2310,7 +2434,6 @@ function appendToPath(segment, basePath = null) {
     return "/" + cleanSegment;
   }
 
-  // अगर पहले से ही उसी segment पर खत्म हो रहा है तो दोहराए नहीं
   if (currentPath === "/" + cleanSegment || currentPath.endsWith("/" + cleanSegment)) {
     return currentPath;
   }
@@ -2341,6 +2464,9 @@ function handleInitialRoute() {
     showSection("productsSection", path, false);
   } else if (path === "/about" || lastSegment === "about") {
     showSection("aboutSection", path, false);
+  } else if (path === "/settings" || lastSegment === "settings" && !path.startsWith("/admin-panel") && !path.startsWith("/my-profile")) {
+    loadCustomerSettingsView();
+    showSection("customerSettingsSection", path, false);
   } else if (path === "/my-profile" || path.startsWith("/my-profile/") || segments.includes("my-profile")) {
     let tab = "details";
     if (lastSegment === "my-orders" || path === "/my-orders") tab = "orders";
@@ -2439,7 +2565,6 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
     if (footer) footer.style.display = "block";
   }
 
-  // Root '/' के लिए सीधे '/' रखें, वरना मौजूदा पाथ में नया segment जोड़ें
   const targetUrl = sectionId === "homeSection" && urlPath === "/"
     ? "/"
     : appendToPath(urlPath);
@@ -2447,9 +2572,7 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
   if (pushHistory && targetUrl) {
     try {
       history.pushState({ section: sectionId }, "", targetUrl);
-    } catch (_) {
-      // Ignore history pushState errors on file:// origins
-    }
+    } catch (_) {}
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -2562,7 +2685,6 @@ function openFullProduct(cardElement) {
   document.getElementById("cartFullSection").style.display = "none";
   document.getElementById("fullProductSection").style.display = "block";
 
-  // पिछला पाथ (जैसे /products) रखते हुए आगे /product-detail जोड़ता है
   const nestedDetailUrl = appendToPath("/product-detail");
   try {
     history.pushState({ product: title }, "", nestedDetailUrl);
@@ -2769,7 +2891,77 @@ function openCartFullView(pushHistory = true) {
 
 function closeCartFullView() {
   document.getElementById("cartFullSection").style.display = "none";
-  goback();
+  goBack();
+}
+
+function goToCheckoutStep(stepNum) {
+  if (stepNum === 2) {
+    const addr = document.getElementById("checkoutAddress")?.value.trim() || "";
+    const phone = document.getElementById("checkoutPhone")?.value.trim() || "";
+    if (!addr || !phone) {
+      alert("Please enter your delivery address and phone number.");
+      return;
+    }
+  }
+
+  currentCheckoutStep = stepNum;
+  [1, 2, 3].forEach(n => {
+    const panel = document.getElementById("checkoutStep" + n);
+    const pill = document.getElementById("stepPill" + n);
+    if (panel) panel.classList.toggle("active", n === stepNum);
+    if (pill) {
+      pill.classList.remove("active", "done");
+      if (n < stepNum) pill.classList.add("done");
+      else if (n === stepNum) pill.classList.add("active");
+    }
+  });
+
+  if (stepNum === 2) {
+    updateCheckoutUpiVisibility();
+  }
+  if (stepNum === 3) {
+    renderCheckoutStep3Summary();
+  }
+}
+
+function updateCheckoutUpiVisibility() {
+  const method = document.getElementById("checkoutPaymentMethod")?.value || "UPI";
+  const upiBox = document.getElementById("checkoutUpiBox");
+  if (!upiBox) return;
+
+  if (method === "UPI" && storeConfig.upiEnabled && storeConfig.upiId) {
+    upiBox.style.display = "block";
+    upiBox.innerHTML = `
+      <strong>UPI Payment Details</strong><br>
+      UPI ID: <code>${storeConfig.upiId}</code>${storeConfig.upiName ? ` (${storeConfig.upiName})` : ""}<br>
+      ${storeConfig.upiQrUrl ? `<img src="${storeConfig.upiQrUrl}" alt="UPI QR Code" style="width:130px;height:130px;object-fit:contain;margin-top:8px;border-radius:6px;background:#fff;padding:4px;">` : ""}
+    `;
+  } else if (method === "UPI") {
+    upiBox.style.display = "block";
+    upiBox.innerHTML = `<strong>UPI Selected:</strong> Payment details will be shared on order confirmation.`;
+  } else {
+    upiBox.style.display = "none";
+  }
+}
+
+function renderCheckoutStep3Summary() {
+  const addr = document.getElementById("checkoutAddress")?.value.trim() || "";
+  const phone = document.getElementById("checkoutPhone")?.value.trim() || "";
+  const note = document.getElementById("checkoutDeliveryNote")?.value.trim() || "None";
+  const payMode = document.getElementById("checkoutPaymentMethod")?.value || "UPI";
+  const total = cartItems.reduce((sum, item) => sum + getCartPrice(item) * item.quantity, 0);
+
+  const summaryBox = document.getElementById("checkoutSummaryBox");
+  if (!summaryBox) return;
+
+  summaryBox.innerHTML = `
+    <strong>Items:</strong> ${cartItems.length} item(s)<br>
+    <strong>Order Total:</strong> <span style="color:var(--accent-bark);font-weight:700;">${formatCartPrice(total)}</span><br>
+    <strong>Payment Mode:</strong> ${payMode}<br>
+    <strong>Address:</strong> ${addr}<br>
+    <strong>Phone:</strong> ${phone}<br>
+    <strong>Delivery Note:</strong> ${note}
+  `;
 }
 
 function openCheckoutModal() {
@@ -2782,32 +2974,23 @@ function openCheckoutModal() {
     return;
   }
 
-  const savedAddr = localStorage.getItem("savedAddress_" + window.currentFirebaseUser.uid) || "";
-  const savedPhone = localStorage.getItem("savedPhone_" + window.currentFirebaseUser.uid) || "";
+  const uid = window.currentFirebaseUser.uid;
+  const savedAddr = localStorage.getItem("savedAddress_" + uid) || "";
+  const savedPhone = localStorage.getItem("savedPhone_" + uid) || "";
   const addrInput = document.getElementById("checkoutAddress");
   const phoneInput = document.getElementById("checkoutPhone");
   if (addrInput && !addrInput.value && savedAddr) addrInput.value = savedAddr;
   if (phoneInput && !phoneInput.value && savedPhone) phoneInput.value = savedPhone;
 
-  const total = cartItems.reduce((sum, item) => sum + getCartPrice(item) * item.quantity, 0);
-  const summaryBox = document.getElementById("checkoutSummaryBox");
-  summaryBox.innerHTML = `
-    <strong>Items:</strong> ${cartItems.length} item(s)<br>
-    <strong>Order Total:</strong> <span style="color:var(--accent-bark);font-weight:700;">${formatCartPrice(total)}</span>
-  `;
+  try {
+    const prefs = JSON.parse(localStorage.getItem("prefs_" + uid) || "{}");
+    const paySelect = document.getElementById("checkoutPaymentMethod");
+    if (paySelect && prefs.preferredPaymentMode) {
+      paySelect.value = prefs.preferredPaymentMode;
+    }
+  } catch (_) {}
 
-  const upiBox = document.getElementById("checkoutUpiBox");
-  if (storeConfig.upiEnabled && storeConfig.upiId) {
-    upiBox.style.display = "block";
-    upiBox.innerHTML = `
-      <strong>UPI Payment Available</strong><br>
-      UPI ID: <code>${storeConfig.upiId}</code>${storeConfig.upiName ? ` (${storeConfig.upiName})` : ""}<br>
-      ${storeConfig.upiQrUrl ? `<img src="${storeConfig.upiQrUrl}" alt="UPI QR Code" style="width:130px;height:130px;object-fit:contain;margin-top:8px;border-radius:6px;background:#fff;padding:4px;">` : ""}
-    `;
-  } else {
-    upiBox.style.display = "none";
-  }
-
+  goToCheckoutStep(1);
   document.getElementById("checkoutModal").style.display = "flex";
 }
 
@@ -2818,10 +3001,13 @@ function closeCheckoutModal() {
 async function confirmCheckoutOrder() {
   const address = document.getElementById("checkoutAddress").value.trim();
   const phone = document.getElementById("checkoutPhone").value.trim();
+  const deliveryNote = document.getElementById("checkoutDeliveryNote")?.value.trim() || "";
+  const paymentMethod = document.getElementById("checkoutPaymentMethod")?.value || "UPI";
   const btn = document.getElementById("confirmOrderBtn");
 
   if (!address || !phone) {
     alert("Please enter your delivery address and phone number.");
+    goToCheckoutStep(1);
     return;
   }
 
@@ -2829,7 +3015,12 @@ async function confirmCheckoutOrder() {
     btn.disabled = true;
     btn.textContent = "Placing Order...";
 
-    const orderId = await window.placeOrderToFirestore({ deliveryAddress: address, phone });
+    const orderId = await window.placeOrderToFirestore({
+      deliveryAddress: address,
+      phone,
+      deliveryNote,
+      paymentMethod
+    });
 
     cartItems = [];
     saveCart();
@@ -2840,6 +3031,9 @@ async function confirmCheckoutOrder() {
 
     document.getElementById("checkoutAddress").value = "";
     document.getElementById("checkoutPhone").value = "";
+    if (document.getElementById("checkoutDeliveryNote")) {
+      document.getElementById("checkoutDeliveryNote").value = "";
+    }
 
     alert("Order placed successfully! Order ID: " + orderId);
   } catch (error) {
@@ -2905,11 +3099,57 @@ function saveAccountPreferences() {
 
   localStorage.setItem("savedAddress_" + uid, addr);
   localStorage.setItem("savedPhone_" + uid, phone);
-  localStorage.setItem("prefs_" + uid, JSON.stringify({ orderUpdates, promoOffers }));
+  let existingPrefs = {};
+  try {
+    existingPrefs = JSON.parse(localStorage.getItem("prefs_" + uid) || "{}");
+  } catch (_) {}
+  localStorage.setItem("prefs_" + uid, JSON.stringify({ ...existingPrefs, orderUpdates, promoOffers }));
 
   const msg = document.getElementById("accountPrefsMsg");
   if (msg) msg.textContent = "Preferences saved!";
   alert("Saved successfully!");
+}
+
+function loadCustomerSettingsView() {
+  const uid = window.currentFirebaseUser ? window.currentFirebaseUser.uid : "guest";
+  const addrInput = document.getElementById("custSettingAddress");
+  const phoneInput = document.getElementById("custSettingPhone");
+  const updatesCheck = document.getElementById("custPrefOrderUpdates");
+  const offersCheck = document.getElementById("custPrefPromoOffers");
+  const paySelect = document.getElementById("custPrefPaymentMode");
+  const statusMsg = document.getElementById("custSettingsStatusMsg");
+
+  if (statusMsg) statusMsg.textContent = "";
+  if (addrInput) addrInput.value = localStorage.getItem("savedAddress_" + uid) || "";
+  if (phoneInput) phoneInput.value = localStorage.getItem("savedPhone_" + uid) || "";
+
+  try {
+    const prefs = JSON.parse(localStorage.getItem("prefs_" + uid) || "{}");
+    if (updatesCheck) updatesCheck.checked = prefs.orderUpdates !== false;
+    if (offersCheck) offersCheck.checked = Boolean(prefs.promoOffers);
+    if (paySelect && prefs.preferredPaymentMode) paySelect.value = prefs.preferredPaymentMode;
+  } catch (_) {}
+}
+
+function saveCustomerSettingsView() {
+  const uid = window.currentFirebaseUser ? window.currentFirebaseUser.uid : "guest";
+  const addr = document.getElementById("custSettingAddress")?.value.trim() || "";
+  const phone = document.getElementById("custSettingPhone")?.value.trim() || "";
+  const orderUpdates = document.getElementById("custPrefOrderUpdates")?.checked ?? true;
+  const promoOffers = document.getElementById("custPrefPromoOffers")?.checked ?? false;
+  const preferredPaymentMode = document.getElementById("custPrefPaymentMode")?.value || "UPI";
+
+  localStorage.setItem("savedAddress_" + uid, addr);
+  localStorage.setItem("savedPhone_" + uid, phone);
+  localStorage.setItem("prefs_" + uid, JSON.stringify({
+    orderUpdates,
+    promoOffers,
+    preferredPaymentMode
+  }));
+
+  const statusMsg = document.getElementById("custSettingsStatusMsg");
+  if (statusMsg) statusMsg.textContent = "Customer settings saved!";
+  alert("Settings saved!");
 }
 
 function updateHeaderProfilePic(user = window.currentFirebaseUser) {
@@ -3053,14 +3293,10 @@ function openProfile(tabName = "details", urlPath = "/my-profile", pushHistory =
   switchProfileTab(tabName, urlPath, false);
 }
 
+// Hamburger -> Settings हमेशा Customer Settings व्यू खोलता है (Admin Panel Settings नहीं)
 function openSettingsView() {
-  if (window.currentFirebaseUser && window.isAdminUser) {
-    openAdminPanel("settings", "/admin-panel/settings");
-  } else if (window.currentFirebaseUser) {
-    openProfile("settings", "/my-profile/settings");
-  } else {
-    showSection("loginSection", "/login");
-  }
+  loadCustomerSettingsView();
+  showSection("customerSettingsSection", "/settings");
 }
 
 function onSuccessfulLogin() {
@@ -3416,6 +3652,8 @@ window.placeOrderToFirestore = async function(extraInfo = {}) {
     customerEmail: user.email || "",
     deliveryAddress: extraInfo.deliveryAddress || "",
     phone: extraInfo.phone || "",
+    deliveryNote: extraInfo.deliveryNote || "",
+    paymentMethod: extraInfo.paymentMethod || "UPI",
     items: cartItems.map(item => ({
       productName: item.title,
       quantity: item.quantity,
@@ -4382,4 +4620,4 @@ window.saveStoreSettings = async function () {
 };
 </script>
 </body>
-</html>  
+</html>
