@@ -1414,7 +1414,7 @@ body.auth-loading #profileBorderBtn {
 
   .border-search-container {
     bottom: -35px;
-    left: 140px;
+    left: 50%;
     transform: none;
     padding: 2px 8px;
   }
@@ -1426,7 +1426,7 @@ body.auth-loading #profileBorderBtn {
 
   .border-right-actions {
     bottom: -36px;
-    right: 16px;
+    right: 10px;
     gap: 10px;
   }
 
@@ -1467,8 +1467,17 @@ body.auth-loading #profileBorderBtn {
   #productsSection #mainContentArea {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    padding: 14px 12px 32px;
+    padding: 14px 0px 0px;
   }
+
+  .item-card {
+  width: 100%;
+  height: 100px;  
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px;  
+}
 
   .item-image-container {
     height: 145px;
