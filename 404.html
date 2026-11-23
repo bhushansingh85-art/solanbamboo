@@ -2759,7 +2759,7 @@ function openCartFullView(pushHistory = true) {
 
 function closeCartFullView() {
   document.getElementById("cartFullSection").style.display = "none";
-  showSection("productsSection", "/products");
+  goBack();
 }
 
 function openCheckoutModal() {
@@ -4349,7 +4349,7 @@ window.saveStoreSettings = async function () {
     const validUrl = url => !url || /^https?:\/\//i.test(url);
     if (
       !validUrl(settingsData.upiQrUrl) ||
-      !validUrl(settingsData.bannerImage) ||
+      !validUrl(settingsData.bannerImage) ||e
       !validUrl(settingsData.bannerLink)
     ) {
       alert("Please enter valid URLs starting with http:// or https://");
