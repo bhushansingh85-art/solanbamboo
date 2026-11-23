@@ -1079,7 +1079,6 @@ body {
   margin: 10px 0 0;
 }
 
-/* Admin Forms, Products, Orders, Customers & Settings Cards */
 #productFormBox,
 #admin-settings-page {
   background: #FFFFFF;
@@ -1301,19 +1300,6 @@ body {
   margin-top: 8px;
 }
 
-.secondary-modal-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: var(--bg-dark);
-  color: var(--accent-sand);
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
 .logout-btn {
   width: 100%;
   padding: 9px;
@@ -1374,7 +1360,6 @@ body {
   color: #140D0B;
 }
 
-/* Prevent login/profile button flicker */
 body.auth-loading #loginHeaderBtn,
 body.auth-loading #profileBorderBtn {
   visibility: hidden !important;
@@ -1938,7 +1923,6 @@ body.auth-loading #profileBorderBtn {
 <!-- ADMIN PANEL -->
 <section id="adminSection" class="page-section">
   <div class="admin-layout">
-    <!-- SIDEBAR -->
     <aside class="admin-sidebar">
       <h2>ADMIN PANEL</h2>
       <button class="active" onclick="showAdminPage('dashboard', '/admin-panel/dashboard')">Dashboard</button>
@@ -1948,7 +1932,6 @@ body.auth-loading #profileBorderBtn {
       <button onclick="showAdminPage('settings', '/admin-panel/settings')">Settings</button>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="admin-main">
       <!-- DASHBOARD PAGE -->
       <div id="admin-dashboard-page" class="admin-page">
@@ -1961,34 +1944,13 @@ body.auth-loading #profileBorderBtn {
         </div>
 
         <div class="admin-stats">
-          <div class="admin-card">
-            <h3>Total Orders</h3>
-            <p id="totalOrders">0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Pending Orders</h3>
-            <p id="pendingOrders">0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Confirmed Orders</h3>
-            <p id="confirmedOrders">0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Delivered Orders</h3>
-            <p id="completedOrders">0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Total Order Value</h3>
-            <p id="totalOrderValue">₹0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Low Stock Products</h3>
-            <p id="lowStockProducts">0</p>
-          </div>
-          <div class="admin-card">
-            <h3>Out of Stock Products</h3>
-            <p id="outOfStockProducts">0</p>
-          </div>
+          <div class="admin-card"><h3>Total Orders</h3><p id="totalOrders">0</p></div>
+          <div class="admin-card"><h3>Pending Orders</h3><p id="pendingOrders">0</p></div>
+          <div class="admin-card"><h3>Confirmed Orders</h3><p id="confirmedOrders">0</p></div>
+          <div class="admin-card"><h3>Delivered Orders</h3><p id="completedOrders">0</p></div>
+          <div class="admin-card"><h3>Total Order Value</h3><p id="totalOrderValue">₹0</p></div>
+          <div class="admin-card"><h3>Low Stock Products</h3><p id="lowStockProducts">0</p></div>
+          <div class="admin-card"><h3>Out of Stock Products</h3><p id="outOfStockProducts">0</p></div>
         </div>
       </div>
 
@@ -2002,7 +1964,6 @@ body.auth-loading #profileBorderBtn {
           <button type="button" class="admin-add-btn" onclick="openProductForm()">+ Add New Product</button>
         </div>
 
-        <!-- PRODUCT FORM -->
         <div id="productFormBox" style="display:none;">
           <h3 id="productFormTitle" style="margin-top:0; color:var(--bg-dark);">Add New Product</h3>
           <input type="hidden" id="editProductId">
@@ -2013,7 +1974,6 @@ body.auth-loading #profileBorderBtn {
           <label for="productPrice">Price (₹)</label>
           <input type="number" id="productPrice" placeholder="Enter price" min="0" oninput="updateLiveDiscountPreview()">
 
-          <!-- PRODUCT SALE SETTINGS -->
           <h4 style="margin: 18px 0 6px; color: var(--accent-bark);">Product Sale &amp; Discount</h4>
           <label>
             <input type="checkbox" id="productSaleEnabled" onchange="updateLiveDiscountPreview()">
@@ -2057,7 +2017,6 @@ body.auth-loading #profileBorderBtn {
           </div>
         </div>
 
-        <!-- PRODUCT LIST -->
         <div class="admin-products-container">
           <h3 style="color:var(--bg-dark);">All Products</h3>
           <div id="adminProductsList">
@@ -2127,48 +2086,31 @@ body.auth-loading #profileBorderBtn {
         <p>Configure payment methods, store-wide sale defaults, and promotional banners.</p>
 
         <h3>1. Payment Settings</h3>
-        <label>
-          <input type="checkbox" id="upiEnabled">
-          Enable UPI Payment
-        </label>
-
+        <label><input type="checkbox" id="upiEnabled"> Enable UPI Payment</label>
         <label for="upiId">UPI ID</label>
         <input type="text" id="upiId" placeholder="example@upi">
-
         <label for="upiName">UPI Payee Name</label>
         <input type="text" id="upiName" placeholder="Enter Payee Name">
-
         <label for="upiQrUrl">UPI QR Image URL</label>
         <input type="url" id="upiQrUrl" placeholder="Enter QR Image URL">
 
         <hr style="margin:22px 0; border:none; border-top:1px solid var(--border-light);">
 
         <h3>2. Sale &amp; Discount Settings</h3>
-        <label>
-          <input type="checkbox" id="saleEnabled">
-          Enable Store-Wide Sale Defaults
-        </label>
-
+        <label><input type="checkbox" id="saleEnabled"> Enable Store-Wide Sale Defaults</label>
         <label for="saleBadgeText">Sale Badge Text</label>
         <input type="text" id="saleBadgeText" placeholder="Example: SALE">
-
         <label for="defaultDiscount">Default Discount (%)</label>
         <input type="number" id="defaultDiscount" min="0" max="99" placeholder="Example: 15">
 
         <hr style="margin:22px 0; border:none; border-top:1px solid var(--border-light);">
 
         <h3>3. Festival &amp; Website Banner</h3>
-        <label>
-          <input type="checkbox" id="bannerEnabled">
-          Enable Banner
-        </label>
-
+        <label><input type="checkbox" id="bannerEnabled"> Enable Banner</label>
         <label for="bannerTitle">Banner Title</label>
         <input type="text" id="bannerTitle" placeholder="Example: Festive Bamboo Sale">
-
         <label for="bannerImage">Banner Image URL</label>
         <input type="url" id="bannerImage" placeholder="Enter Banner Image URL">
-
         <label for="bannerLink">Banner Click Link</label>
         <input type="url" id="bannerLink" placeholder="Enter Link">
 
@@ -2234,7 +2176,7 @@ body.auth-loading #profileBorderBtn {
       </a>
     </li>
     <li class="nav-bottom-settings"><a href="javascript:void(0)" onclick="toggleMenu(); openSettingsView();">
-      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
       Settings
     </a></li>
   </ul>
@@ -2268,10 +2210,10 @@ let currentActiveProduct = "";
 let currentActiveProductData = null;
 let previousView = "homeSection";
 let previousUrl = "/";
-let lastScrollPosition = 0;
 let slideIndex = 0;
 let slideTimer = null;
 let activeCategoryFilter = "All";
+let isHandlingPopstate = false;
 let storeConfig = {
   upiEnabled: false,
   upiId: "",
@@ -2286,26 +2228,16 @@ let storeConfig = {
   bannerLink: ""
 };
 
-// Helper: पिछला पाथ हटाए बिना आगे '/' लगाकर नया segment जोड़ता है
-function appendToPath(segment, basePath = null) {
-  const cleanSegment = String(segment || "").replace(/^\/+|\/+$/g, "");
-  if (!cleanSegment) return "/";
+function normalizePath(path) {
+  const clean = String(path || "/").replace(/\/+$/, "");
+  return clean || "/";
+}
 
-  const rawCurrent = basePath !== null
-    ? String(basePath)
-    : (window.location.pathname || "/");
-  const currentPath = rawCurrent.replace(/\/+$/, "") || "/";
-
-  if (currentPath === "/") {
-    return "/" + cleanSegment;
-  }
-
-  // अगर पहले से ही उसी segment पर खत्म हो रहा है तो दोहराए नहीं
-  if (currentPath === "/" + cleanSegment || currentPath.endsWith("/" + cleanSegment)) {
-    return currentPath;
-  }
-
-  return currentPath + "/" + cleanSegment;
+function pushAppState(state, url) {
+  if (isHandlingPopstate || !url) return;
+  try {
+    history.pushState(state, "", url);
+  } catch (_) {}
 }
 
 window.onload = function() {
@@ -2319,18 +2251,23 @@ window.onload = function() {
 };
 
 window.onpopstate = function() {
-  handleInitialRoute();
+  isHandlingPopstate = true;
+  try {
+    handleInitialRoute();
+  } finally {
+    isHandlingPopstate = false;
+  }
 };
 
 function handleInitialRoute() {
-  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const path = normalizePath(window.location.pathname);
   const segments = path === "/" ? [] : path.slice(1).split("/").filter(Boolean);
   const lastSegment = segments[segments.length - 1] || "";
 
   if (path === "/products" || lastSegment === "products") {
-    showSection("productsSection", path, false);
+    showSection("productsSection", "/products", false);
   } else if (path === "/about" || lastSegment === "about") {
-    showSection("aboutSection", path, false);
+    showSection("aboutSection", "/about", false);
   } else if (path === "/my-profile" || path.startsWith("/my-profile/") || segments.includes("my-profile")) {
     let tab = "details";
     if (lastSegment === "my-orders" || path === "/my-orders") tab = "orders";
@@ -2339,11 +2276,11 @@ function handleInitialRoute() {
     else if (lastSegment === "settings") tab = "settings";
     openProfile(tab, path, false);
   } else if (path === "/customer-care" || lastSegment === "customer-care") {
-    showSection("customerCareSection", path, false);
+    showSection("customerCareSection", "/customer-care", false);
   } else if (path === "/login" || lastSegment === "login") {
-    showSection("loginSection", path, false);
+    showSection("loginSection", "/login", false);
   } else if (path === "/register" || lastSegment === "register") {
-    flipAuthCard("registerSection", path, false);
+    flipAuthCard("registerSection", "/register", false);
   } else if (path === "/cart" || lastSegment === "cart") {
     openCartFullView(false);
   } else if (path === "/product-detail" || lastSegment === "product-detail") {
@@ -2361,8 +2298,8 @@ function handleInitialRoute() {
     else if (lastSegment === "orders") adminTab = "orders";
     else if (lastSegment === "customers") adminTab = "customers";
     else if (lastSegment === "settings") adminTab = "settings";
-    showSection("adminSection", path, false);
-    showAdminPage(adminTab, path, false);
+    showSection("adminSection", "/admin-panel", false);
+    showAdminPage(adminTab, "/admin-panel/" + adminTab, false);
   } else {
     showSection("homeSection", "/", false);
   }
@@ -2385,7 +2322,7 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
   const currentActiveSection = Array.from(document.querySelectorAll(".page-section")).find(sec => sec.classList.contains("active"));
   if (currentActiveSection && currentActiveSection.id !== sectionId) {
     previousView = currentActiveSection.id;
-    previousUrl = window.location.pathname || "/";
+    previousUrl = normalizePath(window.location.pathname);
   }
 
   document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
@@ -2429,17 +2366,9 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
     if (footer) footer.style.display = "block";
   }
 
-  // Root '/' के लिए सीधे '/' रखें, वरना मौजूदा पाथ में नया segment जोड़ें
-  const targetUrl = sectionId === "homeSection" && urlPath === "/"
-    ? "/"
-    : appendToPath(urlPath);
-
-  if (pushHistory && targetUrl) {
-    try {
-      history.pushState({ section: sectionId }, "", targetUrl);
-    } catch (_) {
-      // Ignore history pushState errors on file:// origins
-    }
+  const targetUrl = normalizePath(urlPath);
+  if (pushHistory && normalizePath(window.location.pathname) !== targetUrl) {
+    pushAppState({ section: sectionId }, targetUrl);
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -2448,7 +2377,7 @@ function goBack() {
   if (window.history.length > 1) {
     window.history.back();
   } else {
-    showSection(previousView || "productsSection", previousUrl || "/products");
+    showSection(previousView || "productsSection", previousUrl || "/products", false);
   }
 }
 
@@ -2485,17 +2414,14 @@ function flipAuthCard(targetSectionId, urlPath = "/login", pushHistory = true) {
     loginCard.classList.add("active");
   }
 
-  const targetUrl = appendToPath(urlPath);
-  if (pushHistory && targetUrl) {
-    try {
-      history.pushState({ section: targetSectionId }, "", targetUrl);
-    } catch (_) {}
+  const targetUrl = normalizePath(urlPath);
+  if (pushHistory && normalizePath(window.location.pathname) !== targetUrl) {
+    pushAppState({ section: targetSectionId }, targetUrl);
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function openFullProduct(cardElement) {
-  lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   const title = cardElement.querySelector(".item-title").textContent;
   const desc = cardElement.querySelector(".item-description").textContent;
   const category = cardElement.getAttribute("data-category") || "Bamboo Furniture";
@@ -2546,17 +2472,15 @@ function openFullProduct(cardElement) {
   }
 
   previousView = "productsSection";
-  previousUrl = window.location.pathname || "/products";
+  previousUrl = "/products";
 
   document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
   document.getElementById("cartFullSection").style.display = "none";
   document.getElementById("fullProductSection").style.display = "block";
 
-  // पिछला पाथ (जैसे /products) रखते हुए आगे /product-detail जोड़ता है
-  const nestedDetailUrl = appendToPath("/product-detail");
-  try {
-    history.pushState({ product: title }, "", nestedDetailUrl);
-  } catch (_) {}
+  if (normalizePath(window.location.pathname) !== "/product-detail") {
+    pushAppState({ product: title }, "/product-detail");
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -2742,23 +2666,37 @@ function openCartFullView(pushHistory = true) {
     showSection("loginSection", "/login");
     return;
   }
+
+  const fullProductVisible = document.getElementById("fullProductSection").style.display === "block";
+  const activeSec = Array.from(document.querySelectorAll(".page-section")).find(sec => sec.classList.contains("active"));
+
+  if (fullProductVisible) {
+    previousView = "fullProductSection";
+    previousUrl = "/product-detail";
+  } else if (activeSec) {
+    previousView = activeSec.id;
+    previousUrl = normalizePath(window.location.pathname);
+  }
+
   document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
   document.getElementById("fullProductSection").style.display = "none";
   document.getElementById("cartFullSection").style.display = "block";
-  previousView = "productsSection";
-  previousUrl = window.location.pathname || "/products";
 
-  const nestedCartUrl = appendToPath("/cart");
-  if (pushHistory) {
-    try {
-      history.pushState({ cart: true }, "", nestedCartUrl);
-    } catch (_) {}
+  if (pushHistory && normalizePath(window.location.pathname) !== "/cart") {
+    pushAppState({ cart: true }, "/cart");
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function closeCartFullView() {
   document.getElementById("cartFullSection").style.display = "none";
+  if (previousView === "fullProductSection" && currentActiveProductData) {
+    document.getElementById("fullProductSection").style.display = "block";
+    if (normalizePath(window.location.pathname) !== "/product-detail") {
+      pushAppState({ product: currentActiveProductData.title }, "/product-detail");
+    }
+    return;
+  }
   goBack();
 }
 
@@ -3022,14 +2960,9 @@ function switchProfileTab(tabName, urlPath = "/my-profile", pushHistory = true) 
     window.loadMyOrders();
   }
 
-  const targetUrl = tabName === "details"
-    ? appendToPath("/my-profile")
-    : appendToPath(tabName, "/my-profile");
-
-  if (pushHistory && (urlPath || targetUrl)) {
-    try {
-      history.pushState({ section: "profileSection", tab: tabName }, "", targetUrl);
-    } catch (_) {}
+  const targetUrl = normalizePath(urlPath || (tabName === "details" ? "/my-profile" : `/my-profile/${tabName}`));
+  if (pushHistory && normalizePath(window.location.pathname) !== targetUrl) {
+    pushAppState({ section: "profileSection", tab: tabName }, targetUrl);
   }
 }
 
@@ -3039,8 +2972,8 @@ function openProfile(tabName = "details", urlPath = "/my-profile", pushHistory =
     return;
   }
   loadProfileData();
-  showSection("profileSection", "/my-profile", pushHistory);
-  switchProfileTab(tabName, urlPath, false);
+  showSection("profileSection", "/my-profile", false);
+  switchProfileTab(tabName, urlPath, pushHistory);
 }
 
 function openSettingsView() {
@@ -3169,8 +3102,8 @@ function openAdminPanel(pageName = "dashboard", urlPath = "/admin-panel/dashboar
     alert("Admin access denied!");
     return;
   }
-  showSection("adminSection", "/admin-panel");
-  showAdminPage(pageName, urlPath, false);
+  showSection("adminSection", "/admin-panel", false);
+  showAdminPage(pageName, urlPath, true);
 }
 
 function showAdminPage(pageName, urlPath = "/admin-panel/" + pageName, pushHistory = true) {
@@ -3191,11 +3124,9 @@ function showAdminPage(pageName, urlPath = "/admin-panel/" + pageName, pushHisto
     .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
   if (activeButton) activeButton.classList.add("active");
 
-  const targetUrl = appendToPath(pageName, "/admin-panel");
-  if (pushHistory && (urlPath || targetUrl)) {
-    try {
-      history.pushState({ section: "adminSection", adminPage: pageName }, "", targetUrl);
-    } catch (_) {}
+  const targetUrl = normalizePath(urlPath || `/admin-panel/${pageName}`);
+  if (pushHistory && normalizePath(window.location.pathname) !== targetUrl) {
+    pushAppState({ section: "adminSection", adminPage: pageName }, targetUrl);
   }
 
   if (pageName === "dashboard" && window.loadAdminDashboardStats) {
@@ -3443,7 +3374,11 @@ onAuthStateChanged(auth, async (user) => {
         adminMenuItem.style.display = window.isAdminUser ? "block" : "none";
       }
 
-      onSuccessfulLogin();
+      const loginBtn = document.getElementById("loginHeaderBtn");
+      const profileBtn = document.getElementById("profileBorderBtn");
+      if (loginBtn) loginBtn.style.display = "none";
+      if (profileBtn) profileBtn.style.display = "flex";
+
       updateHeaderProfilePic(user);
       await loadProfileData(user);
     } else {
@@ -4349,7 +4284,7 @@ window.saveStoreSettings = async function () {
     const validUrl = url => !url || /^https?:\/\//i.test(url);
     if (
       !validUrl(settingsData.upiQrUrl) ||
-      !validUrl(settingsData.bannerImage) ||e
+      !validUrl(settingsData.bannerImage) ||
       !validUrl(settingsData.bannerLink)
     ) {
       alert("Please enter valid URLs starting with http:// or https://");
