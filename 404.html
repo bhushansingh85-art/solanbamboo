@@ -176,7 +176,7 @@ body {
 
 .border-search-container {
   position: absolute;
-  bottom: -38px;
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -218,7 +218,7 @@ body {
 .border-right-actions {
   position: absolute;
   bottom: -44px;
-  right: 65px;
+  right: 40px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -421,7 +421,7 @@ body {
 .slideshow-container {
   position: relative;
   width: 100%;
-  height: 680px;
+  height: 700px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
   background: #2B1B17;
@@ -1418,8 +1418,8 @@ body.auth-loading #profileBorderBtn {
   }
 
   .border-search-container {
-    bottom: -28px;
-    left: 165px;
+    bottom: -35px;
+    left: 140px;
     transform: none;
     padding: 2px 8px;
   }
@@ -2286,6 +2286,28 @@ let storeConfig = {
   bannerLink: ""
 };
 
+// Helper: पिछला पाथ हटाए बिना आगे '/' लगाकर नया segment जोड़ता है
+function appendToPath(segment, basePath = null) {
+  const cleanSegment = String(segment || "").replace(/^\/+|\/+$/g, "");
+  if (!cleanSegment) return "/";
+
+  const rawCurrent = basePath !== null
+    ? String(basePath)
+    : (window.location.pathname || "/");
+  const currentPath = rawCurrent.replace(/\/+$/, "") || "/";
+
+  if (currentPath === "/") {
+    return "/" + cleanSegment;
+  }
+
+  // अगर पहले से ही उसी segment पर खत्म हो रहा है तो दोहराए नहीं
+  if (currentPath === "/" + cleanSegment || currentPath.endsWith("/" + cleanSegment)) {
+    return currentPath;
+  }
+
+  return currentPath + "/" + cleanSegment;
+}
+
 window.onload = function() {
   updateCartUI();
   updateHeaderProfilePic();
@@ -2302,29 +2324,29 @@ window.onpopstate = function() {
 
 function handleInitialRoute() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const segments = path === "/" ? [] : path.slice(1).split("/").filter(Boolean);
+  const lastSegment = segments[segments.length - 1] || "";
 
-  if (path === "/products") {
-    showSection("productsSection", "/products", false);
-  } else if (path === "/about") {
-    showSection("aboutSection", "/about", false);
-  } else if (path === "/my-profile" || path.startsWith("/my-profile/")) {
+  if (path === "/products" || lastSegment === "products") {
+    showSection("productsSection", path, false);
+  } else if (path === "/about" || lastSegment === "about") {
+    showSection("aboutSection", path, false);
+  } else if (path === "/my-profile" || path.startsWith("/my-profile/") || segments.includes("my-profile")) {
     let tab = "details";
-    if (path.endsWith("/my-orders")) tab = "orders";
-    else if (path.endsWith("/addresses")) tab = "addresses";
-    else if (path.endsWith("/wishlist")) tab = "wishlist";
-    else if (path.endsWith("/settings")) tab = "settings";
+    if (lastSegment === "my-orders" || path === "/my-orders") tab = "orders";
+    else if (lastSegment === "addresses") tab = "addresses";
+    else if (lastSegment === "wishlist") tab = "wishlist";
+    else if (lastSegment === "settings") tab = "settings";
     openProfile(tab, path, false);
-  } else if (path === "/my-orders") {
-    openProfile("orders", "/my-orders", false);
-  } else if (path === "/customer-care") {
-    showSection("customerCareSection", "/customer-care", false);
-  } else if (path === "/login") {
-    showSection("loginSection", "/login", false);
-  } else if (path === "/register") {
-    flipAuthCard("registerSection", "/register", false);
-  } else if (path === "/cart") {
+  } else if (path === "/customer-care" || lastSegment === "customer-care") {
+    showSection("customerCareSection", path, false);
+  } else if (path === "/login" || lastSegment === "login") {
+    showSection("loginSection", path, false);
+  } else if (path === "/register" || lastSegment === "register") {
+    flipAuthCard("registerSection", path, false);
+  } else if (path === "/cart" || lastSegment === "cart") {
     openCartFullView(false);
-  } else if (path === "/product-detail") {
+  } else if (path === "/product-detail" || lastSegment === "product-detail") {
     const fullProductEl = document.getElementById("fullProductSection");
     if (currentActiveProductData && fullProductEl) {
       document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
@@ -2333,14 +2355,14 @@ function handleInitialRoute() {
     } else {
       showSection("productsSection", "/products", false);
     }
-  } else if (path === "/admin-panel" || path.startsWith("/admin-panel/") || path === "/admin") {
+  } else if (path === "/admin-panel" || path.startsWith("/admin-panel/") || path === "/admin" || segments.includes("admin-panel")) {
     let adminTab = "dashboard";
-    if (path.endsWith("/products")) adminTab = "products";
-    else if (path.endsWith("/orders")) adminTab = "orders";
-    else if (path.endsWith("/customers")) adminTab = "customers";
-    else if (path.endsWith("/settings")) adminTab = "settings";
-    showSection("adminSection", path === "/admin" ? "/admin-panel" : path, false);
-    showAdminPage(adminTab, path === "/admin" ? "/admin-panel" : path, false);
+    if (lastSegment === "products") adminTab = "products";
+    else if (lastSegment === "orders") adminTab = "orders";
+    else if (lastSegment === "customers") adminTab = "customers";
+    else if (lastSegment === "settings") adminTab = "settings";
+    showSection("adminSection", path, false);
+    showAdminPage(adminTab, path, false);
   } else {
     showSection("homeSection", "/", false);
   }
@@ -2407,9 +2429,14 @@ function showSection(sectionId, urlPath = "/", pushHistory = true) {
     if (footer) footer.style.display = "block";
   }
 
-  if (pushHistory && urlPath) {
+  // Root '/' के लिए सीधे '/' रखें, वरना मौजूदा पाथ में नया segment जोड़ें
+  const targetUrl = sectionId === "homeSection" && urlPath === "/"
+    ? "/"
+    : appendToPath(urlPath);
+
+  if (pushHistory && targetUrl) {
     try {
-      history.pushState({ section: sectionId }, "", urlPath);
+      history.pushState({ section: sectionId }, "", targetUrl);
     } catch (_) {
       // Ignore history pushState errors on file:// origins
     }
@@ -2458,9 +2485,10 @@ function flipAuthCard(targetSectionId, urlPath = "/login", pushHistory = true) {
     loginCard.classList.add("active");
   }
 
-  if (pushHistory && urlPath) {
+  const targetUrl = appendToPath(urlPath);
+  if (pushHistory && targetUrl) {
     try {
-      history.pushState({ section: targetSectionId }, "", urlPath);
+      history.pushState({ section: targetSectionId }, "", targetUrl);
     } catch (_) {}
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2518,14 +2546,16 @@ function openFullProduct(cardElement) {
   }
 
   previousView = "productsSection";
-  previousUrl = "/products";
+  previousUrl = window.location.pathname || "/products";
 
   document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
   document.getElementById("cartFullSection").style.display = "none";
   document.getElementById("fullProductSection").style.display = "block";
 
+  // पिछला पाथ (जैसे /products) रखते हुए आगे /product-detail जोड़ता है
+  const nestedDetailUrl = appendToPath("/product-detail");
   try {
-    history.pushState({ product: title }, "", "/product-detail");
+    history.pushState({ product: title }, "", nestedDetailUrl);
   } catch (_) {}
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -2716,11 +2746,12 @@ function openCartFullView(pushHistory = true) {
   document.getElementById("fullProductSection").style.display = "none";
   document.getElementById("cartFullSection").style.display = "block";
   previousView = "productsSection";
-  previousUrl = "/products";
+  previousUrl = window.location.pathname || "/products";
 
+  const nestedCartUrl = appendToPath("/cart");
   if (pushHistory) {
     try {
-      history.pushState({ cart: true }, "", "/cart");
+      history.pushState({ cart: true }, "", nestedCartUrl);
     } catch (_) {}
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2991,9 +3022,13 @@ function switchProfileTab(tabName, urlPath = "/my-profile", pushHistory = true) 
     window.loadMyOrders();
   }
 
-  if (pushHistory && urlPath) {
+  const targetUrl = tabName === "details"
+    ? appendToPath("/my-profile")
+    : appendToPath(tabName, "/my-profile");
+
+  if (pushHistory && (urlPath || targetUrl)) {
     try {
-      history.pushState({ section: "profileSection", tab: tabName }, "", urlPath);
+      history.pushState({ section: "profileSection", tab: tabName }, "", targetUrl);
     } catch (_) {}
   }
 }
@@ -3004,7 +3039,7 @@ function openProfile(tabName = "details", urlPath = "/my-profile", pushHistory =
     return;
   }
   loadProfileData();
-  showSection("profileSection", urlPath, pushHistory);
+  showSection("profileSection", "/my-profile", pushHistory);
   switchProfileTab(tabName, urlPath, false);
 }
 
@@ -3134,7 +3169,7 @@ function openAdminPanel(pageName = "dashboard", urlPath = "/admin-panel/dashboar
     alert("Admin access denied!");
     return;
   }
-  showSection("adminSection", urlPath);
+  showSection("adminSection", "/admin-panel");
   showAdminPage(pageName, urlPath, false);
 }
 
@@ -3156,9 +3191,10 @@ function showAdminPage(pageName, urlPath = "/admin-panel/" + pageName, pushHisto
     .find(button => button.getAttribute("onclick")?.includes("'" + pageName + "'"));
   if (activeButton) activeButton.classList.add("active");
 
-  if (pushHistory && urlPath) {
+  const targetUrl = appendToPath(pageName, "/admin-panel");
+  if (pushHistory && (urlPath || targetUrl)) {
     try {
-      history.pushState({ section: "adminSection", adminPage: pageName }, "", urlPath);
+      history.pushState({ section: "adminSection", adminPage: pageName }, "", targetUrl);
     } catch (_) {}
   }
 
